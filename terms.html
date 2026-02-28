@@ -8,81 +8,44 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 24px 20px 60px;
-      background: #FFF5F8;
-      color: #333;
-      line-height: 1.9;
-      font-size: 14px;
+      max-width: 640px; margin: 0 auto; padding: 24px 20px 60px;
+      background: #FFF5F8; color: #333; line-height: 1.9; font-size: 14px;
     }
     header {
-      text-align: center;
-      margin-bottom: 32px;
-      padding-bottom: 20px;
+      text-align: center; margin-bottom: 32px; padding-bottom: 20px;
       border-bottom: 2px solid #E9D5FF;
     }
-    header h1 {
-      font-size: 1.5em;
-      color: #6B21A8;
-      margin-bottom: 4px;
-    }
-    header .app-name {
-      font-size: 0.9em;
-      color: #A78BFA;
-      margin-bottom: 8px;
-    }
-    header .updated {
-      font-size: 0.8em;
-      color: #999;
-    }
-    section {
-      margin-bottom: 28px;
-    }
-    h2 {
-      font-size: 1.05em;
-      color: #7C3AED;
-      margin-bottom: 10px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #EDE9FE;
-    }
-    p, li {
-      margin-bottom: 6px;
-    }
-    ul, ol {
-      padding-left: 1.4em;
-      margin-bottom: 10px;
-    }
-    a {
-      color: #7C3AED;
-      text-decoration: underline;
-    }
+    .header-logo { width: 48px; height: auto; margin-bottom: 12px; }
+    header h1 { font-size: 1.5em; color: #6B21A8; margin-bottom: 4px; }
+    header .app-name { font-size: 0.9em; color: #A78BFA; margin-bottom: 8px; }
+    header .updated { font-size: 0.8em; color: #999; }
+    section { margin-bottom: 28px; }
+    h2 { font-size: 1.05em; color: #7C3AED; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #EDE9FE; }
+    p, li { margin-bottom: 6px; }
+    ul, ol { padding-left: 1.4em; margin-bottom: 10px; }
+    a { color: #7C3AED; text-decoration: underline; }
     footer {
-      text-align: center;
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 2px solid #E9D5FF;
-      font-size: 0.8em;
-      color: #999;
+      text-align: center; margin-top: 40px; padding-top: 20px;
+      border-top: 2px solid #E9D5FF; font-size: 0.8em; color: #999;
     }
+    .footer-logo { width: 36px; height: auto; opacity: 0.5; margin-bottom: 8px; }
   </style>
 </head>
 <body>
   <header>
+    <a href="index.html"><img src="images/Logo2.png" alt="Dream Noark" class="header-logo"></a>
     <h1>利用規約</h1>
     <div class="app-name">ポケシル</div>
     <div class="updated">最終更新日: 2026年2月</div>
   </header>
 
-  <section>
-    <h2>第1条（規約の適用）</h2>
+  <section><h2>第1条（規約の適用）</h2>
     <p>本利用規約（以下「本規約」）は、ポケシル（以下「本アプリ」）の利用に関する条件を定めるものです。</p>
     <p>本アプリをダウンロード、インストール、または使用することにより、お客様は本規約に同意したものとみなされます。</p>
     <p>本規約に同意いただけない場合は、本アプリをご利用いただくことはできません。</p>
   </section>
 
-  <section>
-    <h2>第2条（定義）</h2>
+  <section><h2>第2条（定義）</h2>
     <p>本規約において使用する用語の定義は、以下のとおりです：</p>
     <ul>
       <li>「運営者」：本アプリを運営する合同会社Dream Noark（Dream Noark LLC）をいいます</li>
@@ -94,8 +57,7 @@
     </ul>
   </section>
 
-  <section>
-    <h2>第3条（アカウント）</h2>
+  <section><h2>第3条（アカウント）</h2>
     <ol>
       <li>本アプリは、初回起動時に匿名アカウントを自動作成します。Google認証またはApple認証によるアカウント連携は任意です。</li>
       <li>本アプリは全年齢を対象としていますが、課金機能のご利用には保護者の同意を推奨します。</li>
@@ -105,26 +67,20 @@
     </ol>
   </section>
 
-  <section>
-    <h2>第4条（サービス内容）</h2>
+  <section><h2>第4条（サービス内容）</h2>
     <p>本アプリは、以下の機能を提供します：</p>
     <ul>
-      <li>シールの収集（ガチャ機能）</li>
-      <li>シールのアップグレード（ノーマル→シルバー→ゴールド→プリズム）</li>
+      <li>シールの収集（ガチャ機能）</li><li>シールのアップグレード（ノーマル→シルバー→ゴールド→プリズム）</li>
       <li>シール帳のカスタマイズ（シール配置、デコアイテム、表紙デザイン）</li>
       <li>他のユーザーとのシール交換（リアルタイム交換・非同期交換）</li>
-      <li>タイムライン（投稿・コメント・フォロー）</li>
-      <li>掲示板（交換募集の投稿）</li>
-      <li>ランキング</li>
-      <li>プロフィールのカスタマイズ</li>
-      <li>デイリーボーナス・ミッション</li>
-      <li>広告視聴によるリワード獲得</li>
+      <li>タイムライン（投稿・コメント・フォロー）</li><li>掲示板（交換募集の投稿）</li>
+      <li>ランキング</li><li>プロフィールのカスタマイズ</li>
+      <li>デイリーボーナス・ミッション</li><li>広告視聴によるリワード獲得</li>
     </ul>
     <p>サービス内容は、予告なく変更、追加、または終了される場合があります。</p>
   </section>
 
-  <section>
-    <h2>第5条（仮想通貨・課金）</h2>
+  <section><h2>第5条（仮想通貨・課金）</h2>
     <ol>
       <li>本アプリでは、以下の仮想通貨を使用します：シルチケ（通常ガチャ用チケット）、プレシルチケ（プレミアムガチャ用チケット）、どろっぷ（課金通貨）</li>
       <li>仮想通貨の価格は、App Store または Google Play の表示価格に従います。</li>
@@ -135,8 +91,7 @@
     </ol>
   </section>
 
-  <section>
-    <h2>第6条（サブスクリプション）</h2>
+  <section><h2>第6条（サブスクリプション）</h2>
     <ol>
       <li>本アプリでは、月額サブスクリプションプラン（ライト・プラス・デラックス）を提供します。</li>
       <li>サブスクリプションは、App Store または Google Play を通じて購入・管理されます。</li>
@@ -147,8 +102,7 @@
     </ol>
   </section>
 
-  <section>
-    <h2>第7条（広告）</h2>
+  <section><h2>第7条（広告）</h2>
     <ol>
       <li>本アプリでは、Google AdMob を通じた広告を表示します。</li>
       <li>リワード広告を視聴完了すると、ゲーム内報酬（シルチケ等）を獲得できます。</li>
@@ -157,8 +111,7 @@
     </ol>
   </section>
 
-  <section>
-    <h2>第8条（ユーザーコンテンツ）</h2>
+  <section><h2>第8条（ユーザーコンテンツ）</h2>
     <ol>
       <li>お客様が本アプリに投稿したコンテンツについて、お客様は著作権その他の権利を保持します。</li>
       <li>お客様は、運営者に対し、ユーザーコンテンツを本アプリの提供・改善のために使用する非独占的ライセンスを付与するものとします。</li>
@@ -167,26 +120,20 @@
     </ol>
   </section>
 
-  <section>
-    <h2>第9条（禁止行為）</h2>
+  <section><h2>第9条（禁止行為）</h2>
     <p>本アプリの利用にあたり、以下の行為を禁止します：</p>
     <ul>
-      <li>本規約または法令に違反する行為</li>
-      <li>他のユーザーへの嫌がらせ、誹謗中傷</li>
-      <li>不正アクセス、ハッキング</li>
-      <li>チート、改ざん、不正な方法での利益取得</li>
-      <li>本アプリの機能を妨害する行為</li>
-      <li>複数アカウントの作成による不正利用</li>
-      <li>アカウントの売買・譲渡</li>
-      <li>本アプリの逆コンパイル、リバースエンジニアリング</li>
+      <li>本規約または法令に違反する行為</li><li>他のユーザーへの嫌がらせ、誹謗中傷</li>
+      <li>不正アクセス、ハッキング</li><li>チート、改ざん、不正な方法での利益取得</li>
+      <li>本アプリの機能を妨害する行為</li><li>複数アカウントの作成による不正利用</li>
+      <li>アカウントの売買・譲渡</li><li>本アプリの逆コンパイル、リバースエンジニアリング</li>
       <li>運営者の許可なく本アプリのコンテンツを複製・配布する行為</li>
       <li>botやスクリプトを使用した自動操作</li>
     </ul>
     <p>違反が確認された場合、アカウントの停止・削除、法的措置等の対応を取ることがあります。</p>
   </section>
 
-  <section>
-    <h2>第10条（知的財産権）</h2>
+  <section><h2>第10条（知的財産権）</h2>
     <ol>
       <li>本アプリのデザイン、プログラム、画像、テキスト、ロゴ等のコンテンツ（AI生成コンテンツを含む）の著作権その他の知的財産権は、運営者に帰属します。</li>
       <li>お客様は、私的利用の範囲を超えて、本アプリのコンテンツを複製、改変、配布、公開することはできません。</li>
@@ -194,8 +141,7 @@
     </ol>
   </section>
 
-  <section>
-    <h2>第11条（免責事項）</h2>
+  <section><h2>第11条（免責事項）</h2>
     <ol>
       <li>本アプリは「現状有姿」で提供され、明示または黙示の保証はありません。</li>
       <li>運営者は、本アプリの中断・遅延・エラー、データの消失、第三者による不正アクセス、ユーザー間のトラブル、外部リンク先のコンテンツ、広告の内容について責任を負いません。</li>
@@ -204,8 +150,7 @@
     </ol>
   </section>
 
-  <section>
-    <h2>第12条（サービスの変更・終了）</h2>
+  <section><h2>第12条（サービスの変更・終了）</h2>
     <ol>
       <li>運営者は、事前の通知なく、本アプリの内容を変更できます。</li>
       <li>本アプリを終了する場合は、30日前までにアプリ内通知にて告知します。</li>
@@ -214,8 +159,7 @@
     </ol>
   </section>
 
-  <section>
-    <h2>第13条（規約の変更）</h2>
+  <section><h2>第13条（規約の変更）</h2>
     <ol>
       <li>運営者は、必要に応じて本規約を変更できるものとします。</li>
       <li>重要な変更がある場合は、アプリ内通知にて事前にお知らせします。</li>
@@ -224,16 +168,14 @@
     </ol>
   </section>
 
-  <section>
-    <h2>第14条（準拠法・管轄）</h2>
+  <section><h2>第14条（準拠法・管轄）</h2>
     <ol>
       <li>本規約は、日本法に準拠し、解釈されるものとします。</li>
       <li>本アプリまたは本規約に関連する紛争については、東京地方裁判所を第一審の専属的合意管轄裁判所とします。</li>
     </ol>
   </section>
 
-  <section>
-    <h2>第15条（お問い合わせ）</h2>
+  <section><h2>第15条（お問い合わせ）</h2>
     <p>本規約に関するご質問やご意見は、以下までお問い合わせください：</p>
     <ul>
       <li>アプリ内のお問い合わせ機能</li>
@@ -243,6 +185,7 @@
   </section>
 
   <footer>
+    <a href="index.html"><img src="images/Logo2.png" alt="Dream Noark" class="footer-logo"></a><br>
     &copy; 2026 Dream Noark LLC All Rights Reserved.
   </footer>
 </body>

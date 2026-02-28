@@ -4,13 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>会社概要 - Dream Noark LLC</title>
-
-  <!-- ★ 検索エンジンにインデックスさせない（Google検索に出ない） -->
   <meta name="robots" content="noindex, nofollow">
-
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', -apple-system, sans-serif;
       max-width: 640px;
@@ -21,12 +17,17 @@
       line-height: 1.9;
       font-size: 14px;
     }
-
     header {
       text-align: center;
       margin-bottom: 40px;
       padding-bottom: 24px;
       border-bottom: 1px solid rgba(168, 130, 255, 0.15);
+    }
+    .header-logo {
+      width: 64px;
+      height: auto;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 2px 12px rgba(168, 130, 255, 0.3));
     }
     header h1 {
       font-size: 1.5em;
@@ -38,11 +39,7 @@
       font-size: 0.85em;
       color: #6B5F8A;
     }
-
-    section {
-      margin-bottom: 36px;
-    }
-
+    section { margin-bottom: 36px; }
     h2 {
       font-size: 1.05em;
       color: #A78BFA;
@@ -50,78 +47,38 @@
       padding-bottom: 8px;
       border-bottom: 1px solid rgba(168, 130, 255, 0.1);
     }
-
-    /* ===== 会社情報テーブル ===== */
-    .info-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .info-table tr {
-      border-bottom: 1px solid rgba(168, 130, 255, 0.08);
-    }
+    .info-table { width: 100%; border-collapse: collapse; }
+    .info-table tr { border-bottom: 1px solid rgba(168, 130, 255, 0.08); }
     .info-table th {
-      text-align: left;
-      color: #8B7FAA;
-      font-weight: bold;
-      font-size: 0.85em;
-      padding: 14px 12px 14px 0;
-      white-space: nowrap;
-      vertical-align: top;
-      width: 110px;
+      text-align: left; color: #8B7FAA; font-weight: bold;
+      font-size: 0.85em; padding: 14px 12px 14px 0;
+      white-space: nowrap; vertical-align: top; width: 110px;
     }
-    .info-table td {
-      padding: 14px 0;
-      color: #D4C0F0;
-      font-size: 0.93em;
-    }
-
-    /* 代表者名：ローマ字のみ（検索対策） */
-    .rep-name {
-      font-weight: bold;
-      letter-spacing: 0.05em;
-    }
-
-    a {
-      color: #A78BFA;
-      text-decoration: none;
-    }
+    .info-table td { padding: 14px 0; color: #D4C0F0; font-size: 0.93em; }
+    .rep-name { font-weight: bold; letter-spacing: 0.05em; }
+    a { color: #A78BFA; text-decoration: none; }
     a:hover { text-decoration: underline; }
-
     .note {
       background: rgba(168, 130, 255, 0.06);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin-top: 24px;
-      font-size: 0.85em;
-      color: #8B7FAA;
+      border-radius: 12px; padding: 16px 20px;
+      margin-top: 24px; font-size: 0.85em; color: #8B7FAA;
     }
-
     footer {
-      text-align: center;
-      margin-top: 48px;
-      padding-top: 24px;
+      text-align: center; margin-top: 48px; padding-top: 24px;
       border-top: 1px solid rgba(168, 130, 255, 0.1);
     }
+    .footer-logo { width: 36px; height: auto; opacity: 0.4; margin-bottom: 12px; }
     .footer-links {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
+      display: flex; gap: 16px; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 16px;
     }
-    .footer-links a {
-      color: #6B5F8A;
-      font-size: 0.82em;
-    }
-    .copyright {
-      color: #3D3555;
-      font-size: 0.75em;
-    }
+    .footer-links a { color: #6B5F8A; font-size: 0.82em; }
+    .copyright { color: #3D3555; font-size: 0.75em; }
   </style>
 </head>
 <body>
-
   <header>
+    <a href="index.html"><img src="images/Logo2.png" alt="Dream Noark" class="header-logo"></a>
     <h1>会社概要</h1>
     <div class="sub">Company Profile</div>
   </header>
@@ -131,61 +88,36 @@
     <table class="info-table">
       <tr>
         <th>会社名</th>
-        <td>
-          合同会社 Dream Noark<br>
-          <span style="color: #8B7FAA; font-size: 0.9em;">Dream Noark LLC</span>
-        </td>
+        <td>合同会社 Dream Noark<br><span style="color: #8B7FAA; font-size: 0.9em;">Dream Noark LLC</span></td>
       </tr>
-      <tr>
-        <th>設立</th>
-        <td>2026年</td>
-      </tr>
+      <tr><th>設立</th><td>2026年</td></tr>
       <tr>
         <th>代表者</th>
         <td>
-          <!-- ★ ローマ字表記のみ：漢字・カタカナ検索でヒットしない -->
           <span class="rep-name">Daniel Murakami</span><br>
           <span style="color: #6B5F8A; font-size: 0.85em;">Representative Member</span>
         </td>
       </tr>
       <tr>
         <th>所在地</th>
-        <td>
-          〒150-0043<br>
-          東京都渋谷区道玄坂1丁目10番8号<br>
-          渋谷道玄坂東急ビル2F-C
-        </td>
+        <td>〒150-0043<br>東京都渋谷区道玄坂1丁目10番8号<br>渋谷道玄坂東急ビル2F-C</td>
       </tr>
-      <tr>
-        <th>事業内容</th>
-        <td>
-          スマートフォン向けアプリケーションの企画・開発・運営
-        </td>
-      </tr>
-      <tr>
-        <th>お問い合わせ</th>
-        <td>
-          <a href="mailto:info@dreamnoark.com">info@dreamnoark.com</a>
-        </td>
-      </tr>
+      <tr><th>事業内容</th><td>スマートフォン向けアプリケーションの企画・開発・運営</td></tr>
+      <tr><th>お問い合わせ</th><td><a href="mailto:info@dreamnoark.com">info@dreamnoark.com</a></td></tr>
     </table>
   </section>
 
   <section>
     <h2>運営アプリ</h2>
     <table class="info-table">
-      <tr>
-        <th>ポケシル</th>
-        <td>シール交換コレクションゲーム（iOS / Android）</td>
-      </tr>
+      <tr><th>ポケシル</th><td>シール交換コレクションゲーム（iOS / Android）</td></tr>
     </table>
   </section>
 
-  <div class="note">
-    本ページに関するお問い合わせは、上記メールアドレスまでご連絡ください。
-  </div>
+  <div class="note">本ページに関するお問い合わせは、上記メールアドレスまでご連絡ください。</div>
 
   <footer>
+    <a href="index.html"><img src="images/Logo2.png" alt="Dream Noark" class="footer-logo"></a>
     <div class="footer-links">
       <a href="index.html">トップ</a>
       <a href="privacy-policy.html">プライバシーポリシー</a>
@@ -194,6 +126,5 @@
     </div>
     <div class="copyright">&copy; 2026 Dream Noark LLC. All Rights Reserved.</div>
   </footer>
-
 </body>
 </html>

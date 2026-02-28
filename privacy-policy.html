@@ -8,73 +8,36 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 24px 20px 60px;
-      background: #FFF5F8;
-      color: #333;
-      line-height: 1.9;
-      font-size: 14px;
+      max-width: 640px; margin: 0 auto; padding: 24px 20px 60px;
+      background: #FFF5F8; color: #333; line-height: 1.9; font-size: 14px;
     }
     header {
-      text-align: center;
-      margin-bottom: 32px;
-      padding-bottom: 20px;
+      text-align: center; margin-bottom: 32px; padding-bottom: 20px;
       border-bottom: 2px solid #E9D5FF;
     }
-    header h1 {
-      font-size: 1.5em;
-      color: #6B21A8;
-      margin-bottom: 4px;
-    }
-    header .app-name {
-      font-size: 0.9em;
-      color: #A78BFA;
-      margin-bottom: 8px;
-    }
-    header .updated {
-      font-size: 0.8em;
-      color: #999;
-    }
-    section {
-      margin-bottom: 28px;
-    }
+    .header-logo { width: 48px; height: auto; margin-bottom: 12px; }
+    header h1 { font-size: 1.5em; color: #6B21A8; margin-bottom: 4px; }
+    header .app-name { font-size: 0.9em; color: #A78BFA; margin-bottom: 8px; }
+    header .updated { font-size: 0.8em; color: #999; }
+    section { margin-bottom: 28px; }
     h2 {
-      font-size: 1.05em;
-      color: #7C3AED;
-      margin-bottom: 10px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #EDE9FE;
+      font-size: 1.05em; color: #7C3AED; margin-bottom: 10px;
+      padding-bottom: 6px; border-bottom: 1px solid #EDE9FE;
     }
-    p, li {
-      margin-bottom: 6px;
-    }
-    ul {
-      padding-left: 1.4em;
-      margin-bottom: 10px;
-    }
-    .sub-heading {
-      font-weight: bold;
-      color: #6B21A8;
-      margin-top: 12px;
-      margin-bottom: 4px;
-    }
-    a {
-      color: #7C3AED;
-      text-decoration: underline;
-    }
+    p, li { margin-bottom: 6px; }
+    ul { padding-left: 1.4em; margin-bottom: 10px; }
+    .sub-heading { font-weight: bold; color: #6B21A8; margin-top: 12px; margin-bottom: 4px; }
+    a { color: #7C3AED; text-decoration: underline; }
     footer {
-      text-align: center;
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 2px solid #E9D5FF;
-      font-size: 0.8em;
-      color: #999;
+      text-align: center; margin-top: 40px; padding-top: 20px;
+      border-top: 2px solid #E9D5FF; font-size: 0.8em; color: #999;
     }
+    .footer-logo { width: 36px; height: auto; opacity: 0.5; margin-bottom: 8px; }
   </style>
 </head>
 <body>
   <header>
+    <a href="index.html"><img src="images/Logo2.png" alt="Dream Noark" class="header-logo"></a>
     <h1>プライバシーポリシー</h1>
     <div class="app-name">ポケシル</div>
     <div class="updated">最終更新日: 2026年2月</div>
@@ -90,7 +53,6 @@
   <section>
     <h2>2. 収集する情報</h2>
     <p>本アプリでは、以下の情報を収集することがあります：</p>
-
     <p class="sub-heading">【アカウント情報】</p>
     <ul>
       <li>匿名認証用の内部ユーザーID（自動生成）</li>
@@ -99,7 +61,6 @@
       <li>プロフィール画像（選択したシール画像）</li>
       <li>ユーザーコード（6桁の識別番号）</li>
     </ul>
-
     <p class="sub-heading">【ゲームデータ】</p>
     <ul>
       <li>シールの所持情報・アップグレード状態</li>
@@ -108,39 +69,29 @@
       <li>シール帳のカスタマイズ情報（シール配置、デコアイテム、表紙デザイン）</li>
       <li>通貨残高（シルチケ、プレシルチケ、どろっぷ）</li>
     </ul>
-
     <p class="sub-heading">【ソーシャル機能データ】</p>
     <ul>
-      <li>タイムラインへの投稿内容</li>
-      <li>コメント</li>
-      <li>フォロー・フォロワー関係</li>
-      <li>掲示板の投稿内容</li>
+      <li>タイムラインへの投稿内容</li><li>コメント</li>
+      <li>フォロー・フォロワー関係</li><li>掲示板の投稿内容</li>
     </ul>
-
     <p class="sub-heading">【課金情報】</p>
     <ul>
       <li>購入履歴（App Store / Google Play経由）</li>
       <li>サブスクリプション状態・プラン情報</li>
     </ul>
-
     <p class="sub-heading">【デバイス情報】</p>
     <ul>
       <li>デバイスの種類（iOS / Android）</li>
       <li>プッシュ通知用のデバイストークン</li>
     </ul>
-
     <p class="sub-heading">【広告関連情報】</p>
     <ul>
       <li>広告ID（IDFA / AAID）※広告の表示・効果測定に使用</li>
-      <li>リワード広告の視聴履歴</li>
-      <li>広告連続視聴日数</li>
+      <li>リワード広告の視聴履歴</li><li>広告連続視聴日数</li>
     </ul>
-
     <p class="sub-heading">【利用状況データ】</p>
     <ul>
-      <li>最終ログイン日時</li>
-      <li>デイリーボーナス取得履歴</li>
-      <li>アプリの使用状況</li>
+      <li>最終ログイン日時</li><li>デイリーボーナス取得履歴</li><li>アプリの使用状況</li>
     </ul>
   </section>
 
@@ -149,15 +100,11 @@
     <p>本アプリでは、以下のコンテンツの制作にAI画像生成技術を使用しています：</p>
     <p class="sub-heading">【AI生成を使用しているコンテンツ】</p>
     <ul>
-      <li>シール画像</li>
-      <li>シール帳の表紙・裏表紙画像</li>
-      <li>アイコンフレーム画像</li>
-      <li>UIデザイン素材（ボタン、背景、装飾など）</li>
+      <li>シール画像</li><li>シール帳の表紙・裏表紙画像</li>
+      <li>アイコンフレーム画像</li><li>UIデザイン素材（ボタン、背景、装飾など）</li>
     </ul>
     <p class="sub-heading">【使用技術】</p>
-    <ul>
-      <li>Google Gemini（画像生成モデル）</li>
-    </ul>
+    <ul><li>Google Gemini（画像生成モデル）</li></ul>
     <p>これらのAI生成コンテンツは、本アプリのために独自に生成されたものであり、第三者の著作権を侵害するものではありません。AI生成コンテンツの著作権は、適用法令に従い運営者に帰属します。</p>
   </section>
 
@@ -169,12 +116,9 @@
       <li>ゲーム機能の提供（シール収集、ガチャ、交換、アップグレードなど）</li>
       <li>ソーシャル機能の提供（投稿、コメント、フォロー、掲示板など）</li>
       <li>プッシュ通知の送信（お知らせ、交換リクエストなど）</li>
-      <li>課金・購入処理</li>
-      <li>広告の表示・効果測定</li>
-      <li>リワード広告の報酬付与</li>
-      <li>カスタマーサポートの提供</li>
-      <li>サービスの改善・新機能の開発</li>
-      <li>不正利用の防止・検出</li>
+      <li>課金・購入処理</li><li>広告の表示・効果測定</li>
+      <li>リワード広告の報酬付与</li><li>カスタマーサポートの提供</li>
+      <li>サービスの改善・新機能の開発</li><li>不正利用の防止・検出</li>
       <li>法的義務の履行</li>
     </ul>
   </section>
@@ -183,8 +127,7 @@
     <h2>5. 情報の共有と開示</h2>
     <p>本アプリは、以下の場合を除き、お客様の個人情報を第三者に販売、貸与、または開示することはありません：</p>
     <ul>
-      <li>お客様の同意がある場合</li>
-      <li>法令に基づく開示要求があった場合</li>
+      <li>お客様の同意がある場合</li><li>法令に基づく開示要求があった場合</li>
       <li>サービス提供に必要な業務委託先への提供（下記「第三者サービス」参照）</li>
       <li>合併、事業譲渡等に伴う承継</li>
     </ul>
@@ -197,52 +140,37 @@
   <section>
     <h2>6. 第三者サービス・情報収集モジュール</h2>
     <p>本アプリは、以下の第三者サービスおよび情報収集モジュール（SDK）を利用しています。各サービスには、それぞれのプライバシーポリシーが適用されます。</p>
-
     <p class="sub-heading">【Supabase】</p>
     <ul>
-      <li>提供者: Supabase Inc.</li>
-      <li>用途: データベース、ユーザー認証、ファイルストレージ、リアルタイム通信</li>
+      <li>提供者: Supabase Inc.</li><li>用途: データベース、ユーザー認証、ファイルストレージ、リアルタイム通信</li>
       <li>取得情報: アカウント情報、ゲームデータ、ソーシャルデータ</li>
       <li>プライバシーポリシー: <a href="https://supabase.com/privacy" target="_blank">https://supabase.com/privacy</a></li>
     </ul>
-
     <p class="sub-heading">【Google AdMob】</p>
     <ul>
-      <li>提供者: Google LLC</li>
-      <li>用途: 広告の表示（リワード広告、インタースティシャル広告）</li>
+      <li>提供者: Google LLC</li><li>用途: 広告の表示（リワード広告、インタースティシャル広告）</li>
       <li>取得情報: 広告ID（IDFA / AAID）、デバイス情報、広告表示・クリック情報</li>
       <li>プライバシーポリシー: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></li>
     </ul>
-
     <p class="sub-heading">【Firebase Cloud Messaging（FCM）】</p>
     <ul>
-      <li>提供者: Google LLC</li>
-      <li>用途: プッシュ通知の送信</li>
-      <li>取得情報: デバイストークン</li>
+      <li>提供者: Google LLC</li><li>用途: プッシュ通知の送信</li><li>取得情報: デバイストークン</li>
       <li>プライバシーポリシー: <a href="https://firebase.google.com/support/privacy" target="_blank">https://firebase.google.com/support/privacy</a></li>
     </ul>
-
     <p class="sub-heading">【Google認証】（オプション）</p>
     <ul>
-      <li>提供者: Google LLC</li>
-      <li>用途: アカウント連携・認証</li>
-      <li>取得情報: メールアドレス、認証トークン</li>
+      <li>提供者: Google LLC</li><li>用途: アカウント連携・認証</li><li>取得情報: メールアドレス、認証トークン</li>
       <li>プライバシーポリシー: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></li>
     </ul>
-
     <p class="sub-heading">【Apple認証】（オプション）</p>
     <ul>
-      <li>提供者: Apple Inc.</li>
-      <li>用途: アカウント連携・認証、App Store決済</li>
+      <li>提供者: Apple Inc.</li><li>用途: アカウント連携・認証、App Store決済</li>
       <li>取得情報: 認証トークン（メールアドレスは非公開選択可）</li>
       <li>プライバシーポリシー: <a href="https://www.apple.com/legal/privacy/" target="_blank">https://www.apple.com/legal/privacy/</a></li>
     </ul>
-
     <p class="sub-heading">【Google Play】</p>
     <ul>
-      <li>提供者: Google LLC</li>
-      <li>用途: Android版での決済処理</li>
-      <li>取得情報: 購入情報</li>
+      <li>提供者: Google LLC</li><li>用途: Android版での決済処理</li><li>取得情報: 購入情報</li>
       <li>プライバシーポリシー: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></li>
     </ul>
   </section>
@@ -269,18 +197,12 @@
     <h2>8. 広告について</h2>
     <p>本アプリでは、Google AdMob を利用した広告を表示します。</p>
     <p class="sub-heading">【表示される広告の種類】</p>
-    <ul>
-      <li>リワード広告（視聴完了でゲーム内報酬を獲得）</li>
-      <li>インタースティシャル広告（画面遷移時に表示）</li>
-    </ul>
+    <ul><li>リワード広告（視聴完了でゲーム内報酬を獲得）</li><li>インタースティシャル広告（画面遷移時に表示）</li></ul>
     <p class="sub-heading">【広告IDの利用】</p>
     <p>広告の表示・効果測定のため、お使いのデバイスの広告ID（iOS: IDFA、Android: AAID）を取得します。iOS 14.5以降では、App Tracking Transparency（ATT）に基づき、トラッキングの許可を求めます。</p>
     <p class="sub-heading">【広告のオプトアウト】</p>
     <p>デバイスの設定から広告IDのリセットやパーソナライズ広告の無効化が可能です：</p>
-    <ul>
-      <li>iOS: 設定 > プライバシーとセキュリティ > トラッキング</li>
-      <li>Android: 設定 > Google > 広告</li>
-    </ul>
+    <ul><li>iOS: 設定 > プライバシーとセキュリティ > トラッキング</li><li>Android: 設定 > Google > 広告</li></ul>
   </section>
 
   <section>
@@ -307,10 +229,8 @@
     <h2>11. セキュリティ</h2>
     <p>本アプリは、お客様の情報を保護するために、以下のセキュリティ対策を講じています：</p>
     <ul>
-      <li>SSL/TLS暗号化通信</li>
-      <li>Row Level Security（RLS）によるデータアクセス制御</li>
-      <li>認証トークンによるセッション管理</li>
-      <li>定期的なセキュリティアップデート</li>
+      <li>SSL/TLS暗号化通信</li><li>Row Level Security（RLS）によるデータアクセス制御</li>
+      <li>認証トークンによるセッション管理</li><li>定期的なセキュリティアップデート</li>
     </ul>
     <p>ただし、インターネット上のデータ送信は100%安全であることを保証できないことをご了承ください。</p>
   </section>
@@ -333,6 +253,7 @@
   </section>
 
   <footer>
+    <a href="index.html"><img src="images/Logo2.png" alt="Dream Noark" class="footer-logo"></a><br>
     &copy; 2026 Dream Noark LLC All Rights Reserved.
   </footer>
 </body>

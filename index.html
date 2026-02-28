@@ -47,23 +47,12 @@
       pointer-events: none;
     }
 
-    .hero-logo {
+    .hero-logo-img {
       position: relative;
-      font-size: 2.8em;
-      font-weight: 900;
-      letter-spacing: 0.04em;
-      margin-bottom: 8px;
-      background: linear-gradient(135deg, #C9A0FF 0%, #FFFFFF 40%, #A0D4FF 70%, #C9A0FF 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-sub {
-      position: relative;
-      font-size: 0.95em;
-      color: #8B7FAA;
-      letter-spacing: 0.15em;
-      margin-bottom: 40px;
+      width: min(360px, 80vw);
+      height: auto;
+      margin-bottom: 32px;
+      filter: drop-shadow(0 4px 24px rgba(168, 130, 255, 0.3));
     }
     .hero-tagline {
       position: relative;
@@ -200,6 +189,12 @@
       text-align: center;
       border-top: 1px solid rgba(168, 130, 255, 0.1);
     }
+    .footer-logo {
+      width: 40px;
+      height: auto;
+      opacity: 0.4;
+      margin-bottom: 16px;
+    }
     .footer-links {
       display: flex;
       gap: 20px;
@@ -224,8 +219,7 @@
 
   <!-- ===== Hero ===== -->
   <section class="hero">
-    <div class="hero-logo">Dream Noark</div>
-    <div class="hero-sub">GAME STUDIO</div>
+    <img src="images/Logo.png" alt="Dream Noark LLC" class="hero-logo-img">
     <p class="hero-tagline">
       <em>夢を乗せた方舟</em> ——<br>
       たくさんの夢を乗せて、<br>
@@ -275,6 +269,7 @@
 
   <!-- ===== Footer ===== -->
   <footer>
+    <img src="images/Logo2.png" alt="Dream Noark" class="footer-logo">
     <div class="footer-links">
       <a href="privacy-policy.html">プライバシーポリシー</a>
       <a href="terms.html">利用規約</a>
