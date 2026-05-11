@@ -144,6 +144,7 @@
       gap: 12px;
       justify-content: center;
       margin-top: 24px;
+      flex-wrap: wrap;
     }
     .store-badge {
       display: inline-block;
@@ -155,6 +156,14 @@
       font-weight: bold;
       text-decoration: none;
       border: 1px solid rgba(168, 130, 255, 0.2);
+      transition: background 0.2s, border-color 0.2s, transform 0.1s;
+    }
+    .store-badge:hover {
+      background: rgba(168, 130, 255, 0.2);
+      border-color: rgba(168, 130, 255, 0.5);
+    }
+    .store-badge:active {
+      transform: scale(0.97);
     }
 
     /* ===== Contact ===== */
@@ -256,8 +265,8 @@
           ガチャでシールをゲットして、自分だけのシール帳をつくれるよ。
         </p>
         <div class="store-badges">
-          <span class="store-badge">App Store — 近日公開</span>
-          <span class="store-badge">Google Play — 近日公開</span>
+          <a href="https://apps.apple.com/jp/app/%E3%83%9D%E3%82%B1%E3%82%B7%E3%83%AB-%E3%83%9D%E3%82%B1%E3%83%83%E3%83%88%E3%82%B7%E3%83%BC%E3%83%AB%E3%81%A1%E3%82%87%E3%81%86/id6758645050" class="store-badge" target="_blank" rel="noopener">App Store でダウンロード</a>
+          <a href="https://play.google.com/store/apps/details?id=com.pokeseal.app" class="store-badge" target="_blank" rel="noopener">Google Play でダウンロード</a>
         </div>
       </div>
     </div>
