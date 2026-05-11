@@ -44,7 +44,7 @@
     <a href="index.html"><img src="images/Logo2.png" alt="Dream Noark" class="header-logo"></a>
     <h1>プライバシーポリシー</h1>
     <div class="app-name">ポケシル</div>
-    <div class="updated">最終更新日: 2026年4月</div>
+    <div class="updated">最終更新日: 2026年5月</div>
   </header>
 
   <section>
@@ -61,7 +61,7 @@
     <ul>
       <li>匿名認証用の内部ユーザーID（自動生成）</li>
       <li>メールアドレス（アカウント登録を行った場合）</li>
-      <li>パスワード（暗号化して保存）</li>
+      <li>パスワード(暗号化して保存)</li>
       <li>表示名（ニックネーム）</li>
       <li>プロフィール画像（選択したシール画像）</li>
       <li>ユーザーコード（6桁の識別番号）</li>
@@ -92,6 +92,7 @@
     <p class="sub-heading">【広告関連情報】</p>
     <ul>
       <li>広告ID（IDFA / AAID）※広告の表示・効果測定に使用</li>
+      <li>IPアドレス・粗い位置情報（広告配信ネットワークが取得）</li>
       <li>リワード広告の視聴履歴</li><li>広告連続視聴日数</li>
     </ul>
     <p class="sub-heading">【利用状況データ】</p>
@@ -157,6 +158,15 @@
       <li>取得情報: 広告ID（IDFA / AAID）、デバイス情報、広告表示・クリック情報</li>
       <li>プライバシーポリシー: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></li>
     </ul>
+    <p class="sub-heading">【AppLovin（MAXメディエーション）】</p>
+    <ul>
+      <li>提供者: AppLovin Corporation</li>
+      <li>用途: 広告メディエーション（複数の広告ネットワークから最適な広告を配信）、リワード広告・インタースティシャル広告の表示、広告効果測定</li>
+      <li>取得情報: 広告ID（IDFA / AAID）、デバイス情報（モデル、OSバージョン、言語、タイムゾーン等）、IPアドレス、粗い位置情報、広告表示・クリック・視聴情報、SKAdNetwork経由のインストール計測情報</li>
+      <li>備考: AppLovin はメディエーションパートナーとして、上記の取得情報を AppLovin が提携する第三者広告ネットワーク（Meta Audience Network、Unity Ads、Mintegral、Pangle、ironSource、Liftoff、Vungle、Chartboost、InMobi 等）と共有することがあります。各広告ネットワークのプライバシーポリシーが別途適用されます。</li>
+      <li>プライバシーポリシー: <a href="https://www.applovin.com/privacy/" target="_blank">https://www.applovin.com/privacy/</a></li>
+      <li>パートナー一覧: <a href="https://www.applovin.com/partners/" target="_blank">https://www.applovin.com/partners/</a></li>
+    </ul>
     <p class="sub-heading">【Firebase Cloud Messaging（FCM）】</p>
     <ul>
       <li>提供者: Google LLC</li><li>用途: プッシュ通知の送信</li><li>取得情報: デバイストークン</li>
@@ -201,11 +211,15 @@
 
   <section>
     <h2>8. 広告について</h2>
-    <p>本アプリでは、Google AdMob を利用した広告を表示します。</p>
+    <p>本アプリでは、Google AdMob および AppLovin（MAXメディエーション）を利用した広告を表示します。AppLovin は複数の第三者広告ネットワークから最適な広告を配信するメディエーションサービスです。</p>
     <p class="sub-heading">【表示される広告の種類】</p>
     <ul><li>リワード広告（視聴完了でゲーム内報酬を獲得）</li><li>インタースティシャル広告（画面遷移時に表示）</li></ul>
     <p class="sub-heading">【広告IDの利用】</p>
     <p>広告の表示・効果測定のため、お使いのデバイスの広告ID（iOS: IDFA、Android: AAID）を取得します。iOS 14.5以降では、App Tracking Transparency（ATT）に基づき、トラッキングの許可を求めます。</p>
+    <p class="sub-heading">【SKAdNetwork による計測（iOS）】</p>
+    <p>iOS版では、Apple が提供する SKAdNetwork フレームワークを通じて、ユーザーを個人特定しない形での広告効果測定（インストール計測等）を行います。SKAdNetwork は Apple のプライバシー保護機能であり、個別のユーザー識別子は使用されません。</p>
+    <p class="sub-heading">【メディエーションパートナーへの共有】</p>
+    <p>AppLovin（MAX）を介して、Meta Audience Network、Unity Ads、Mintegral、Pangle、ironSource、Liftoff、Vungle、Chartboost、InMobi 等の第三者広告ネットワークに、広告ID・デバイス情報・広告表示情報が共有されることがあります。各ネットワークのプライバシーポリシーは AppLovin パートナーページ（<a href="https://www.applovin.com/partners/" target="_blank">https://www.applovin.com/partners/</a>）からご確認いただけます。</p>
     <p class="sub-heading">【広告のオプトアウト】</p>
     <p>デバイスの設定から広告IDのリセットやパーソナライズ広告の無効化が可能です：</p>
     <ul><li>iOS: 設定 > プライバシーとセキュリティ > トラッキング</li><li>Android: 設定 > Google > 広告</li></ul>
