@@ -7,291 +7,607 @@
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-  <title>Dream Noark LLC | 合同会社 Dream Noark</title>
-  <meta name="description" content="Dream Noark（ドリーム・ノアーク）は、夢のような体験を届けるモバイルゲーム開発会社です。">
+  <title>Dream Noark LLC | 夢を乗せた方舟 — ゲームスタジオ</title>
+  <meta name="description" content="Dream Noark（ドリーム・ノアーク）は「夢を乗せた方舟」。プレイヤーに夢のような体験を届けるモバイルゲームスタジオです。ポケシル／スナドロを開発・運営しています。">
+  <meta property="og:title" content="Dream Noark LLC | 夢を乗せた方舟">
+  <meta property="og:description" content="プレイヤーに夢のような体験を届けるモバイルゲームスタジオ。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dreamnoark.com/">
+  <meta property="og:image" content="https://dreamnoark.com/images/Logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #05070F;
+      --bg2: #0B0E1A;
+      --ink: #E9E6F5;
+      --dim: #9A94B8;
+      --violet: #8B5CF6;
+      --cyan: #38E1FF;
+      --pink: #FF4D8D;
+      --gold: #FFC94D;
+      --glass: rgba(255, 255, 255, 0.04);
+      --stroke: rgba(255, 255, 255, 0.09);
+      --en: 'Orbitron', sans-serif;
+      --jp: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    html { scroll-behavior: smooth; }
     body {
-      font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', -apple-system, sans-serif;
-      color: #E8E0F0;
-      line-height: 1.8;
+      font-family: var(--jp);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.9;
       font-size: 15px;
-      background: #0B0E1A;
+      overflow-x: hidden;
     }
+    ::selection { background: rgba(139, 92, 246, .45); }
 
-    /* ===== Hero ===== */
-    .hero {
-      min-height: 70vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 60px 24px 48px;
-      background: linear-gradient(160deg, #0B0E1A 0%, #1A1040 40%, #0D1B3E 70%, #0B0E1A 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background:
-        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
-        radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
-        radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
-        radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
-        radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.5) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 20% 80%, rgba(255,255,255,0.4) 0%, transparent 100%),
-        radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 80% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
-        radial-gradient(1px 1px at 40% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
-        radial-gradient(1px 1px at 15% 50%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    /* ===== 星空キャンバス（固定背景） ===== */
+    #sky {
+      position: fixed; inset: 0;
+      z-index: 0;
       pointer-events: none;
     }
+    .aurora {
+      position: fixed; inset: -20%;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(40% 32% at 18% 22%, rgba(139, 92, 246, .16), transparent 70%),
+        radial-gradient(36% 30% at 82% 16%, rgba(56, 225, 255, .10), transparent 70%),
+        radial-gradient(42% 36% at 68% 86%, rgba(255, 77, 141, .09), transparent 70%);
+      animation: drift 26s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+      from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+      to   { transform: translate3d(1.5%, 1.5%, 0) scale(1.06); }
+    }
+    main, nav, footer { position: relative; z-index: 1; }
 
-    .hero-logo-img {
-      position: relative;
-      width: min(360px, 80vw);
-      height: auto;
-      margin-bottom: 32px;
-      filter: brightness(2.2) drop-shadow(0 0 30px rgba(168, 130, 255, 0.5)) drop-shadow(0 0 60px rgba(100, 80, 200, 0.3));
+    /* ===== ナビ ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px clamp(20px, 5vw, 56px);
+      background: rgba(5, 7, 15, .55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--stroke);
     }
-    .hero-tagline {
-      position: relative;
-      font-size: 1.15em;
-      color: #B8A8D8;
-      max-width: 480px;
-      line-height: 2;
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-brand img { width: 30px; height: 30px; object-fit: contain; }
+    .nav-brand span {
+      font-family: var(--en); font-weight: 700; font-size: 14px;
+      letter-spacing: .18em; color: var(--ink);
     }
-    .hero-tagline em {
-      font-style: normal;
-      color: #D4C0F0;
-      font-weight: bold;
+    .nav-links { display: flex; gap: clamp(14px, 3vw, 30px); }
+    .nav-links a {
+      color: var(--dim); text-decoration: none; font-size: 12.5px;
+      font-weight: 700; letter-spacing: .12em;
+      transition: color .25s;
     }
+    .nav-links a:hover { color: var(--cyan); }
+    @media (max-width: 640px) { .nav-links a.optional { display: none; } }
 
-    /* ===== About ===== */
-    .about {
-      background: #0F1225;
-      padding: 60px 24px;
+    /* ===== ヒーロー ===== */
+    .hero {
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center;
+      padding: 110px 24px 90px;
+      position: relative;
     }
-    .about-inner {
+    .hero-logo {
+      width: clamp(96px, 16vw, 150px);
+      filter: drop-shadow(0 0 34px rgba(139, 92, 246, .55));
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+    .hero-en {
+      margin-top: 30px;
+      font-family: var(--en); font-weight: 900;
+      font-size: clamp(30px, 7vw, 64px);
+      letter-spacing: .14em;
+      background: linear-gradient(100deg, #fff 10%, #C9B8FF 38%, var(--cyan) 62%, #fff 90%);
+      background-size: 220% auto;
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+      animation: shine 7s linear infinite;
+    }
+    @keyframes shine { to { background-position: 220% center; } }
+    .hero-ja {
+      margin-top: 14px;
+      font-size: clamp(15px, 2.6vw, 21px);
+      font-weight: 700; letter-spacing: .42em; text-indent: .42em;
+      color: var(--dim);
+    }
+    .hero-copy {
+      margin-top: 26px;
+      font-size: clamp(13px, 2vw, 15.5px);
+      color: #C9C3E2;
       max-width: 560px;
-      margin: 0 auto;
     }
-    .section-title {
-      font-size: 1.4em;
-      font-weight: 800;
-      color: #C9A0FF;
-      margin-bottom: 24px;
-      letter-spacing: 0.05em;
+    .hero-cta {
+      margin-top: 38px;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(139, 92, 246, .55);
+      color: var(--ink); text-decoration: none;
+      font-weight: 700; font-size: 13.5px; letter-spacing: .14em;
+      background: linear-gradient(120deg, rgba(139, 92, 246, .22), rgba(56, 225, 255, .12));
+      box-shadow: 0 0 28px rgba(139, 92, 246, .25), inset 0 0 18px rgba(139, 92, 246, .12);
+      transition: transform .25s, box-shadow .25s;
     }
-    .about p {
-      color: #9A90B0;
-      margin-bottom: 12px;
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 44px rgba(139, 92, 246, .5), inset 0 0 22px rgba(139, 92, 246, .2);
+    }
+    .scroll-hint {
+      position: absolute; bottom: 26px; left: 50%;
+      transform: translateX(-50%);
+      color: var(--dim); font-size: 10px; letter-spacing: .3em;
+      font-family: var(--en);
+    }
+    .scroll-hint::after {
+      content: '';
+      display: block; width: 1px; height: 38px;
+      margin: 8px auto 0;
+      background: linear-gradient(to bottom, var(--violet), transparent);
+      animation: fall 1.8s ease-in-out infinite;
+    }
+    @keyframes fall {
+      0% { transform: scaleY(0); transform-origin: top; }
+      55% { transform: scaleY(1); transform-origin: top; }
+      56% { transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
     }
 
-    /* ===== App Showcase ===== */
-    .apps {
-      background: linear-gradient(180deg, #0F1225 0%, #1A1040 100%);
-      padding: 60px 24px;
-      text-align: center;
+    /* ===== セクション共通 ===== */
+    section { padding: clamp(70px, 11vw, 130px) clamp(20px, 6vw, 64px); }
+    .wrap { max-width: 1080px; margin: 0 auto; }
+    .sec-label {
+      font-family: var(--en); font-weight: 700; font-size: 12px;
+      letter-spacing: .34em; color: var(--cyan);
     }
-    .apps-inner {
-      max-width: 560px;
-      margin: 0 auto;
+    .sec-title {
+      font-size: clamp(24px, 4.6vw, 38px);
+      font-weight: 900; letter-spacing: .06em;
+      margin-top: 8px;
     }
+    .sec-lead { margin-top: 16px; color: var(--dim); max-width: 640px; }
+
+    /* スクロールリビール */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ===== Mission ===== */
+    .mission-grid {
+      margin-top: 46px;
+      display: grid; gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+    .mission-card {
+      padding: 28px 24px;
+      border-radius: 18px;
+      background: var(--glass);
+      border: 1px solid var(--stroke);
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+    }
+    .mission-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(139, 92, 246, .5);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, .45), 0 0 30px rgba(139, 92, 246, .12);
+    }
+    .mission-card .icon { font-size: 26px; }
+    .mission-card h3 { margin-top: 12px; font-size: 16.5px; letter-spacing: .04em; }
+    .mission-card p { margin-top: 8px; font-size: 13px; color: var(--dim); }
+
+    /* ===== Apps ===== */
     .app-card {
-      background: linear-gradient(145deg, #1E1745, #2A1E5C);
-      border-radius: 24px;
-      padding: 40px 32px;
-      margin-top: 24px;
-      border: 1px solid rgba(168, 130, 255, 0.15);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      margin-top: 46px;
+      display: grid;
+      grid-template-columns: minmax(120px, 200px) 1fr;
+      gap: clamp(22px, 4vw, 44px);
+      align-items: center;
+      padding: clamp(26px, 4vw, 44px);
+      border-radius: 26px;
+      background: var(--glass);
+      border: 1px solid var(--stroke);
+      position: relative;
+      overflow: hidden;
+      transition: transform .35s, box-shadow .35s, border-color .35s;
+    }
+    .app-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(60% 90% at 12% 10%, var(--tint, rgba(139,92,246,.14)), transparent 70%);
+      pointer-events: none;
+    }
+    .app-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--edge, rgba(139, 92, 246, .55));
+      box-shadow: 0 26px 60px rgba(0, 0, 0, .5), 0 0 44px var(--glow, rgba(139,92,246,.18));
     }
     .app-icon {
-      width: 88px;
-      height: 88px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, #7C3AED, #EC4899);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 2.2em;
-      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+      width: 100%; max-width: 200px;
+      border-radius: 22.5%;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, .55), 0 0 36px var(--glow, rgba(139,92,246,.3));
     }
-    .app-name {
-      font-size: 1.5em;
-      font-weight: 800;
-      color: #FFFFFF;
-      margin-bottom: 8px;
-    }
-    .app-genre {
-      font-size: 0.85em;
-      color: #A78BFA;
-      margin-bottom: 16px;
-    }
-    .app-desc {
-      color: #9A90B0;
-      font-size: 0.95em;
-      line-height: 1.9;
-    }
-    .store-badges {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 24px;
-      flex-wrap: wrap;
-    }
-    .store-badge {
+    .app-tag {
       display: inline-block;
-      background: rgba(255,255,255,0.1);
-      color: #D4C0F0;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 0.85em;
-      font-weight: bold;
-      text-decoration: none;
-      border: 1px solid rgba(168, 130, 255, 0.2);
-      transition: background 0.2s, border-color 0.2s, transform 0.1s;
+      font-family: var(--en); font-size: 10.5px; font-weight: 700;
+      letter-spacing: .24em;
+      padding: 4px 14px; border-radius: 999px;
+      border: 1px solid var(--edge, rgba(139,92,246,.5));
+      color: var(--edge-ink, #C9B8FF);
     }
-    .store-badge:hover {
-      background: rgba(168, 130, 255, 0.2);
-      border-color: rgba(168, 130, 255, 0.5);
+    .app-tag.soon {
+      background: linear-gradient(120deg, rgba(255, 77, 141, .2), rgba(255, 201, 77, .18));
+      animation: pulse 2.2s ease-in-out infinite;
     }
-    .store-badge:active {
-      transform: scale(0.97);
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 77, 141, .4); }
+      50% { box-shadow: 0 0 0 9px rgba(255, 77, 141, 0); }
+    }
+    .app-card h3 { margin-top: 14px; font-size: clamp(22px, 3.4vw, 30px); font-weight: 900; }
+    .app-card .genre { font-size: 12.5px; color: var(--dim); letter-spacing: .1em; margin-top: 2px; }
+    .app-card p.desc { margin-top: 14px; font-size: 13.5px; color: #C9C3E2; }
+    .feature-chips { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .feature-chips span {
+      font-size: 11px; font-weight: 700;
+      padding: 4px 12px; border-radius: 999px;
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid var(--stroke);
+      color: var(--dim);
+    }
+    .store-row { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .store-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 14px;
+      text-decoration: none; font-weight: 700; font-size: 13px;
+      color: #0B0E1A;
+      background: linear-gradient(120deg, #fff, #D9D2F2);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .store-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(255, 255, 255, .18); }
+    .store-btn.ghost {
+      color: var(--ink);
+      background: transparent;
+      border: 1px solid var(--stroke);
+    }
+    .legal-row { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 16px; }
+    .legal-row a { color: var(--dim); font-size: 11.5px; text-decoration: none; border-bottom: 1px dotted var(--dim); }
+    .legal-row a:hover { color: var(--cyan); border-color: var(--cyan); }
+    @media (max-width: 640px) {
+      .app-card { grid-template-columns: 1fr; text-align: center; }
+      .app-icon { max-width: 132px; margin: 0 auto; }
+      .feature-chips, .store-row, .legal-row { justify-content: center; }
+    }
+
+    /* ===== Company ===== */
+    .co-table {
+      margin-top: 40px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--stroke);
+      background: var(--glass);
+    }
+    .co-row {
+      display: grid; grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid var(--stroke);
+    }
+    .co-row:last-child { border-bottom: none; }
+    .co-row dt {
+      padding: 17px 22px; font-size: 12.5px; font-weight: 700;
+      color: var(--dim); letter-spacing: .08em;
+      background: rgba(255, 255, 255, .025);
+    }
+    .co-row dd { padding: 17px 22px; font-size: 13.5px; }
+    @media (max-width: 560px) {
+      .co-row { grid-template-columns: 1fr; }
+      .co-row dt { padding-bottom: 2px; background: none; }
+      .co-row dd { padding-top: 0; }
     }
 
     /* ===== Contact ===== */
-    .contact {
-      background: #0B0E1A;
-      padding: 60px 24px;
+    .contact-box {
+      margin-top: 40px;
       text-align: center;
+      padding: clamp(36px, 6vw, 64px) 24px;
+      border-radius: 26px;
+      border: 1px solid rgba(139, 92, 246, .35);
+      background:
+        radial-gradient(80% 120% at 50% 0%, rgba(139, 92, 246, .16), transparent 70%),
+        var(--glass);
     }
-    .contact-inner {
-      max-width: 560px;
-      margin: 0 auto;
-    }
-    .contact p {
-      color: #8B7FAA;
-      margin-bottom: 20px;
-    }
-    .email-link {
+    .contact-box .mail {
       display: inline-block;
-      background: linear-gradient(135deg, #7C3AED, #6D28D9);
-      color: #FFFFFF;
-      text-decoration: none;
-      padding: 14px 36px;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 1em;
-      letter-spacing: 0.02em;
-      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
-      transition: opacity 0.2s;
+      margin-top: 18px;
+      font-family: var(--en); font-weight: 700;
+      font-size: clamp(16px, 3.2vw, 22px); letter-spacing: .06em;
+      color: var(--cyan); text-decoration: none;
     }
-    .email-link:hover { opacity: 0.85; }
+    .contact-box .mail:hover { text-shadow: 0 0 18px rgba(56, 225, 255, .6); }
 
-    /* ===== Footer ===== */
+    /* ===== フッター ===== */
     footer {
-      background: #080A14;
-      padding: 32px 24px;
-      text-align: center;
-      border-top: 1px solid rgba(168, 130, 255, 0.1);
+      border-top: 1px solid var(--stroke);
+      background: rgba(5, 7, 15, .7);
+      padding: 50px clamp(20px, 6vw, 64px) 34px;
     }
-    .footer-logo {
-      width: 40px;
-      height: auto;
-      opacity: 0.6;
-      margin-bottom: 16px;
-      filter: brightness(2.2);
+    .foot-grid {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     }
-    .footer-links {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
+    .foot-grid h4 {
+      font-size: 12px; letter-spacing: .2em; color: var(--ink);
+      font-family: var(--en); font-weight: 700;
+      margin-bottom: 12px;
     }
-    .footer-links a {
-      color: #6B5F8A;
-      text-decoration: none;
-      font-size: 0.82em;
-      transition: color 0.2s;
+    .foot-grid a {
+      display: block; color: var(--dim); text-decoration: none;
+      font-size: 12.5px; padding: 3.5px 0;
+      transition: color .2s;
     }
-    .footer-links a:hover { color: #A78BFA; }
+    .foot-grid a:hover { color: var(--cyan); }
     .copyright {
-      color: #3D3555;
-      font-size: 0.75em;
+      max-width: 1080px; margin: 36px auto 0;
+      padding-top: 20px; border-top: 1px solid var(--stroke);
+      color: var(--dim); font-size: 11px; letter-spacing: .08em;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
     }
   </style>
 </head>
 <body>
+  <canvas id="sky"></canvas>
+  <div class="aurora"></div>
 
-  <!-- ===== Hero ===== -->
-  <section class="hero">
-    <img src="images/Logo.png" alt="Dream Noark LLC" class="hero-logo-img">
-    <p class="hero-tagline">
-      <em>夢を乗せた方舟</em> ——<br>
-      たくさんの夢を乗せて、<br>
-      まだ見ぬ新しい世界へ届けるゲームスタジオです。
-    </p>
-  </section>
-
-  <!-- ===== About ===== -->
-  <section class="about">
-    <div class="about-inner">
-      <h2 class="section-title">About Us</h2>
-      <p>Dream Noark（ドリーム・ノアーク）は、「夢を乗せた方舟」という意味を込めた社名です。</p>
-      <p>スマートフォン向けゲームアプリの企画・開発・運営を行っています。<br>
-      プレイヤーに夢のような体験を届けることを使命として、心を込めたゲームづくりに取り組んでいます。</p>
+  <nav>
+    <a class="nav-brand" href="#">
+      <img src="images/Logo2.png" alt="Dream Noark">
+      <span>DREAM NOARK</span>
+    </a>
+    <div class="nav-links">
+      <a href="#about">ABOUT</a>
+      <a href="#apps">APPS</a>
+      <a class="optional" href="#company">COMPANY</a>
+      <a href="#contact">CONTACT</a>
     </div>
-  </section>
+  </nav>
 
-  <!-- ===== Apps ===== -->
-  <section class="apps">
-    <div class="apps-inner">
-      <h2 class="section-title">Our Apps</h2>
+  <main>
+    <!-- ヒーロー -->
+    <header class="hero">
+      <img class="hero-logo" src="images/Logo.png" alt="Dream Noark LLC">
+      <h1 class="hero-en">DREAM NOARK</h1>
+      <p class="hero-ja">夢を乗せた方舟</p>
+      <p class="hero-copy">
+        たくさんの夢を乗せて、まだ見ぬ新しい世界へ。<br>
+        プレイヤーの心に残る体験をつくるゲームスタジオです。
+      </p>
+      <a class="hero-cta" href="#apps">OUR APPS ▸</a>
+      <div class="scroll-hint">SCROLL</div>
+    </header>
 
-      <div class="app-card">
-        <div class="app-icon"><img src="images/App_Icon.png" alt="ポケシル" style="width:100%; height:100%; border-radius:20px; object-fit:cover;"></div>
-        <div class="app-name">ポケシル</div>
-        <div class="app-genre">シール交換コレクションゲーム</div>
-        <p class="app-desc">
-          かわいいシールを集めて、ともだちと交換しよう！<br>
-          ガチャでシールをゲットして、自分だけのシール帳をつくれるよ。
-        </p>
-        <div class="store-badges">
-          <a href="https://apps.apple.com/jp/app/%E3%83%9D%E3%82%B1%E3%82%B7%E3%83%AB-%E3%83%9D%E3%82%B1%E3%83%83%E3%83%88%E3%82%B7%E3%83%BC%E3%83%AB%E3%81%A1%E3%82%87%E3%81%86/id6758645050" class="store-badge" target="_blank" rel="noopener">App Store でダウンロード</a>
-          <a href="https://play.google.com/store/apps/details?id=com.pokeseal.app" class="store-badge" target="_blank" rel="noopener">Google Play でダウンロード</a>
+    <!-- About -->
+    <section id="about">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="sec-label">ABOUT US</div>
+          <h2 class="sec-title">夢のような体験を、ポケットに。</h2>
+          <p class="sec-lead">
+            Dream Noark（ドリーム・ノアーク）は、「夢を乗せた方舟」という意味を込めた社名のモバイルゲームスタジオです。
+            スマートフォン向けアプリの企画・開発・運営まで、すべてを自分たちの手で行っています。
+          </p>
+        </div>
+        <div class="mission-grid">
+          <div class="mission-card reveal">
+            <div class="icon">🚀</div>
+            <h3>小さく、速く、心を込めて</h3>
+            <p>少数精鋭だからできるスピードと、細部までこだわり抜いたものづくり。企画から運営まで一気通貫で体験を届けます。</p>
+          </div>
+          <div class="mission-card reveal">
+            <div class="icon">✨</div>
+            <h3>「集める楽しさ」を科学する</h3>
+            <p>コレクション、交換、ガチャのときめき。人が夢中になる瞬間を研究し、長く愛されるゲームデザインに落とし込みます。</p>
+          </div>
+          <div class="mission-card reveal">
+            <div class="icon">🛡️</div>
+            <h3>安心して遊べる場所</h3>
+            <p>プライバシー保護・健全な課金設計・通報モデレーション。ユーザーとその大切な人が安心できる運営を約束します。</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== Contact ===== -->
-  <section class="contact">
-    <div class="contact-inner">
-      <h2 class="section-title">Contact</h2>
-      <p>アプリに関するお問い合わせ、ご質問、不具合の報告など<br>お気軽にご連絡ください。</p>
-      <a href="mailto:info@dreamnoark.com" class="email-link">info@dreamnoark.com</a>
-    </div>
-  </section>
+    <!-- Apps -->
+    <section id="apps">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="sec-label">OUR APPS</div>
+          <h2 class="sec-title">つくっているもの</h2>
+        </div>
 
-  <!-- ===== Footer ===== -->
+        <!-- ポケシル -->
+        <div class="app-card reveal" style="--tint: rgba(199, 108, 255, .14); --edge: rgba(199, 108, 255, .55); --edge-ink: #E3B8FF; --glow: rgba(199, 108, 255, .22);">
+          <img class="app-icon" src="images/App_Icon.png" alt="ポケシル アプリアイコン">
+          <div>
+            <span class="app-tag">NOW AVAILABLE</span>
+            <h3>ポケシル</h3>
+            <div class="genre">シール交換コレクションゲーム（iOS / Android）</div>
+            <p class="desc">
+              かわいいシールを集めて、ともだちと交換しよう！ガチャでシールをゲットして、
+              自分だけのシール帳をつくれるよ。
+            </p>
+            <div class="feature-chips">
+              <span># シール帳</span><span># ガチャ</span><span># フレンド交換</span><span># コレクション</span>
+            </div>
+            <div class="store-row">
+              <a class="store-btn" href="https://apps.apple.com/jp/app/%E3%83%9D%E3%82%B1%E3%82%B7%E3%83%AB-%E3%83%9D%E3%82%B1%E3%83%83%E3%83%88%E3%82%B7%E3%83%BC%E3%83%AB%E3%81%A1%E3%82%87%E3%81%86/id6758645050"> App Store</a>
+              <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.pokeseal.app">▶ Google Play</a>
+            </div>
+            <div class="legal-row">
+              <a href="privacy-policy.html">プライバシーポリシー</a>
+              <a href="terms.html">利用規約</a>
+              <a href="support.html">サポート</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- スナドロ -->
+        <div class="app-card reveal" style="--tint: rgba(255, 77, 141, .13); --edge: rgba(255, 77, 141, .55); --edge-ink: #FFB8D0; --glow: rgba(255, 77, 141, .2);">
+          <img class="app-icon" src="images/snapdrop_icon.png" alt="スナドロ アプリアイコン">
+          <div>
+            <span class="app-tag soon">COMING SOON</span>
+            <h3>スナドロ <span style="font-size:.55em; color:var(--dim); font-weight:700;">Snap Drop</span></h3>
+            <div class="genre">推し活デジタルスナップ（iOS / Android）</div>
+            <p class="desc">
+              ライブやイベントで撮った1枚が、「動く思い出」と「トレカ」になる。
+              QRをかざすだけで、撮影前後の動画・落書きのタイムラプス・シークレットボイスまで
+              まるごとコレクション。集めるほど深まる、新しい推し活体験。
+            </p>
+            <div class="feature-chips">
+              <span># 動くスナップ</span><span># 落書きタイムラプス</span><span># トレカ＆ガチャ</span><span># トレカ交換</span><span># クラウドバックアップ</span>
+            </div>
+            <div class="store-row">
+              <span class="store-btn ghost">2026年 リリース予定</span>
+            </div>
+            <div class="legal-row">
+              <a href="snapdrop/privacy.html">プライバシーポリシー</a>
+              <a href="snapdrop/terms.html">利用規約</a>
+              <a href="snapdrop/support.html">サポート</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Company -->
+    <section id="company">
+      <div class="wrap">
+        <div class="reveal">
+          <div class="sec-label">COMPANY</div>
+          <h2 class="sec-title">会社概要</h2>
+        </div>
+        <dl class="co-table reveal">
+          <div class="co-row"><dt>会社名</dt><dd>合同会社 Dream Noark（Dream Noark LLC）</dd></div>
+          <div class="co-row"><dt>設立</dt><dd>2026年</dd></div>
+          <div class="co-row"><dt>代表者</dt><dd>Daniel Murakami（Representative Member）</dd></div>
+          <div class="co-row"><dt>所在地</dt><dd>〒150-0043 東京都渋谷区道玄坂1丁目10番8号 渋谷道玄坂東急ビル2F-C</dd></div>
+          <div class="co-row"><dt>事業内容</dt><dd>スマートフォン向けアプリケーションの企画・開発・運営</dd></div>
+          <div class="co-row"><dt>お問い合わせ</dt><dd><a href="mailto:info@dreamnoark.com" style="color: var(--cyan); text-decoration: none;">info@dreamnoark.com</a></dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact-box reveal">
+          <div class="sec-label">CONTACT</div>
+          <h2 class="sec-title" style="margin-top: 10px;">お問い合わせ</h2>
+          <p style="margin-top: 14px; color: var(--dim); font-size: 13.5px;">
+            アプリに関するご質問、不具合の報告、取材・協業のご相談など、お気軽にご連絡ください。
+          </p>
+          <a class="mail" href="mailto:info@dreamnoark.com">info@dreamnoark.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
   <footer>
-    <img src="images/Logo2.png" alt="Dream Noark" class="footer-logo">
-    <div class="footer-links">
-      <a href="privacy-policy.html">プライバシーポリシー</a>
-      <a href="terms.html">利用規約</a>
-      <a href="support.html">サポート</a>
-      <a href="company.html">会社概要</a>
+    <div class="foot-grid">
+      <div>
+        <h4>DREAM NOARK</h4>
+        <a href="#about">私たちについて</a>
+        <a href="company.html">会社概要</a>
+        <a href="mailto:info@dreamnoark.com">お問い合わせ</a>
+      </div>
+      <div>
+        <h4>POKESEAL ─ ポケシル</h4>
+        <a href="privacy-policy.html">プライバシーポリシー</a>
+        <a href="terms.html">利用規約</a>
+        <a href="support.html">サポート</a>
+      </div>
+      <div>
+        <h4>SNAP DROP ─ スナドロ</h4>
+        <a href="snapdrop/privacy.html">プライバシーポリシー</a>
+        <a href="snapdrop/terms.html">利用規約</a>
+        <a href="snapdrop/support.html">サポート</a>
+      </div>
     </div>
-    <div class="copyright">&copy; 2026 Dream Noark LLC. All Rights Reserved.</div>
+    <div class="copyright">
+      <span>&copy; 2026 Dream Noark LLC. All Rights Reserved.</span>
+      <span style="font-family: var(--en); letter-spacing: .2em;">TOKYO, JAPAN</span>
+    </div>
   </footer>
 
+  <script>
+    // ===== 星空（軽量・DPR対応・流れ星つき） =====
+    const cv = document.getElementById('sky');
+    const cx = cv.getContext('2d');
+    let W, H, stars = [], meteors = [];
+    function resize() {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      W = innerWidth; H = innerHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      cv.style.width = W + 'px'; cv.style.height = H + 'px';
+      cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = Array.from({ length: Math.min(170, W / 6) }, () => ({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.3 + .25,
+        tw: Math.random() * Math.PI * 2,
+        sp: .12 + Math.random() * .5,
+      }));
+    }
+    addEventListener('resize', resize); resize();
+    function spawnMeteor() {
+      meteors.push({
+        x: Math.random() * W * .9, y: -20,
+        vx: 3.2 + Math.random() * 2.4, vy: 2.2 + Math.random() * 1.6,
+        life: 1,
+      });
+      setTimeout(spawnMeteor, 4000 + Math.random() * 9000);
+    }
+    setTimeout(spawnMeteor, 2500);
+    function tick(t) {
+      cx.clearRect(0, 0, W, H);
+      for (const s of stars) {
+        const a = .35 + .65 * Math.abs(Math.sin(s.tw + t / (900 / s.sp)));
+        cx.globalAlpha = a;
+        cx.fillStyle = '#CFE6FF';
+        cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, 7); cx.fill();
+      }
+      cx.globalAlpha = 1;
+      for (let i = meteors.length - 1; i >= 0; i--) {
+        const m = meteors[i];
+        m.x += m.vx; m.y += m.vy; m.life -= .008;
+        if (m.life <= 0 || m.x > W + 60 || m.y > H + 60) { meteors.splice(i, 1); continue; }
+        const g = cx.createLinearGradient(m.x, m.y, m.x - m.vx * 16, m.y - m.vy * 16);
+        g.addColorStop(0, `rgba(200, 230, 255, ${.9 * m.life})`);
+        g.addColorStop(1, 'rgba(200, 230, 255, 0)');
+        cx.strokeStyle = g; cx.lineWidth = 1.6;
+        cx.beginPath(); cx.moveTo(m.x, m.y);
+        cx.lineTo(m.x - m.vx * 16, m.y - m.vy * 16); cx.stroke();
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // ===== スクロールリビール =====
+    const io = new IntersectionObserver((es) => {
+      for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
 </body>
 </html>

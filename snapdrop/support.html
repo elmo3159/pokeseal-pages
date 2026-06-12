@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <title>サポート - スナドロ（Snap Drop） | Dream Noark LLC</title>
+  <meta name="description" content="スナドロ（Snap Drop）のサポート・お問い合わせ・よくあるご質問。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05070F; --ink: #E9E6F5; --dim: #9A94B8;
+      --pink: #FF4D8D; --cyan: #38E1FF;
+      --glass: rgba(255,255,255,.04); --stroke: rgba(255,255,255,.09);
+      --en: 'Orbitron', sans-serif;
+      --jp: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--jp); background: var(--bg); color: var(--ink);
+      line-height: 1.95; font-size: 14px;
+      background-image:
+        radial-gradient(40% 30% at 16% 6%, rgba(255,77,141,.12), transparent 70%),
+        radial-gradient(34% 26% at 86% 16%, rgba(56,225,255,.07), transparent 70%);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px clamp(20px, 5vw, 56px);
+      background: rgba(5,7,15,.6); backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-brand img { width: 28px; height: 28px; object-fit: contain; }
+    .nav-brand span { font-family: var(--en); font-weight: 700; font-size: 13px; letter-spacing: .18em; color: var(--ink); }
+    nav a.back { color: var(--dim); text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+    nav a.back:hover { color: var(--cyan); }
+    main { max-width: 760px; margin: 0 auto; padding: clamp(44px, 8vw, 80px) 22px 90px; }
+    .sec-label { font-family: var(--en); font-weight: 700; font-size: 11.5px; letter-spacing: .34em; color: var(--pink); }
+    h1 { font-size: clamp(24px, 5vw, 34px); font-weight: 900; margin-top: 6px; }
+    .app-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--stroke); background: var(--glass); font-size: 12px; font-weight: 700; }
+    .app-badge img { width: 22px; height: 22px; border-radius: 6px; }
+    .card {
+      margin-top: 22px; padding: 22px 24px;
+      border-radius: 18px; background: var(--glass); border: 1px solid var(--stroke);
+    }
+    .card h2 { font-size: 15.5px; font-weight: 900; margin-bottom: 8px; }
+    .card .mail { font-family: var(--en); font-weight: 700; font-size: 17px; color: var(--cyan); text-decoration: none; }
+    h2.faq-head { margin-top: 42px; font-size: 18px; font-weight: 900; }
+    details {
+      margin-top: 12px; border-radius: 14px;
+      background: var(--glass); border: 1px solid var(--stroke);
+      overflow: hidden;
+      transition: border-color .25s;
+    }
+    details[open] { border-color: rgba(255,77,141,.45); }
+    summary {
+      cursor: pointer; padding: 15px 18px;
+      font-weight: 700; font-size: 13.5px;
+      list-style: none; position: relative; padding-right: 40px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '＋'; position: absolute; right: 16px; top: 50%;
+      transform: translateY(-50%); color: var(--pink); font-weight: 900;
+      transition: transform .25s;
+    }
+    details[open] summary::after { content: '－'; }
+    .ans { padding: 0 18px 16px; color: #D5D0E8; font-size: 13px; }
+    footer { border-top: 1px solid var(--stroke); padding: 26px 20px; text-align: center; color: var(--dim); font-size: 11px; }
+    footer a { color: var(--dim); text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: var(--cyan); }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="../index.html">
+      <img src="../images/Logo2.png" alt="Dream Noark">
+      <span>DREAM NOARK</span>
+    </a>
+    <a class="back" href="../index.html">← TOP</a>
+  </nav>
+  <main>
+    <div class="sec-label">SUPPORT</div>
+    <h1>サポート</h1>
+    <div class="app-badge"><img src="../images/snapdrop_icon.png" alt="スナドロ">スナドロ（Snap Drop）</div>
+
+    <div class="card">
+      <h2>📧 メールでのお問い合わせ</h2>
+      <p style="font-size: 13px; color: #D5D0E8;">
+        アプリに関するご質問、不具合の報告、ご要望、ご自身が写った写真の削除依頼など、お気軽にご連絡ください。
+        通常3営業日以内に回答いたします。
+      </p>
+      <p style="margin-top: 10px;"><a class="mail" href="mailto:info@dreamnoark.com">info@dreamnoark.com</a></p>
+    </div>
+
+    <h2 class="faq-head">よくあるご質問</h2>
+    <details>
+      <summary>Q. QRコードを読み取れる期限はありますか？</summary>
+      <div class="ans">A. スナドロは撮影から<strong>5日間</strong>サーバーに保存され、その後自動的に削除されます。期限内にアプリまたはWebページで受け取ってください。一度アプリで受け取ったスナドロは、あなたの端末の中にずっと残ります。</div>
+    </details>
+    <details>
+      <summary>Q. 会場の電波が悪くて受け取れません</summary>
+      <div class="ans">A. アプリ内のQRスキャナは電波がなくても読み取れます。読み取った時点で「現像待ち」として保存され、電波が回復したときに自動で現像（ダウンロード）されます。帰りの電車やご自宅でも間に合います（5日の期限内に一度通信できればOKです）。</div>
+    </details>
+    <details>
+      <summary>Q. 機種変更やアプリの削除でデータは消えますか？</summary>
+      <div class="ans">A. アカウント登録（無料）をしておくと、トレカ帳・プロフィールなどは新しい端末でのログインで復元できます。<strong>スナドロの写真・動画そのものは端末内に保存されるため、アプリを削除すると失われます。</strong>「まもるパック」（クラウドバックアップ）に加入すると、写真・動画もまるごとクラウドに退避され、別端末からでも復元できます。カメラロールへの自動保存（設定からON）も併用できます。</div>
+    </details>
+    <details>
+      <summary>Q. まもるパックを解約するとバックアップはどうなりますか？</summary>
+      <div class="ans">A. 解約後90日間は「復元のみ」可能です。90日を過ぎるとクラウド上のデータは完全に削除されます。解約前にお使いの端末へ復元しておくことをおすすめします。</div>
+    </details>
+    <details>
+      <summary>Q. サブスクリプションの解約方法は？</summary>
+      <div class="ans">A. iOSの場合は「設定 &gt; Apple ID &gt; サブスクリプション」、Androidの場合は「Google Playストア &gt; お支払いと定期購入」から解約できます。アプリを削除しても解約にはなりませんのでご注意ください。</div>
+    </details>
+    <details>
+      <summary>Q. 課金の返金はできますか？</summary>
+      <div class="ans">A. 返金はApple（App Store）またはGoogle（Google Play）の返金ポリシーに従います。各ストアのサポートにお問い合わせください。返金が行われた場合、対応するチケット等は取り消されます。</div>
+    </details>
+    <details>
+      <summary>Q. トレカの排出率は確認できますか？</summary>
+      <div class="ans">A. はい。ガチャの提供割合はアプリ内に表示されています。同じカードが重複した場合は、カードのランクアップ（ブロンズ→シルバー→ゴールド→プリズム）の素材になります。</div>
+    </details>
+    <details>
+      <summary>Q. 自分が写った写真を削除してほしい</summary>
+      <div class="ans">A. サーバー上の写真・動画は撮影から5日で自動削除されますが、お急ぎの場合は上記メールアドレスまでご連絡ください。速やかに対応いたします。</div>
+    </details>
+    <details>
+      <summary>Q. 不適切なユーザーを見つけました</summary>
+      <div class="ans">A. 該当ユーザーのプロフィールから「通報」機能をご利用ください。運営チームが確認し、適切に対応いたします。「ブロック」機能で交換やランキングでの表示を遮断することもできます。</div>
+    </details>
+  </main>
+  <footer>
+    <div>
+      <a href="../index.html">トップ</a><a href="privacy.html">プライバシーポリシー（スナドロ）</a><a href="terms.html">利用規約（スナドロ）</a>
+    </div>
+    <div style="margin-top: 10px;">&copy; 2026 Dream Noark LLC. All Rights Reserved.</div>
+  </footer>
+</body>
+</html>
