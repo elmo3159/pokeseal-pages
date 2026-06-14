@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <title>Support - SnapDrop | Dream Noark LLC</title>
+  <meta name="description" content="Support, contact, and frequently asked questions for SnapDrop.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05070F; --ink: #E9E6F5; --dim: #9A94B8;
+      --pink: #FF4D8D; --cyan: #38E1FF;
+      --glass: rgba(255,255,255,.04); --stroke: rgba(255,255,255,.09);
+      --en: 'Orbitron', sans-serif;
+      --jp: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--jp); background: var(--bg); color: var(--ink);
+      line-height: 1.95; font-size: 14px;
+      background-image:
+        radial-gradient(40% 30% at 16% 6%, rgba(255,77,141,.12), transparent 70%),
+        radial-gradient(34% 26% at 86% 16%, rgba(56,225,255,.07), transparent 70%);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px clamp(20px, 5vw, 56px);
+      background: rgba(5,7,15,.6); backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-brand img { width: 28px; height: 28px; object-fit: contain; }
+    .nav-brand span { font-family: var(--en); font-weight: 700; font-size: 13px; letter-spacing: .18em; color: var(--ink); }
+    nav a.back { color: var(--dim); text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+    nav a.back:hover { color: var(--cyan); }
+    main { max-width: 760px; margin: 0 auto; padding: clamp(44px, 8vw, 80px) 22px 90px; }
+    .sec-label { font-family: var(--en); font-weight: 700; font-size: 11.5px; letter-spacing: .34em; color: var(--pink); }
+    h1 { font-size: clamp(24px, 5vw, 34px); font-weight: 900; margin-top: 6px; }
+    .app-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--stroke); background: var(--glass); font-size: 12px; font-weight: 700; }
+    .app-badge img { width: 22px; height: 22px; border-radius: 6px; }
+    .card {
+      margin-top: 22px; padding: 22px 24px;
+      border-radius: 18px; background: var(--glass); border: 1px solid var(--stroke);
+    }
+    .card h2 { font-size: 15.5px; font-weight: 900; margin-bottom: 8px; }
+    .card .mail { font-family: var(--en); font-weight: 700; font-size: 17px; color: var(--cyan); text-decoration: none; }
+    h2.faq-head { margin-top: 42px; font-size: 18px; font-weight: 900; }
+    details {
+      margin-top: 12px; border-radius: 14px;
+      background: var(--glass); border: 1px solid var(--stroke);
+      overflow: hidden;
+      transition: border-color .25s;
+    }
+    details[open] { border-color: rgba(255,77,141,.45); }
+    summary {
+      cursor: pointer; padding: 15px 18px;
+      font-weight: 700; font-size: 13.5px;
+      list-style: none; position: relative; padding-right: 40px;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '＋'; position: absolute; right: 16px; top: 50%;
+      transform: translateY(-50%); color: var(--pink); font-weight: 900;
+      transition: transform .25s;
+    }
+    details[open] summary::after { content: '－'; }
+    .ans { padding: 0 18px 16px; color: #D5D0E8; font-size: 13px; }
+    footer { border-top: 1px solid var(--stroke); padding: 26px 20px; text-align: center; color: var(--dim); font-size: 11px; }
+    footer a { color: var(--dim); text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: var(--cyan); }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="../index.html">
+      <img src="../images/Logo2.png" alt="Dream Noark">
+      <span>DREAM NOARK</span>
+    </a>
+    <a class="back" href="../index.html">← TOP</a>
+  </nav>
+  <main>
+    <div class="sec-label">SUPPORT</div>
+    <h1>Support</h1>
+    <div class="app-badge"><img src="../images/snapdrop_icon.png" alt="SnapDrop">SnapDrop</div>
+
+    <div class="card">
+      <h2>📧 Email Support</h2>
+      <p style="font-size: 13px; color: #D5D0E8;">
+        Whether you have questions about the app, want to report a bug, have a feature request, or would like to request deletion of a photo in which you appear, feel free to reach out.
+        We typically respond within 3 business days.
+      </p>
+      <p style="margin-top: 10px;"><a class="mail" href="mailto:info@dreamnoark.com">info@dreamnoark.com</a></p>
+    </div>
+
+    <h2 class="faq-head">Frequently Asked Questions</h2>
+    <details>
+      <summary>Q. Is there a deadline for scanning the QR code?</summary>
+      <div class="ans">A. A SnapDrop is stored on our servers for <strong>5 days</strong> after capture and is then automatically deleted. Please receive it in the app or on the web page within that period. Once you have received a SnapDrop in the app, it stays on your device forever.</div>
+    </details>
+    <details>
+      <summary>Q. The signal at the venue is poor and I can't receive my SnapDrop.</summary>
+      <div class="ans">A. The in-app QR scanner works even without a signal. The moment you scan, it is saved as "waiting to develop," and it is developed (downloaded) automatically once your connection is restored. You can still make it in time on the train home or at home — as long as you can connect once within the 5-day window, you're fine.</div>
+    </details>
+    <details>
+      <summary>Q. Will I lose my data if I switch phones or delete the app?</summary>
+      <div class="ans">A. If you register an account (free), your trading card book, profile, and similar data can be restored by logging in on the new device. <strong>The SnapDrop photos and videos themselves are stored on your device, so they are lost if you delete the app.</strong> If you enroll in the "Keepsafe pack" (cloud backup), your photos and videos are also backed up to the cloud in full and can be restored from another device. You can also use automatic saving to your camera roll (turned on in settings) alongside this.</div>
+    </details>
+    <details>
+      <summary>Q. What happens to my backup if I cancel the Keepsafe pack?</summary>
+      <div class="ans">A. For 90 days after cancellation, your data is "restore only." After 90 days, the data in the cloud is permanently deleted. We recommend restoring it to your device before you cancel.</div>
+    </details>
+    <details>
+      <summary>Q. How do I cancel a subscription?</summary>
+      <div class="ans">A. On iOS, you can cancel from "Settings &gt; Apple ID &gt; Subscriptions"; on Android, from "Google Play Store &gt; Payments &amp; subscriptions." Please note that deleting the app does not cancel your subscription.</div>
+    </details>
+    <details>
+      <summary>Q. Can I get a refund for a purchase?</summary>
+      <div class="ans">A. Refunds are subject to Apple's (App Store) or Google's (Google Play) refund policy. Please contact each store's support. If a refund is issued, the corresponding tickets and similar items will be revoked.</div>
+    </details>
+    <details>
+      <summary>Q. Can I check the trading card drop rates?</summary>
+      <div class="ans">A. Yes. The gacha drop rates are displayed within the app. When you get a duplicate of the same card, it becomes material for ranking that card up (Bronze → Silver → Gold → Prism).</div>
+    </details>
+    <details>
+      <summary>Q. I'd like a photo of myself deleted.</summary>
+      <div class="ans">A. Photos and videos on our servers are automatically deleted 5 days after capture, but if it's urgent, please contact us at the email address above. We will respond promptly.</div>
+    </details>
+    <details>
+      <summary>Q. I found an inappropriate user.</summary>
+      <div class="ans">A. Please use the "Report" feature from that user's profile. Our team will review it and respond appropriately. You can also use the "Block" feature to cut off their appearance in trades and rankings.</div>
+    </details>
+  </main>
+  <footer>
+    <div>
+      <a href="../index.html">Top</a><a href="privacy.en.html">Privacy Policy (SnapDrop)</a><a href="terms.en.html">Terms of Service (SnapDrop)</a>
+    </div>
+    <div style="margin-top: 10px;">&copy; 2026 Dream Noark LLC. All Rights Reserved.</div>
+  </footer>
+</body>
+</html>
