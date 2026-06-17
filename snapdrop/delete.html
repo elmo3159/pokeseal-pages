@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <title>アカウントの削除 - スナドロ(Snap Drop) | Dream Noark LLC</title>
+  <meta name="description" content="スナドロ(Snap Drop)のアカウントおよび関連データの削除方法・削除されるデータと保持期間について。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #05070F; --ink: #E9E6F5; --dim: #9A94B8;
+      --pink: #FF4D8D; --cyan: #38E1FF;
+      --glass: rgba(255,255,255,.04); --stroke: rgba(255,255,255,.09);
+      --en: 'Orbitron', sans-serif;
+      --jp: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--jp); background: var(--bg); color: var(--ink);
+      line-height: 1.95; font-size: 14px;
+      background-image:
+        radial-gradient(40% 30% at 16% 6%, rgba(255,77,141,.12), transparent 70%),
+        radial-gradient(34% 26% at 86% 16%, rgba(56,225,255,.07), transparent 70%);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px clamp(20px, 5vw, 56px);
+      background: rgba(5,7,15,.6); backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--stroke);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-brand img { width: 28px; height: 28px; object-fit: contain; }
+    .nav-brand span { font-family: var(--en); font-weight: 700; font-size: 13px; letter-spacing: .18em; color: var(--ink); }
+    nav a.back { color: var(--dim); text-decoration: none; font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+    nav a.back:hover { color: var(--cyan); }
+    main { max-width: 760px; margin: 0 auto; padding: clamp(44px, 8vw, 80px) 22px 90px; }
+    .sec-label { font-family: var(--en); font-weight: 700; font-size: 11.5px; letter-spacing: .34em; color: var(--pink); }
+    h1 { font-size: clamp(24px, 5vw, 34px); font-weight: 900; margin-top: 6px; }
+    .app-badge { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--stroke); background: var(--glass); font-size: 12px; font-weight: 700; }
+    .app-badge img { width: 22px; height: 22px; border-radius: 6px; }
+    .card {
+      margin-top: 22px; padding: 22px 24px;
+      border-radius: 18px; background: var(--glass); border: 1px solid var(--stroke);
+    }
+    .card h2 { font-size: 15.5px; font-weight: 900; margin-bottom: 10px; }
+    .card p { font-size: 13px; color: #D5D0E8; }
+    .card .mail { font-family: var(--en); font-weight: 700; font-size: 17px; color: var(--cyan); text-decoration: none; }
+    ol.steps { margin: 6px 0 0 0; padding-left: 20px; }
+    ol.steps li { font-size: 13px; color: #D5D0E8; margin-bottom: 8px; }
+    ul.data { margin: 6px 0 0 0; padding-left: 20px; }
+    ul.data li { font-size: 13px; color: #D5D0E8; margin-bottom: 6px; }
+    .tag { display:inline-block; font-family: var(--en); font-weight:700; font-size:10.5px; letter-spacing:.12em; padding:2px 8px; border-radius:999px; border:1px solid var(--stroke); color: var(--pink); margin-right:6px; }
+    footer { border-top: 1px solid var(--stroke); padding: 26px 20px; text-align: center; color: var(--dim); font-size: 11px; }
+    footer a { color: var(--dim); text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: var(--cyan); }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="../index.html">
+      <img src="../images/Logo2.png" alt="Dream Noark">
+      <span>DREAM NOARK</span>
+    </a>
+    <a class="back" href="../index.html">← TOP</a>
+  </nav>
+  <main>
+    <div class="sec-label">ACCOUNT DELETION</div>
+    <h1>アカウントの削除</h1>
+    <div class="app-badge"><img src="../images/snapdrop_icon.png" alt="スナドロ">スナドロ(Snap Drop) / Dream Noark LLC</div>
+
+    <div class="card">
+      <h2>アプリから削除する（推奨）</h2>
+      <p>スナドロ(Snap Drop)のアカウントと関連データは、アプリ内からいつでもご自身で削除できます。</p>
+      <ol class="steps">
+        <li><span class="tag">運営・キャスト</span>アプリを開く →「設定」→「アカウントを削除」をタップ</li>
+        <li><span class="tag">ファン</span>アプリを開く →「プロフィール」画面 → 下部の「アカウントを削除」をタップ</li>
+        <li>確認ダイアログで削除を承認すると、アカウントと関連データがサーバーから完全に削除されます。</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h2>アプリを使わずに削除を依頼する</h2>
+      <p>端末を機種変更した、アプリを既に削除したなどでアプリから操作できない場合は、登録メールアドレスを添えて下記までご連絡ください。本人確認のうえ、通常3営業日以内に削除いたします。</p>
+      <p style="margin-top: 10px;"><a class="mail" href="mailto:info@dreamnoark.com">info@dreamnoark.com</a></p>
+    </div>
+
+    <div class="card">
+      <h2>削除されるデータ</h2>
+      <p>アカウント削除を行うと、以下のデータがサーバーから<strong>完全かつ復元不可能な形で削除</strong>されます。</p>
+      <ul class="data">
+        <li>アカウント情報（メールアドレス・認証情報・グループ/プロフィール設定）</li>
+        <li>コレクション・トレカ図鑑・所持カードなどの記録</li>
+        <li>購入残高（チケット枚数・プラン契約状態）</li>
+        <li>「まもるパック」のクラウドバックアップ（保存済みの写真・動画を含む）</li>
+        <li>受け取り履歴・通報/ブロック等の関連レコード</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>保持されるデータ・保持期間</h2>
+      <ul class="data">
+        <li><strong>撮影した写真・動画</strong>：アカウント削除の有無にかかわらず、サーバー上では<strong>撮影から5日</strong>で自動削除されます。</li>
+        <li><strong>まもるパックのクラウドデータ</strong>：解約後は復元のみ可能で、<strong>90日</strong>を過ぎると完全に削除されます。</li>
+        <li><strong>取引・課金の記録</strong>：法令（税務・会計など）で保存が義務付けられる範囲に限り、定められた<strong>法定保存期間</strong>のみ匿名化して保持する場合があります。それ以外の個人データは削除時に消去されます。</li>
+        <li><strong>端末内に保存したスナドロ</strong>：お使いの端末のローカルに保存されているため、アプリの削除や端末初期化で失われます（サーバーには残りません）。</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <p style="font-size:12px;color:var(--dim);">本ページは Dream Noark LLC が提供するアプリ「スナドロ(Snap Drop)」のアカウント削除に関する案内です。詳しくは<a href="privacy.html" style="color:var(--cyan);text-decoration:none;">プライバシーポリシー</a>もご確認ください。</p>
+    </div>
+  </main>
+  <footer>
+    <div>
+      <a href="../index.html">トップ</a><a href="privacy.html">プライバシーポリシー（スナドロ）</a><a href="terms.html">利用規約（スナドロ）</a><a href="support.html">サポート（スナドロ）</a>
+    </div>
+    <div style="margin-top: 10px;">&copy; 2026 Dream Noark LLC. All Rights Reserved.</div>
+  </footer>
+</body>
+</html>
