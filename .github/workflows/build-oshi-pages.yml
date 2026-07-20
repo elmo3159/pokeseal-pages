@@ -1,0 +1,39 @@
+name: Build 推しカレ public pages
+
+on:
+  push:
+    paths:
+      - 'tools/gen_public_pages.mjs'
+      - '.github/workflows/build-oshi-pages.yml'
+  schedule:
+    - cron: '0 18 * * *' # 毎日 03:00 JST に再生成（予定の鮮度を保つ）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-oshi-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Generate public room pages from Supabase
+        run: node tools/gen_public_pages.mjs .
+      - name: Commit generated pages if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add oshi-calendar/oshi robots.txt
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: regenerate 推しカレ public pages [skip ci]"
+            git push
+          fi
