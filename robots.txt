@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dreamnoark.com/oshi-calendar/oshi/sitemap.xml
