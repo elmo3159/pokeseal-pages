@@ -537,6 +537,10 @@ ${body}
 <footer>
 このページはファンが共同で編集する「推しカレ」の公開データです。<br>写真・画像は一切扱いません（テキストと公式リンクのみ）。<br>
 <a href="${SITE}/oshi-calendar/terms.html">利用規約</a> ・ <a href="${SITE}/oshi-calendar/privacy.html">プライバシー</a> ・ <a href="${BASE}/">推し一覧</a>
+<div style="margin-top:14px;padding:10px 14px;border:1.5px dashed var(--line);border-radius:14px">
+🎪 <b>運営者・事務所の方へ</b>：チェキのフィルム代、1枚約10円にできます →
+<a href="${SITE}/snapdrop/" style="font-weight:800">電子チェキアプリ『スナドロ』</a>
+</div>
 </footer>
 </div>
 <script>${COMMON_JS}${extraJs}</script>
@@ -829,7 +833,10 @@ async function main() {
 ${urls.map((u) => `<url><loc>${u}</loc><changefreq>daily</changefreq></url>`).join('\n')}
 </urlset>`;
   outFiles.push(['oshi-calendar/oshi/sitemap.xml', sitemap]);
-  outFiles.push(['robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE}${BASE}/sitemap.xml\n`]);
+  outFiles.push([
+    'robots.txt',
+    `User-agent: *\nAllow: /\nSitemap: ${SITE}${BASE}/sitemap.xml\nSitemap: ${SITE}/snapdrop/sitemap.xml\n`,
+  ]);
 
   for (const [rel, content] of outFiles) {
     const full = join(OUT_ROOT, rel);
