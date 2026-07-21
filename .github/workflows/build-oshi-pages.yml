@@ -25,12 +25,15 @@ jobs:
         with:
           node-version: '20'
       - name: Generate public room pages from Supabase
-        run: node tools/gen_public_pages.mjs .
+        run: |
+          # 削除された推しのページが残らないよう、毎回まっさらに作り直す
+          rm -rf oshi-calendar/oshi
+          node tools/gen_public_pages.mjs .
       - name: Commit generated pages if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add oshi-calendar/oshi robots.txt
+          git add -A oshi-calendar/oshi robots.txt
           if git diff --cached --quiet; then
             echo "No changes."
           else
