@@ -113,6 +113,14 @@ a{color:var(--purple);text-decoration:none}
 .count .num{font-size:24px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1;display:block}
 .count .unit{font-size:9.5px;font-weight:700;opacity:.75}
 .count.live .cell{background:linear-gradient(135deg,var(--oshi),var(--purple))}
+.nextup .join{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;
+  padding:12px 16px;border-radius:16px;font-size:12.5px;font-weight:900;color:#fff;line-height:1.6;
+  background:linear-gradient(120deg,var(--oshi),color-mix(in srgb,var(--oshi) 45%,var(--purple)));
+  box-shadow:0 6px 18px color-mix(in srgb,var(--oshi) 35%,transparent);
+  text-shadow:0 1px 2px rgba(0,0,0,.2);
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s}
+.nextup .join:hover{transform:translateY(-2px) scale(1.02);
+  box-shadow:0 10px 26px color-mix(in srgb,var(--oshi) 50%,transparent)}
 
 /* ---- セクション ---- */
 section{margin-top:44px}
@@ -245,6 +253,31 @@ details .body{padding:0 18px 15px 43px;font-size:13px;color:var(--sub);line-heig
   text-shadow:0 1px 3px rgba(0,0,0,.22)}
 .cta small{display:block;font-size:12px;font-weight:700;opacity:.95;margin-top:3px;
   text-shadow:0 1px 2px rgba(0,0,0,.2)}
+.cta .feat{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 4px;position:relative;z-index:1}
+.cta .feat span{font-size:11.5px;font-weight:800;background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.35);padding:7px 13px;border-radius:99px;
+  text-shadow:0 1px 2px rgba(0,0,0,.22)}
+.cta .btn{display:inline-block;margin-top:14px;background:#fff;color:var(--oshi);
+  font-size:14px;font-weight:900;padding:12px 30px;border-radius:99px;position:relative;z-index:1;
+  box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.cta.sm{margin:26px 0 0;padding:18px 20px}
+.cta.sm::after{display:none}
+.cta.sm .big{font-size:clamp(14px,2.8vw,16.5px)}
+
+/* ---- 追従アプリ誘導バー（スクロールで登場） ---- */
+.float-cta{position:fixed;left:50%;bottom:14px;z-index:70;width:min(560px,calc(100% - 24px));
+  transform:translate(-50%,140%);transition:transform .5s cubic-bezier(.22,1,.36,1);
+  display:flex;align-items:center;gap:12px;padding:11px 12px 11px 18px;border-radius:99px;
+  background:linear-gradient(120deg,var(--oshi),color-mix(in srgb,var(--oshi) 40%,var(--purple)));
+  box-shadow:0 12px 34px color-mix(in srgb,var(--oshi) 45%,transparent)}
+.float-cta.show{transform:translate(-50%,0)}
+.float-cta .txt{flex:1;min-width:0;color:#fff;font-size:12px;font-weight:900;line-height:1.45;
+  text-shadow:0 1px 2px rgba(0,0,0,.22);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.float-cta .txt small{display:block;font-size:9.5px;font-weight:700;opacity:.9}
+.float-cta .go{flex-shrink:0;background:#fff;color:var(--oshi);font-size:12px;font-weight:900;
+  padding:9px 18px;border-radius:99px;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.float-cta .x{flex-shrink:0;width:26px;height:26px;border:none;border-radius:50%;cursor:pointer;
+  color:#fff;background:rgba(255,255,255,.22);font-size:13px;font-weight:900;line-height:1}
 
 /* ---- フッター ---- */
 footer{margin-top:56px;padding-top:22px;border-top:1.5px solid var(--line);
@@ -288,7 +321,7 @@ html.js .rv.in{opacity:1;transform:none}
 <header class="topbar"><div class="topbar-in">
   <a class="logo" href="/oshi-calendar/oshi/">推し<b>カレ</b></a>
   <span class="logo-sub">推し活スケジュール共有</span>
-  <a class="top-cta" href="https://dreamnoark.com/oshi-calendar/">アプリで見る</a>
+  <a class="top-cta" href="https://dreamnoark.com/oshi-calendar/">📲 アプリで参加する</a>
 </div></header>
 <div class="wrap">
 <div class="hero">
@@ -311,6 +344,7 @@ html.js .rv.in{opacity:1;transform:none}
         <div class="cell"><span class="num" data-u="m">-</span><span class="unit">MIN</span></div>
         <div class="cell"><span class="num" data-u="s">-</span><span class="unit">SEC</span></div>
       </div>
+      <a class="join" href="https://dreamnoark.com/oshi-calendar/">🎤 出演中は、アプリのみんなとリアルタイム実況！星宮そらに愛を叫ぼう ▸</a>
     </div></div><section>
       <div class="sec-head rv"><span class="em">🗓️</span><h2>カレンダー</h2><span class="bar"></span></div>
       <div class="card cal-card rv">
@@ -354,7 +388,11 @@ html.js .rv.in{opacity:1;transform:none}
         <div class="d">2026年7月28日(火) 20:16</div>
         
         <a class="off" href="https://example.com/goods" rel="nofollow noopener" target="_blank">🔗 公式ページを見る</a>
-      </article></div></section><section>
+      </article></div>
+    <a class="cta sm rv" href="https://dreamnoark.com/oshi-calendar/">
+      <span class="big">🔔 星宮そらの予定、ぜんぶリマインド</span>
+      <small>直前に通知が届くから、もう見逃さない。アプリで「行く・見る」を押すだけ</small>
+    </a></section><section>
       <div class="sec-head rv"><span class="em">🌟</span><h2>プロフィール</h2><span class="bar"></span></div>
       <div class="card hoverable rv">
         <p class="bio">澄んだ歌声と天真爛漫なトークで人気のバーチャルシンガー。星と宇宙をモチーフにした楽曲を得意とする。ファンの呼称は「そらとも」。</p>
@@ -387,8 +425,19 @@ html.js .rv.in{opacity:1;transform:none}
       <div class="sec-head rv"><span class="em">❓</span><h2>よくある情報</h2><span class="bar"></span></div>
       <details class="rv"><summary>ファンクラブの入会方法は？</summary><div class="body">公式サイトの「そらのなかま」ページから月額500円で入会できます。会員限定配信・先行チケットの特典あり。</div></details><details class="rv"><summary>グッズはどこで買える？</summary><div class="body">オフィシャルストア（オンライン）と、ライブ会場の物販で購入できます。再販情報は公式Xで告知されます。</div></details><details class="rv"><summary>現場のマナーは？</summary><div class="body">ペンライトは公式カラー（紫）推奨。前後の人への配慮を忘れずに。撮影は指定エリアのみ。</div></details>
     </section><a class="cta rv" href="https://dreamnoark.com/oshi-calendar/">
-    <span class="big">📲 推しカレアプリでリマインドを受け取る</span>
-    <small>予定の直前に通知が届く／みんなで実況しながら応援</small>
+    <span class="big">💖 星宮そらのファンが集うアプリ、できました</span>
+    <small>このページはみんなの入り口。本編は、アプリの中に。</small>
+    <span class="feat">
+      <span>🔔 予定の直前にリマインド</span>
+      <span>🎤 出演中はみんなで実況</span>
+      <span>✍️ 情報をみんなで持ち寄る</span>
+    </span>
+    <span class="btn">無料でアプリをはじめる ▸</span>
+  </a>
+  <a class="float-cta" id="float-cta" href="https://dreamnoark.com/oshi-calendar/">
+    <span class="txt">星宮そらのファンが集うアプリ<small>リマインド通知＆みんなで実況。無料</small></span>
+    <span class="go">はじめる</span>
+    <button class="x" aria-label="閉じる">✕</button>
   </a>
 <footer>
 このページはファンが共同で編集する「推しカレ」の公開データです。<br>写真・画像は一切扱いません（テキストと公式リンクのみ）。<br>
@@ -415,6 +464,19 @@ html.js .rv.in{opacity:1;transform:none}
     var d=Math.floor(diff/86400000),h=Math.floor(diff/3600000)%24,m=Math.floor(diff/60000)%60;
     el.textContent=d>0?'あと'+d+'日':(h>0?'あと'+h+'時間':'あと'+m+'分');
   });
+
+  // 追従アプリ誘導バー：少しスクロールしたら登場（✕でそのセッションは出さない）
+  var fc=document.getElementById('float-cta');
+  if(fc&&!sessionStorage.getItem('fcta-off')){
+    var shown=false;
+    addEventListener('scroll',function(){
+      var on=scrollY>420;
+      if(on!==shown){shown=on;fc.classList.toggle('show',on)}
+    },{passive:true});
+    var fx=fc.querySelector('.x');
+    if(fx)fx.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();
+      fc.classList.remove('show');sessionStorage.setItem('fcta-off','1')});
+  }
 
   // 次の予定ライブカウントダウン
   var cd=document.getElementById('countdown');
