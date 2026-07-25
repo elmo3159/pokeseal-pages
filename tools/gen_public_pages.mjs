@@ -377,6 +377,24 @@ html.js .rv.in{opacity:1;transform:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .rv{opacity:1;transform:none}
 }
+/* ランディング専用 */
+.storebtns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px}
+.sbtn{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:15px;
+  padding:14px 24px;border-radius:99px;text-decoration:none;
+  background:linear-gradient(135deg,var(--oshi),var(--purple));color:#fff;
+  box-shadow:0 10px 24px rgba(255,92,158,.32);transition:transform .15s,box-shadow .15s}
+.sbtn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(255,92,158,.42)}
+.sbtn.ghost{background:#fff;color:var(--sub);border:1.5px solid var(--line);box-shadow:none;cursor:default}
+.lsection{margin:52px 0}
+.lsection h2{text-align:center;font-size:24px;font-weight:900;color:var(--ink);margin:0 0 24px}
+.lfeat{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.lcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow)}
+.lcard .i{font-size:32px;display:block;margin-bottom:8px}
+.lcard b{font-size:16px;color:var(--ink);display:block;margin-bottom:6px}
+.lcard p{font-size:13.5px;line-height:1.7;color:var(--sub);margin:0}
+.allrooms{display:inline-block;font-weight:800;color:var(--oshi);text-decoration:none;
+  padding:10px 22px;border:1.5px solid var(--oshi);border-radius:99px;font-size:14px}
+.allrooms:hover{background:var(--oshi);color:#fff}
 `;
 
 // リビール＋カウントダウン＋「あと◯日」ハイドレーションの共通JS
@@ -795,6 +813,81 @@ function hubPage(rooms) {
   });
 }
 
+// ---------------------------------------------------------------- ランディング
+// アプリ紹介の「表玄関」。各ページのCTA（/oshi-calendar/）はここに着地する。
+function landingPage(rooms) {
+  const canonical = `${SITE}/oshi-calendar/`;
+  const total = rooms.length;
+  const topRooms = rooms.slice(0, 8);
+  const jsonld = {
+    '@context': 'https://schema.org',
+    '@type': 'MobileApplication',
+    name: '推しカレ（Oshi-Calendar）',
+    applicationCategory: 'SocialNetworkingApplication',
+    operatingSystem: 'iOS, Android',
+    description:
+      '推しのライブ・配信・イベント予定をファン同士で共有し、その時間にみんなで実況チャットに集まれる推し活アプリ。写真投稿ゼロで安心・無料。',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'JPY' },
+    url: canonical,
+  };
+  const body = `<div class="hero">
+    <h1 class="rv">推し活が、もっと楽しくなる。<br>推しカレ</h1>
+    <p class="lead rv">推しのライブ・配信・イベント予定をみんなで持ち寄って、その時間に<b>一緒に実況</b>。写真投稿は一切なし、テキストと公式リンクだけだから安心・無料。</p>
+    <div class="badges rv">
+      <span class="badge">🔔 予定の直前にリマインド</span>
+      <span class="badge">🎤 出演中はみんなで実況</span>
+      <span class="badge">🖼️ 画像なしで安心</span>
+      <span class="badge">🎤 登録推し <b>${total}</b></span>
+    </div>
+    <div class="storebtns rv">
+      <a class="sbtn" href="${BASE}/">🔎 推しを探す（一覧を見る）</a>
+      <span class="sbtn ghost">📱 iOS / Android アプリ 近日公開</span>
+    </div>
+  </div>
+
+  <div class="lsection rv">
+    <h2>こんなことができます</h2>
+    <div class="lfeat">
+      <div class="lcard"><span class="i">🗓️</span><b>共同カレンダー</b><p>ファン全員で予定を書き込むWikipedia方式。TV・ライブ・配信・グッズ発売を推し色で一覧に。</p></div>
+      <div class="lcard"><span class="i">🔔</span><b>直前リマインド</b><p>「乗っかる」を押すと、開始10分前に通知。タップで実況チャットへ直行できます。</p></div>
+      <div class="lcard"><span class="i">🎤</span><b>みんなで実況</b><p>放送の時間に同じ部屋へ集合。ペンライトを振ったり、盛り上がりを共有できます。</p></div>
+      <div class="lcard"><span class="i">📖</span><b>推し図鑑</b><p>プロフィール・公式リンク・作品・用語をファンでまとめる、推しの百科事典。</p></div>
+    </div>
+  </div>
+
+  <div class="lsection rv">
+    <h2>いま盛り上がっている推し</h2>
+    <div class="roomgrid">
+      ${topRooms
+        .map(
+          (r) => `<a class="roomcard" href="${BASE}/${encodeURIComponent(r.slug)}/" style="--rc:${roomColor(r)}">
+        <div class="nm">${esc(r.name)}</div>
+        <div class="ag">${r.agency ? esc(r.agency) : ''}</div>
+        <div class="stats"><span class="st">📅 予定 ${r.eventCount}件</span></div>
+        <span class="go">▸</span>
+      </a>`,
+        )
+        .join('')}
+    </div>
+    <div style="text-align:center;margin-top:14px"><a class="allrooms" href="${BASE}/">すべての推しを見る ▸</a></div>
+  </div>
+
+  <a class="cta rv" href="${BASE}/">
+    <span class="big">💖 あなたの推しも、きっといる</span>
+    <small>まずは推しのページを見てみよう。ルームが無ければ、あなたが最初の1人に。</small>
+    <span class="btn">推しを探す ▸</span>
+  </a>`;
+  return pageShell({
+    title: '推しカレ｜推しのライブ・配信予定をみんなで共有＆実況する推し活アプリ',
+    description:
+      '推しのライブ・配信・イベント予定をファン同士で共有し、その時間にみんなで実況チャットに集まれる推し活アプリ「推しカレ」。写真投稿ゼロで安心、無料。アイドル・VTuber・声優・アニメに対応。',
+    canonical,
+    body,
+    jsonld,
+    oshi: '#FF5C9E',
+  });
+}
+
 // ---------------------------------------------------------------- main
 
 async function main() {
@@ -826,8 +919,14 @@ async function main() {
     outFiles.push([`oshi-calendar/oshi/${r.slug}/index.html`, html]);
   }
   outFiles.push(['oshi-calendar/oshi/index.html', hubPage(rooms)]);
+  // アプリ紹介ランディング（各ページのCTA着地点・/oshi-calendar/）
+  outFiles.push(['oshi-calendar/index.html', landingPage(rooms)]);
 
-  const urls = [`${SITE}${BASE}/`, ...rooms.map((r) => `${SITE}${BASE}/${encodeURIComponent(r.slug)}/`)];
+  const urls = [
+    `${SITE}/oshi-calendar/`,
+    `${SITE}${BASE}/`,
+    ...rooms.map((r) => `${SITE}${BASE}/${encodeURIComponent(r.slug)}/`),
+  ];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `<url><loc>${u}</loc><changefreq>daily</changefreq></url>`).join('\n')}
