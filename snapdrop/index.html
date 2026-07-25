@@ -92,7 +92,25 @@ img{max-width:100%;height:auto;display:block}
 .tb-cta:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 8px 24px rgba(255,61,143,.55)}
 
 /* ヒーロー */
-.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:center;padding:64px 0 40px}
+.hero{display:block;text-align:center;padding:52px 0 6px}
+.hero .lead{margin-left:auto;margin-right:auto}
+.hero .storebtns{justify-content:center;margin-top:22px}
+/* 画像ラッシュ（ヒーロー直下のフィルムストリップ） */
+.heromarquee{overflow:hidden;position:relative;margin:30px calc(50% - 50vw) 6px;padding:16px 0 10px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.mq-track{display:flex;gap:18px;width:max-content;animation:mqscroll 46s linear infinite;will-change:transform}
+.heromarquee:hover .mq-track{animation-play-state:paused}
+@keyframes mqscroll{to{transform:translateX(-50%)}}
+.mq-card{flex:none;width:172px;margin:0;position:relative;border-radius:26px;border:6px solid #0d0620;
+  overflow:hidden;background:#0d0620;box-shadow:0 18px 44px rgba(255,61,143,.22),0 0 0 1px rgba(255,255,255,.06);
+  transform:rotate(-1.4deg)}
+.mq-card:nth-child(even){transform:rotate(1.4deg)}
+.mq-card img{display:block;width:100%;height:auto}
+.mq-card figcaption{position:absolute;left:8px;right:8px;bottom:8px;text-align:center;
+  font-size:11px;font-weight:900;padding:6px 4px;border-radius:12px;color:#fff;
+  background:rgba(13,6,32,.78);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.14)}
+.stats-hero{justify-content:center;margin:14px auto 0;max-width:640px}
 .hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:900;
   color:var(--pink2);background:rgba(255,61,143,.12);border:1.5px solid rgba(255,61,143,.4);
   padding:7px 16px;border-radius:99px;margin-bottom:18px}
@@ -255,11 +273,11 @@ html.js .rv{opacity:0;transform:translateY(20px);
 html.js .rv.in{opacity:1;transform:none}
 
 @media (max-width:760px){
-  .hero{grid-template-columns:1fr;padding:40px 0 24px;text-align:center}
-  .hero .lead{margin-left:auto;margin-right:auto}
+  .hero{padding:34px 0 4px}
   .stats,.storebtns{justify-content:center}
-  .hero-visual{order:-1}
-  .hero-visual .phone-img{width:min(220px,60vw)}
+  .mq-card{width:138px;border-width:5px;border-radius:22px}
+  .mq-card figcaption{font-size:10px;padding:5px 3px}
+  .mq-track{gap:13px;animation-duration:38s}
   .feature{grid-template-columns:1fr;gap:22px;text-align:center}
   .feature.rev .shot{order:0}
   .feature .txt ul{display:inline-block;text-align:left}
@@ -267,6 +285,7 @@ html.js .rv.in{opacity:1;transform:none}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
+  .heromarquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
   html.js .rv{opacity:1;transform:none}
 }
 </style>
@@ -289,20 +308,38 @@ html.js .rv.in{opacity:1;transform:none}
     <span class="kicker rv">⚡ チェキフィルム高騰・品薄の救世主</span>
     <h1 class="rv">フィルム高騰時代の、<br><span class="neon">新しいツーショット。</span></h1>
     <p class="lead rv">ライブや特典会でキャストが撮った1枚が、<b>落書き・動く写真・ボイス・トレカ</b>になってファンのスマホへまるごと届く。チェキ会・特典会の新しい選択肢、デジタルツーショットアプリ<b>『スナドロ（Snap Drop）』</b>。</p>
-    <div class="stats rv">
-      <div class="stat"><div class="n">約10円〜</div><div class="l">1枚あたりの発行コスト</div></div>
-      <div class="stat"><div class="n">4データ</div><div class="l">1回の撮影で届く</div></div>
-      <div class="stat"><div class="n">175地域</div><div class="l">世界対応・3言語</div></div>
-    </div>
     <div class="storebtns rv" id="download">
       <a class="store" href="https://apps.apple.com/jp/app/id6779418369" rel="noopener" target="_blank"> App Storeで入手<small>iPhone / iPad</small></a>
       <a class="store" href="https://play.google.com/store/apps/details?id=com.snapdrop.snapdrop" rel="noopener" target="_blank">▶ Google Play<small>Android</small></a>
     </div>
   </div>
-  <div class="hero-visual rv">
-    <div class="glow"></div>
-    <img class="phone-img" src="img/hero.png" alt="デジタルツーショットアプリ・スナドロのホーム画面。運営キャストモードとファンモードを選択できる" width="300" fetchpriority="high">
+</div>
+
+<!-- 画像ラッシュ：実際の画面が流れるフィルムストリップ（百聞は一見にしかず） -->
+<div class="heromarquee">
+  <div class="mq-track">
+      <figure class="mq-card"><img src="img/op-rakugaki.jpg" alt="スナドロの落書き画面。ツーショットチェキにネオンブラシやスタンプでその場でデコレーション" width="294" height="640" fetchpriority="high"><figcaption>🖊 その場で落書き</figcaption></figure>
+      <figure class="mq-card"><img src="img/fan-scratch.jpg" alt="トレカのスクラッチを指で削ってレアリティを確認する画面" width="294" height="640" fetchpriority="high"><figcaption>✨ 削るトレカガチャ</figcaption></figure>
+      <figure class="mq-card"><img src="img/fan-newdrop.jpg" alt="新しいスナドロがコレクション帳に追加される瞬間の画面" width="294" height="640" fetchpriority="high"><figcaption>📥 ファンに即お届け</figcaption></figure>
+      <figure class="mq-card"><img src="img/op-toreka.jpg" alt="スナドロのトレカ設定画面。レアリティ付きトレカを運営が設定できる" width="294" height="640" loading="lazy"><figcaption>🎴 レアリティ自由設定</figcaption></figure>
+      <figure class="mq-card"><img src="img/fan-book.jpg" alt="集めたチェキとトレカを一覧できるコレクション帳画面" width="294" height="640" loading="lazy"><figcaption>📚 集まるコレクション帳</figcaption></figure>
+      <figure class="mq-card"><img src="img/op-qr.jpg" alt="スナドロのQRコード発行画面。電波の悪い会場でもオフラインで即時発行できる" width="294" height="640" loading="lazy"><figcaption>📶 圏外でもQR発行</figcaption></figure>
+      <figure class="mq-card"><img src="img/fan-reward.jpg" alt="撮影回数の達成特典の進捗と受け取り画面" width="294" height="640" loading="lazy"><figcaption>🎁 通うほど達成特典</figcaption></figure>
+      <figure class="mq-card"><img src="img/op-cast.jpg" alt="スナドロのキャスト管理画面。メンバーごとの発行状況を管理できる" width="294" height="640" loading="lazy"><figcaption>🛠 かんたんキャスト管理</figcaption></figure>
+      <figure class="mq-card" aria-hidden="true"><img src="img/op-rakugaki.jpg" width="294" height="640" loading="lazy"><figcaption>🖊 その場で落書き</figcaption></figure>
+      <figure class="mq-card" aria-hidden="true"><img src="img/fan-scratch.jpg" width="294" height="640" loading="lazy"><figcaption>✨ 削るトレカガチャ</figcaption></figure>
+      <figure class="mq-card" aria-hidden="true"><img src="img/fan-newdrop.jpg" width="294" height="640" loading="lazy"><figcaption>📥 ファンに即お届け</figcaption></figure>
+      <figure class="mq-card" aria-hidden="true"><img src="img/op-toreka.jpg" width="294" height="640" loading="lazy"><figcaption>🎴 レアリティ自由設定</figcaption></figure>
+      <figure class="mq-card" aria-hidden="true"><img src="img/fan-book.jpg" width="294" height="640" loading="lazy"><figcaption>📚 集まるコレクション帳</figcaption></figure>
+      <figure class="mq-card" aria-hidden="true"><img src="img/op-qr.jpg" width="294" height="640" loading="lazy"><figcaption>📶 圏外でもQR発行</figcaption></figure>
+      <figure class="mq-card" aria-hidden="true"><img src="img/fan-reward.jpg" width="294" height="640" loading="lazy"><figcaption>🎁 通うほど達成特典</figcaption></figure>
+      <figure class="mq-card" aria-hidden="true"><img src="img/op-cast.jpg" width="294" height="640" loading="lazy"><figcaption>🛠 かんたんキャスト管理</figcaption></figure>
   </div>
+</div>
+<div class="stats rv stats-hero">
+  <div class="stat"><div class="n">約10円〜</div><div class="l">1枚あたりの発行コスト</div></div>
+  <div class="stat"><div class="n">4データ</div><div class="l">1回の撮影で届く</div></div>
+  <div class="stat"><div class="n">175地域</div><div class="l">世界対応・3言語</div></div>
 </div>
 
 <!-- 課題 -->
