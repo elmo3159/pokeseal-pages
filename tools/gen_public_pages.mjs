@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 推しカレ 公開Webページ生成（B-1：SEO流入でニッチ推しルームに人を運ぶ）
+// 推しコール 公開Webページ生成（B-1：SEO流入でニッチ推しルームに人を運ぶ）
 //
 // 図鑑＋カレンダーを「画像なし・テキストと公式リンクだけ」の静的HTMLとして書き出す。
 // ＝そのままGoogleにインデックスされる（Wikipedia/Fandom型の集客）。CDN（GitHub Pages）配信で激安。
@@ -533,7 +533,7 @@ function pageShell({ title, description, canonical, body, jsonld, oshi, extraJs 
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${esc(canonical)}">
-<meta property="og:site_name" content="推しカレ">
+<meta property="og:site_name" content="推しコール">
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#FFF7F2">
@@ -553,7 +553,7 @@ ${ld}
 <div class="wrap">
 ${body}
 <footer>
-このページはファンが共同で編集する「推しカレ」の公開データです。<br>写真・画像は一切扱いません（テキストと公式リンクのみ）。<br>
+このページはファンが共同で編集する「推しコール」の公開データです。<br>写真・画像は一切扱いません（テキストと公式リンクのみ）。<br>
 <a href="${SITE}/oshi-calendar/terms.html">利用規約</a> ・ <a href="${SITE}/oshi-calendar/privacy.html">プライバシー</a> ・ <a href="${BASE}/">推し一覧</a>
 <div style="margin-top:14px;padding:10px 14px;border:1.5px dashed var(--line);border-radius:14px">
 🎪 <b>運営者・事務所の方へ</b>：チェキのフィルム代、1枚約10円にできます →
@@ -577,7 +577,7 @@ function roomPage(room, data) {
     .sort((a, b) => new Date(a.date) - new Date(b.date));
   const next = upcoming[0];
   const canonical = `${SITE}${BASE}/${encodeURIComponent(room.slug)}/`;
-  const title = `${room.name}の予定・スケジュールまとめ｜推しカレ`;
+  const title = `${room.name}の予定・スケジュールまとめ｜推しコール`;
   const description = [
     `${room.name}のライブ・配信・イベント・グッズ発売日をファンが共同でまとめたスケジュール。`,
     room.agency ? `所属：${room.agency}。` : '',
@@ -594,7 +594,7 @@ function roomPage(room, data) {
     location: { '@type': 'VirtualLocation', url: e.official_url || canonical },
     description: e.memo || `${room.name}の${cat(e.category).label}`,
     performer: { '@type': 'PerformingGroup', name: room.name },
-    organizer: { '@type': 'Organization', name: '推しカレ', url: SITE },
+    organizer: { '@type': 'Organization', name: '推しコール', url: SITE },
   }));
 
   // カレンダー用データ（全予定・過去も月送りで見られる）
@@ -802,12 +802,12 @@ function hubPage(rooms) {
     <span class="btn">無料でアプリをはじめる ▸</span>
   </a>
   <a class="float-cta" id="float-cta" href="${SITE}/oshi-calendar/">
-    <span class="txt">推しのファンが集うアプリ・推しカレ<small>リマインド通知＆みんなで実況。無料</small></span>
+    <span class="txt">推しのファンが集うアプリ・推しコール<small>リマインド通知＆みんなで実況。無料</small></span>
     <span class="go">はじめる</span>
     <button class="x" aria-label="閉じる">✕</button>
   </a>`;
   return pageShell({
-    title: '推し一覧・ライブ配信スケジュールまとめ｜推しカレ',
+    title: '推し一覧・ライブ配信スケジュールまとめ｜推しコール',
     description: 'アイドル・VTuber・声優・アニメの推しのライブ・配信・イベント予定を、ファンが共同でまとめています。あなたの推しを探そう。',
     canonical, body, oshi: '#FF5C9E',
   });
@@ -822,7 +822,7 @@ function landingPage(rooms) {
   const jsonld = {
     '@context': 'https://schema.org',
     '@type': 'MobileApplication',
-    name: '推しカレ（Oshi-Calendar）',
+    name: '推しコール（Oshi Call）',
     applicationCategory: 'SocialNetworkingApplication',
     operatingSystem: 'iOS, Android',
     description:
@@ -831,7 +831,7 @@ function landingPage(rooms) {
     url: canonical,
   };
   const body = `<div class="hero">
-    <h1 class="rv">推し活が、もっと楽しくなる。<br>推しカレ</h1>
+    <h1 class="rv">推し活が、もっと楽しくなる。<br>推しコール</h1>
     <p class="lead rv">推しのライブ・配信・イベント予定をみんなで持ち寄って、その時間に<b>一緒に実況</b>。写真投稿は一切なし、テキストと公式リンクだけだから安心・無料。</p>
     <div class="badges rv">
       <span class="badge">🔔 予定の直前にリマインド</span>
@@ -878,9 +878,9 @@ function landingPage(rooms) {
     <span class="btn">推しを探す ▸</span>
   </a>`;
   return pageShell({
-    title: '推しカレ｜推しのライブ・配信予定をみんなで共有＆実況する推し活アプリ',
+    title: '推しコール｜推しのライブ・配信予定をみんなで共有＆実況する推し活アプリ',
     description:
-      '推しのライブ・配信・イベント予定をファン同士で共有し、その時間にみんなで実況チャットに集まれる推し活アプリ「推しカレ」。写真投稿ゼロで安心、無料。アイドル・VTuber・声優・アニメに対応。',
+      '推しのライブ・配信・イベント予定をファン同士で共有し、その時間にみんなで実況チャットに集まれる推し活アプリ「推しコール」。写真投稿ゼロで安心、無料。アイドル・VTuber・声優・アニメに対応。',
     canonical,
     body,
     jsonld,
