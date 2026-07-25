@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Event","name":"星宮そら｜3rdワンマンライブ「Stellar Sky」","startDate":"2026-07-24T20:16:26.925Z","eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"VirtualLocation","url":"https://example.com/stellar-sky"},"description":"チケット2次抽選は今週金曜まで！","performer":{"@type":"PerformingGroup","name":"星宮そら"},"organizer":{"@type":"Organization","name":"推しカレ","url":"https://dreamnoark.com"}},{"@context":"https://schema.org","@type":"Event","name":"星宮そら｜1周年記念アクリルスタンド発売","startDate":"2026-07-28T20:16:26.925Z","eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"VirtualLocation","url":"https://example.com/goods"},"description":"星宮そらのグッズ・発売日","performer":{"@type":"PerformingGroup","name":"星宮そら"},"organizer":{"@type":"Organization","name":"推しカレ","url":"https://dreamnoark.com"}}]</script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Event","name":"星宮そら｜1周年記念アクリルスタンド発売","startDate":"2026-07-28T20:16:26.925Z","eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"VirtualLocation","url":"https://example.com/goods"},"description":"星宮そらのグッズ・発売日","performer":{"@type":"PerformingGroup","name":"星宮そら"},"organizer":{"@type":"Organization","name":"推しカレ","url":"https://dreamnoark.com"}}]</script>
 <style>
 :root{
   --oshi:#FF5C9E;
@@ -314,6 +314,24 @@ html.js .rv.in{opacity:1;transform:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .rv{opacity:1;transform:none}
 }
+/* ランディング専用 */
+.storebtns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px}
+.sbtn{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:15px;
+  padding:14px 24px;border-radius:99px;text-decoration:none;
+  background:linear-gradient(135deg,var(--oshi),var(--purple));color:#fff;
+  box-shadow:0 10px 24px rgba(255,92,158,.32);transition:transform .15s,box-shadow .15s}
+.sbtn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(255,92,158,.42)}
+.sbtn.ghost{background:#fff;color:var(--sub);border:1.5px solid var(--line);box-shadow:none;cursor:default}
+.lsection{margin:52px 0}
+.lsection h2{text-align:center;font-size:24px;font-weight:900;color:var(--ink);margin:0 0 24px}
+.lfeat{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.lcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow)}
+.lcard .i{font-size:32px;display:block;margin-bottom:8px}
+.lcard b{font-size:16px;color:var(--ink);display:block;margin-bottom:6px}
+.lcard p{font-size:13.5px;line-height:1.7;color:var(--sub);margin:0}
+.allrooms{display:inline-block;font-weight:800;color:var(--oshi);text-decoration:none;
+  padding:10px 22px;border:1.5px solid var(--oshi);border-radius:99px;font-size:14px}
+.allrooms:hover{background:var(--oshi);color:#fff}
 </style>
 </head>
 <body style="--oshi:#7C4DFF">
@@ -330,15 +348,15 @@ html.js .rv.in{opacity:1;transform:none}
     <div class="sub rv">予定・スケジュールまとめ</div>
     <p class="lead rv">ライブ・配信・イベント・グッズ発売日を、ファンみんなで共同編集しているカレンダーです。画像は扱わず、テキストと公式リンクだけ。</p>
     <div class="badges rv">
-      <span class="badge">📅 これからの予定 <b>2件</b></span>
+      <span class="badge">📅 これからの予定 <b>1件</b></span>
       <span class="badge">🏢 スターライト・プロダクション</span>
       <span class="badge">🏷️ #星宮そら</span>
     </div>
   </div><div class="nextup rv"><div class="nextup-in">
-      <span class="tag" id="nextup-tag"><span class="dot"></span>NEXT 🎤 ライブ・イベント</span>
-      <h2>3rdワンマンライブ「Stellar Sky」</h2>
-      <div class="when">2026年7月24日(金) 20:16</div>
-      <div class="count" id="countdown" data-date="2026-07-24T20:16:26.925Z">
+      <span class="tag" id="nextup-tag"><span class="dot"></span>NEXT 🎁 グッズ・発売日</span>
+      <h2>1周年記念アクリルスタンド発売</h2>
+      <div class="when">2026年7月28日(火) 20:16</div>
+      <div class="count" id="countdown" data-date="2026-07-28T20:16:26.925Z">
         <div class="cell"><span class="num" data-u="d">-</span><span class="unit">DAYS</span></div>
         <div class="cell"><span class="num" data-u="h">-</span><span class="unit">HOURS</span></div>
         <div class="cell"><span class="num" data-u="m">-</span><span class="unit">MIN</span></div>
@@ -361,16 +379,7 @@ html.js .rv.in{opacity:1;transform:none}
       <script type="application/json" id="cal-data">[{"d":"2026-07-20T20:16:26.925Z","t":"週刊アニメ情報「そらのコーナー」","c":"tv","cl":"TV出演"},{"d":"2026-07-21T10:00:00.000Z","t":"ええあえあえあ","c":"live","cl":"ライブ・イベント"},{"d":"2026-07-21T20:16:26.925Z","t":"歌枠リレー（そら → 星彩ねね）","c":"streaming","cl":"ネット配信"},{"d":"2026-07-22T05:42:06.097Z","t":"3rdワンマン チケット当落発表","c":"lottery","cl":"その他"},{"d":"2026-07-24T20:16:26.925Z","t":"3rdワンマンライブ「Stellar Sky」","c":"live","cl":"ライブ・イベント"},{"d":"2026-07-28T20:16:26.925Z","t":"1周年記念アクリルスタンド発売","c":"goods","cl":"グッズ・発売日"}]</script>
       <script type="application/json" id="cal-cat">{"tv":"#2E8BE0","live":"#E8484C","goods":"#E8890C","streaming":"#9B51C9","other":"#3BA55D"}</script>
     </section><section>
-    <div class="sec-head rv"><span class="em">✨</span><h2>これからの予定</h2><span class="bar"></span></div><div class="tl"><article class="ev rv" style="--ec:#E8484C">
-        <div class="row1">
-          <span class="chip">🎤 ライブ・イベント</span>
-          <span class="until" data-until="2026-07-24T20:16:26.925Z"></span>
-        </div>
-        <h3 class="t">3rdワンマンライブ「Stellar Sky」</h3>
-        <div class="d">2026年7月24日(金) 20:16</div>
-        <p class="memo">チケット2次抽選は今週金曜まで！</p>
-        <a class="off" href="https://example.com/stellar-sky" rel="nofollow noopener" target="_blank">🔗 公式ページを見る</a>
-      </article><article class="ev rv" style="--ec:#E8890C">
+    <div class="sec-head rv"><span class="em">✨</span><h2>これからの予定</h2><span class="bar"></span></div><div class="tl"><article class="ev rv" style="--ec:#E8890C">
         <div class="row1">
           <span class="chip">🎁 グッズ・発売日</span>
           <span class="until" data-until="2026-07-28T20:16:26.925Z"></span>

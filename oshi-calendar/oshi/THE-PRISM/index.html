@@ -314,6 +314,24 @@ html.js .rv.in{opacity:1;transform:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .rv{opacity:1;transform:none}
 }
+/* ランディング専用 */
+.storebtns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:22px}
+.sbtn{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:15px;
+  padding:14px 24px;border-radius:99px;text-decoration:none;
+  background:linear-gradient(135deg,var(--oshi),var(--purple));color:#fff;
+  box-shadow:0 10px 24px rgba(255,92,158,.32);transition:transform .15s,box-shadow .15s}
+.sbtn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(255,92,158,.42)}
+.sbtn.ghost{background:#fff;color:var(--sub);border:1.5px solid var(--line);box-shadow:none;cursor:default}
+.lsection{margin:52px 0}
+.lsection h2{text-align:center;font-size:24px;font-weight:900;color:var(--ink);margin:0 0 24px}
+.lfeat{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.lcard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow)}
+.lcard .i{font-size:32px;display:block;margin-bottom:8px}
+.lcard b{font-size:16px;color:var(--ink);display:block;margin-bottom:6px}
+.lcard p{font-size:13.5px;line-height:1.7;color:var(--sub);margin:0}
+.allrooms{display:inline-block;font-weight:800;color:var(--oshi);text-decoration:none;
+  padding:10px 22px;border:1.5px solid var(--oshi);border-radius:99px;font-size:14px}
+.allrooms:hover{background:var(--oshi);color:#fff}
 </style>
 </head>
 <body style="--oshi:#FF4081">
