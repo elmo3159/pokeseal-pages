@@ -1,4 +1,4 @@
-name: Build 推しカレ public pages
+name: Build 推しコール public pages
 
 on:
   push:
@@ -33,10 +33,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A oshi-calendar/oshi robots.txt
+          # ランディング(oshi-calendar/index.html)も含めるため oshi-calendar 全体をadd
+          # （terms等の静的法務ページは生成対象外なので影響しない）
+          git add -A oshi-calendar robots.txt
           if git diff --cached --quiet; then
             echo "No changes."
           else
-            git commit -m "chore: regenerate 推しカレ public pages [skip ci]"
+            git commit -m "chore: regenerate 推しコール public pages [skip ci]"
             git push
           fi
