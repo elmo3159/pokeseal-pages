@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>推しコール 管理コンソール</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0912; --bg2:#12101f; --surface:rgba(255,255,255,.045); --surface2:rgba(255,255,255,.07);
+  --border:rgba(255,255,255,.10); --border2:rgba(255,255,255,.18);
+  --text:#F3F0FA; --muted:#A79FC0; --dim:#6F6889;
+  --pink:#FF5C8A; --purple:#7C4DFF; --teal:#00E5C0; --gold:#FFC24B; --red:#FF5468; --blue:#4DA3FF;
+  --shadow:0 18px 50px rgba(0,0,0,.45);
+  --r:18px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:"M PLUS Rounded 1c",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
+  font-size:14px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(900px 700px at 12% -10%, rgba(124,77,255,.28), transparent 60%),
+    radial-gradient(800px 600px at 88% 8%, rgba(255,92,138,.22), transparent 62%),
+    radial-gradient(700px 700px at 50% 110%, rgba(0,229,192,.14), transparent 60%),
+    linear-gradient(180deg,#0a0912,#0f0d1c 60%,#0a0912);
+}
+body::after{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.35;
+  background-image:radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px);
+  background-size:34px 34px;
+  mask-image:radial-gradient(ellipse at 50% 0%, #000 30%, transparent 75%);
+}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:99px;border:2px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-track{background:transparent}
+a{color:var(--pink);text-decoration:none}
+button{font-family:inherit}
+
+/* ---------- ログイン ---------- */
+#gate{position:fixed;inset:0;display:grid;place-items:center;z-index:200;padding:24px}
+.gate-card{
+  width:min(420px,100%); background:rgba(20,17,34,.86); backdrop-filter:blur(24px);
+  border:1px solid var(--border2); border-radius:26px; padding:34px 30px; box-shadow:var(--shadow);
+  animation:pop .5s cubic-bezier(.2,1.2,.3,1) both;
+}
+.gate-logo{font-size:34px;font-weight:800;letter-spacing:.02em;background:linear-gradient(100deg,var(--pink),var(--purple) 55%,var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent;margin:0 0 4px}
+.gate-sub{color:var(--muted);font-size:12.5px;margin:0 0 22px}
+input,select,textarea{
+  width:100%;background:rgba(0,0,0,.32);border:1px solid var(--border2);color:var(--text);
+  border-radius:12px;padding:11px 13px;font-size:14px;font-family:inherit;outline:none;transition:.18s;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,92,138,.16)}
+select option{background:#171429}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;justify-content:center;
+  background:linear-gradient(100deg,var(--pink),var(--purple));border:none;color:#fff;font-weight:700;
+  padding:11px 18px;border-radius:12px;cursor:pointer;font-size:14px;transition:transform .14s,filter .18s,box-shadow .18s;
+  box-shadow:0 8px 22px rgba(124,77,255,.30);
+}
+.btn:hover{filter:brightness(1.08);box-shadow:0 12px 28px rgba(124,77,255,.42)}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:var(--surface2);box-shadow:none;border:1px solid var(--border2);color:var(--text);font-weight:500}
+.btn.ghost:hover{background:rgba(255,255,255,.13)}
+.btn.danger{background:linear-gradient(100deg,#FF4D6D,#C81E43);box-shadow:0 8px 22px rgba(255,77,109,.3)}
+.btn.sm{padding:6px 11px;font-size:12px;border-radius:9px}
+.btn.xs{padding:4px 9px;font-size:11.5px;border-radius:8px}
+
+/* ---------- レイアウト ---------- */
+#app{display:none;min-height:100vh}
+#app.on{display:grid;grid-template-columns:236px 1fr}
+aside{
+  position:sticky;top:0;height:100vh;padding:22px 14px;overflow-y:auto;
+  background:rgba(15,12,28,.62);backdrop-filter:blur(22px);border-right:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:9px;padding:0 8px 18px;font-weight:800;font-size:17px}
+.brand .dot{width:11px;height:11px;border-radius:99px;background:linear-gradient(135deg,var(--pink),var(--purple));box-shadow:0 0 14px var(--pink);animation:pulse 2.4s ease-in-out infinite}
+.nav-group{margin:14px 0 6px;padding:0 10px;font-size:10.5px;letter-spacing:.12em;color:var(--dim);font-weight:700}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:11px;color:var(--muted);
+  cursor:pointer;font-size:13.5px;font-weight:500;transition:.16s;position:relative;
+}
+.nav-item:hover{background:var(--surface);color:var(--text)}
+.nav-item.on{background:linear-gradient(100deg,rgba(255,92,138,.20),rgba(124,77,255,.16));color:#fff;font-weight:700}
+.nav-item.on::before{content:"";position:absolute;left:-14px;top:9px;bottom:9px;width:3px;border-radius:9px;background:linear-gradient(var(--pink),var(--purple))}
+.nav-item .ic{width:18px;text-align:center;font-size:15px}
+.nav-item .badge{margin-left:auto;background:var(--red);color:#fff;font-size:10.5px;font-weight:800;padding:1px 6px;border-radius:99px}
+main{padding:24px 28px 70px;min-width:0}
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+h1{font-size:23px;margin:0;font-weight:800;letter-spacing:.01em}
+.crumb{color:var(--dim);font-size:12px;margin-top:2px}
+.spacer{flex:1}
+.chip{
+  display:inline-flex;align-items:center;gap:5px;background:var(--surface);border:1px solid var(--border);
+  padding:5px 11px;border-radius:99px;font-size:12px;color:var(--muted);
+}
+.chip.on{background:linear-gradient(100deg,rgba(255,92,138,.24),rgba(124,77,255,.2));color:#fff;border-color:transparent;font-weight:700}
+.chip.click{cursor:pointer;transition:.15s}
+.chip.click:hover{background:var(--surface2);color:var(--text)}
+.live-dot{width:7px;height:7px;border-radius:99px;background:var(--teal);box-shadow:0 0 9px var(--teal);animation:pulse 1.6s infinite}
+
+/* ---------- カード ---------- */
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;
+  backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(0,0,0,.22);
+}
+.card h2{font-size:14.5px;margin:0 0 14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.card h2 .cnt{color:var(--dim);font-weight:500;font-size:12px}
+.grid{display:grid;gap:14px}
+.kpis{grid-template-columns:repeat(auto-fill,minmax(158px,1fr))}
+.kpi{
+  background:var(--surface);border:1px solid var(--border);border-radius:15px;padding:14px 15px;position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s;
+}
+.kpi:hover{transform:translateY(-3px);border-color:var(--border2)}
+.kpi::after{content:"";position:absolute;right:-24px;top:-24px;width:76px;height:76px;border-radius:99px;background:var(--accent,var(--purple));opacity:.14;filter:blur(14px)}
+.kpi .lbl{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.kpi .val{font-size:26px;font-weight:800;letter-spacing:-.01em;margin-top:3px;font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:11px;color:var(--dim);margin-top:1px}
+
+/* ---------- テーブル ---------- */
+.tw{overflow-x:auto;margin:0 -18px -18px;padding:0 18px 18px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{
+  text-align:left;color:var(--dim);font-weight:700;font-size:11px;letter-spacing:.06em;
+  padding:0 10px 9px;border-bottom:1px solid var(--border);white-space:nowrap;
+}
+th.s{cursor:pointer;user-select:none} th.s:hover{color:var(--text)}
+td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
+tbody tr{transition:background .14s}
+tbody tr:hover{background:rgba(255,255,255,.045)}
+tbody tr.click{cursor:pointer}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--muted)}
+.trunc{max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.empty{text-align:center;color:var(--dim);padding:34px 0;font-size:13px}
+
+/* ---------- 部品 ---------- */
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700;white-space:nowrap}
+.tag.g{background:rgba(0,229,192,.16);color:var(--teal)}
+.tag.r{background:rgba(255,84,104,.18);color:#FF8494}
+.tag.y{background:rgba(255,194,75,.16);color:var(--gold)}
+.tag.p{background:rgba(124,77,255,.2);color:#B79BFF}
+.tag.n{background:rgba(255,255,255,.08);color:var(--muted)}
+.avatar{width:26px;height:26px;border-radius:99px;object-fit:cover;background:var(--surface2);display:inline-grid;place-items:center;font-size:14px;vertical-align:middle;flex:none}
+.who{display:flex;align-items:center;gap:8px;min-width:0}
+.swatch{width:10px;height:10px;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:6px;flex:none}
+.bar{height:6px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden;min-width:56px}
+.bar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--pink),var(--purple));animation:grow .8s cubic-bezier(.2,1,.3,1) both}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11.5px;color:var(--muted);margin-bottom:5px;font-weight:700}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sk{background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.11),rgba(255,255,255,.05));background-size:220% 100%;animation:sh 1.3s infinite;border-radius:10px;height:14px}
+
+/* ---------- モーダル・トースト ---------- */
+#modal{position:fixed;inset:0;background:rgba(5,4,12,.72);backdrop-filter:blur(7px);z-index:150;display:none;place-items:center;padding:22px}
+#modal.on{display:grid}
+.modal-card{
+  width:min(720px,100%);max-height:86vh;overflow:auto;background:#16132a;border:1px solid var(--border2);
+  border-radius:22px;padding:24px;box-shadow:var(--shadow);animation:pop .34s cubic-bezier(.2,1.2,.3,1) both;
+}
+.modal-card h3{margin:0 0 16px;font-size:17px;font-weight:800}
+#toast{position:fixed;right:20px;bottom:20px;z-index:300;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.toast{
+  background:rgba(24,20,44,.95);border:1px solid var(--border2);border-left:3px solid var(--teal);
+  padding:11px 16px;border-radius:12px;font-size:13px;box-shadow:var(--shadow);animation:slideIn .32s cubic-bezier(.2,1.2,.3,1) both;max-width:380px;
+}
+.toast.err{border-left-color:var(--red)}
+
+/* ---------- アニメーション ---------- */
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(12px)}to{opacity:1;transform:none}}
+@keyframes slideIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.85)}}
+@keyframes sh{0%{background-position:220% 0}100%{background-position:-20% 0}}
+@keyframes grow{from{width:0 !important}}
+@keyframes draw{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+@keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.anim{animation:fadeUp .45s cubic-bezier(.2,1,.3,1) both}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+@media (max-width:900px){
+  #app.on{grid-template-columns:1fr}
+  aside{position:static;height:auto;display:flex;gap:6px;overflow-x:auto;padding:12px;border-right:none;border-bottom:1px solid var(--border)}
+  .brand{display:none}.nav-group{display:none}
+  .nav-item{white-space:nowrap;padding:8px 12px}
+  .nav-item.on::before{display:none}
+  main{padding:16px 14px 60px}
+}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <form class="gate-card" onsubmit="return login(event)">
+    <h1 class="gate-logo">推しコール</h1>
+    <p class="gate-sub">管理コンソール ／ Dream Noark</p>
+    <div class="field">
+      <label>管理トークン</label>
+      <input id="tok" type="password" autocomplete="current-password" placeholder="••••••••••••••••" autofocus>
+    </div>
+    <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);margin:12px 0 16px;cursor:pointer">
+      <input type="checkbox" id="remember" checked style="width:auto"> このブラウザに記憶する
+    </label>
+    <button class="btn" style="width:100%" type="submit">ログイン</button>
+    <p id="gate-err" style="color:var(--red);font-size:12px;margin:12px 0 0;min-height:16px"></p>
+  </form>
+</div>
+
+<div id="app">
+  <aside>
+    <div class="brand"><span class="dot"></span>推しコール</div>
+    <div id="nav"></div>
+  </aside>
+  <main>
+    <div class="topbar">
+      <div>
+        <h1 id="title">ダッシュボード</h1>
+        <div class="crumb" id="crumb"></div>
+      </div>
+      <div class="spacer"></div>
+      <div id="tools" class="row"></div>
+      <span class="chip" id="clock"></span>
+      <button class="btn ghost sm" onclick="refresh()">⟳ 更新</button>
+      <button class="btn ghost sm" onclick="logout()">ログアウト</button>
+    </div>
+    <div id="view"></div>
+  </main>
+</div>
+
+<div id="modal" onclick="if(event.target===this)closeModal()"><div class="modal-card" id="modal-body"></div></div>
+<div id="toast"></div>
+
+<script>
+const API = "https://imcmtdyjbjbxuvecwslf.supabase.co/functions/v1/admin-api";
+let TOKEN = "";
+let STATE = {};      // 画面ごとのキャッシュ
+let VIEW = "dash";
+let PARAM = null;
+let timer = null;
+
+/* ============ 基本ユーティリティ ============ */
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const n = (v) => Number(v ?? 0).toLocaleString("ja-JP");
+const yen = (v) => "¥" + Number(v ?? 0).toLocaleString("ja-JP");
+
+function dt(s, short) {
+  if (!s) return "—";
+  const d = new Date(s);
+  const p = (x) => String(x).padStart(2, "0");
+  const base = `${d.getMonth()+1}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+  return short ? base : `${d.getFullYear()}/${base}`;
+}
+function ago(s) {
+  if (!s) return "—";
+  const m = (Date.now() - new Date(s).getTime()) / 60000;
+  if (m < 1) return "たった今";
+  if (m < 60) return `${Math.floor(m)}分前`;
+  if (m < 1440) return `${Math.floor(m/60)}時間前`;
+  if (m < 43200) return `${Math.floor(m/1440)}日前`;
+  return `${Math.floor(m/43200)}ヶ月前`;
+}
+function toast(msg, err) {
+  const el = document.createElement("div");
+  el.className = "toast" + (err ? " err" : "");
+  el.textContent = msg;
+  $("#toast").appendChild(el);
+  setTimeout(() => { el.style.opacity = "0"; el.style.transform = "translateX(26px)"; el.style.transition = ".3s"; }, 3200);
+  setTimeout(() => el.remove(), 3600);
+}
+
+async function api(action, params = {}) {
+  const r = await fetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-admin-token": TOKEN },
+    body: JSON.stringify({ action, ...params }),
+  });
+  const j = await r.json().catch(() => ({ error: "レスポンスの解析に失敗しました" }));
+  if (!r.ok || j.error) throw new Error(j.error || `HTTP ${r.status}`);
+  return j.data;
+}
+
+/* ============ ログイン ============ */
+async function login(e) {
+  e.preventDefault();
+  const t = $("#tok").value.trim();
+  if (!t) return false;
+  $("#gate-err").textContent = "確認中…";
+  try {
+    TOKEN = t;
+    await api("ping");
+    if ($("#remember").checked) localStorage.setItem("oc_admin_token", t);
+    $("#gate").style.display = "none";
+    $("#app").classList.add("on");
+    buildNav();
+    go(location.hash.slice(1) || "dash");
+    startClock();
+  } catch (err) {
+    TOKEN = "";
+    $("#gate-err").textContent = String(err.message).includes("unauthorized") ? "トークンが違います" : String(err.message);
+  }
+  return false;
+}
+function logout() {
+  localStorage.removeItem("oc_admin_token");
+  location.reload();
+}
+function startClock() {
+  const tick = () => {
+    const d = new Date();
+    const p = (x) => String(x).padStart(2, "0");
+    $("#clock").textContent = `${d.getFullYear()}/${d.getMonth()+1}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+  };
+  tick(); setInterval(tick, 1000);
+}
+
+/* ============ ナビゲーション ============ */
+const NAV = [
+  { g: "モニタリング", items: [
+    { id: "dash", ic: "📊", label: "ダッシュボード" },
+    { id: "live", ic: "📡", label: "ライブフィード" },
+  ]},
+  { g: "コミュニティ", items: [
+    { id: "rooms", ic: "🏠", label: "ルーム" },
+    { id: "users", ic: "👥", label: "ユーザー" },
+    { id: "content", ic: "📅", label: "コンテンツ" },
+  ]},
+  { g: "安全", items: [
+    { id: "mod", ic: "🛡", label: "モデレーション", badgeKey: "reports" },
+    { id: "ng", ic: "🚫", label: "NGワード" },
+  ]},
+  { g: "ビジネス", items: [
+    { id: "revenue", ic: "💎", label: "収益" },
+    { id: "push", ic: "🔔", label: "プッシュ通知" },
+  ]},
+  { g: "システム", items: [
+    { id: "system", ic: "⚙️", label: "システム" },
+    { id: "sql", ic: "🧪", label: "SQLコンソール" },
+    { id: "audit", ic: "📜", label: "操作ログ" },
+  ]},
+];
+function buildNav() {
+  $("#nav").innerHTML = NAV.map((g) => `
+    <div class="nav-group">${g.g}</div>
+    ${g.items.map((i) => `<div class="nav-item" data-id="${i.id}" onclick="go('${i.id}')">
+      <span class="ic">${i.ic}</span>${i.label}
+      <span class="badge" id="badge-${i.id}" style="display:none"></span>
+    </div>`).join("")}
+  `).join("");
+}
+function markNav() {
+  document.querySelectorAll(".nav-item").forEach((e) => e.classList.toggle("on", e.dataset.id === VIEW));
+}
+function go(hash) {
+  const [v, p] = String(hash).split(":");
+  VIEW = v || "dash"; PARAM = p ? decodeURIComponent(p) : null;
+  location.hash = hash;
+  markNav();
+  if (timer) { clearInterval(timer); timer = null; }
+  render();
+}
+window.addEventListener("hashchange", () => {
+  const h = location.hash.slice(1) || "dash";
+  const [v, p] = h.split(":");
+  if (v !== VIEW || (p ? decodeURIComponent(p) : null) !== PARAM) go(h);
+});
+function refresh() { render(true); }
+
+/* ============ グラフ（依存なしSVG） ============ */
+function lineChart(rows, key, color, h = 150) {
+  const vals = rows.map((r) => Number(r[key] ?? 0));
+  const max = Math.max(1, ...vals);
+  const W = 1000, H = h, pad = 8;
+  const step = vals.length > 1 ? (W - pad * 2) / (vals.length - 1) : 0;
+  const pt = (v, i) => [pad + i * step, H - pad - (v / max) * (H - pad * 2.4)];
+  const pts = vals.map(pt);
+  const line = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+  const area = line + ` L${W-pad} ${H} L${pad} ${H} Z`;
+  const id = "g" + Math.random().toString(36).slice(2, 8);
+  const dots = pts.map((p, i) => vals[i] > 0
+    ? `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5" fill="${color}"><title>${esc(rows[i].label)}: ${n(vals[i])}</title></circle>` : "").join("");
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:${h}px;overflow:visible">
+    <defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${color}" stop-opacity=".38"/><stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+    </linearGradient></defs>
+    <path d="${area}" fill="url(#${id})" style="animation:fadeUp .7s ease both"/>
+    <path d="${line}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+      style="--len:4000;stroke-dasharray:4000;animation:draw 1.4s cubic-bezier(.3,1,.4,1) both"/>
+    ${dots}
+  </svg>
+  <div style="display:flex;justify-content:space-between;color:var(--dim);font-size:10.5px;margin-top:6px">
+    <span>${esc(rows[0]?.label ?? "")}</span><span>最大 ${n(max)}</span><span>${esc(rows.at(-1)?.label ?? "")}</span>
+  </div>`;
+}
+function barRow(label, value, max, color, right) {
+  const w = max > 0 ? Math.max(2, (value / max) * 100) : 0;
+  return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:9px">
+    <div style="width:130px;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${label}</div>
+    <div class="bar" style="flex:1"><i style="width:${w}%;background:${color || "linear-gradient(90deg,var(--pink),var(--purple))"}"></i></div>
+    <div class="num" style="width:82px;font-size:12px;color:var(--muted)">${right ?? n(value)}</div>
+  </div>`;
+}
+
+/* ============ テーブルヘルパー ============ */
+function table(cols, rows, opts = {}) {
+  if (!rows || !rows.length) return `<div class="empty">${opts.empty || "データがありません"}</div>`;
+  return `<div class="tw"><table>
+    <thead><tr>${cols.map((c) => `<th class="${c.num ? "num" : ""}">${c.h}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map((r, i) => `<tr class="${opts.onClick ? "click" : ""}" ${opts.onClick ? `onclick="${opts.onClick(r)}"` : ""}
+      style="animation:fadeUp .4s cubic-bezier(.2,1,.3,1) both;animation-delay:${Math.min(i * 14, 300)}ms">
+      ${cols.map((c) => `<td class="${c.num ? "num" : ""}">${c.f(r)}</td>`).join("")}</tr>`).join("")}
+    </tbody></table></div>`;
+}
+function loading() {
+  return `<div class="grid" style="gap:12px">${Array.from({length:5},(_,i)=>`<div class="sk" style="height:${i?54:96}px;animation-delay:${i*80}ms"></div>`).join("")}</div>`;
+}
+function avatar(url, emoji, size) {
+  const s = size || 26;
+  return url
+    ? `<img class="avatar" src="${esc(url)}" style="width:${s}px;height:${s}px" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'avatar',textContent:'${esc(emoji||"🌟")}'}))">`
+    : `<span class="avatar" style="width:${s}px;height:${s}px;font-size:${s*0.55}px">${esc(emoji || "🌟")}</span>`;
+}
+function colorDot(c) { return `<span class="swatch" style="background:#${esc(c || "FF5C8A")}"></span>`; }
+function kindTag(k, amount) {
+  const m = { text:["n","発言"], penlight:["p","ペンラ"], stamp:["y","スタンプ"], super_chat:["g","スパチャ"], announce:["y","告知"] };
+  const [cls, label] = m[k] || ["n", k];
+  return `<span class="tag ${cls}">${label}${k === "super_chat" && amount ? " " + yen(amount) : ""}</span>`;
+}
+const CAT = { tv:["📺","TV出演"], live:["🎤","ライブ"], goods:["🛍","グッズ"], streaming:["💻","配信"], lottery:["🎫","当落"], other:["✨","その他"] };
+
+/* ============ モーダル ============ */
+function modal(html) { $("#modal-body").innerHTML = html; $("#modal").classList.add("on"); }
+function closeModal() { $("#modal").classList.remove("on"); }
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+async function act(action, params, msg) {
+  try {
+    await api(action, params);
+    toast(msg || "実行しました");
+    closeModal();
+    render(true);
+  } catch (e) { toast("失敗: " + e.message, true); }
+}
+function confirmAct(text, action, params, msg) {
+  modal(`<h3>確認</h3><p style="color:var(--muted);font-size:13.5px;line-height:1.8">${text}</p>
+    <div class="row" style="justify-content:flex-end;margin-top:20px">
+      <button class="btn ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn danger" onclick='act(${JSON.stringify(action)}, ${JSON.stringify(params)}, ${JSON.stringify(msg || "実行しました")})'>実行する</button>
+    </div>`);
+}
+
+/* ============ 描画エントリ ============ */
+async function render(silent) {
+  const v = $("#view");
+  const meta = {
+    dash:["ダッシュボード","アプリ全体の健康状態"], live:["ライブフィード","いま流れている発言"],
+    rooms:["ルーム","推しごとの部屋"], room:["ルーム詳細",""], users:["ユーザー","登録プロフィール"],
+    user:["ユーザー詳細",""], content:["コンテンツ","予定・スレッド・アンケート・図鑑"],
+    mod:["モデレーション","通報・非表示・ミュート"], ng:["NGワード","審査不要で即反映"],
+    revenue:["収益","スパチャの内訳と推移"], push:["プッシュ通知","端末と到達数"],
+    system:["システム","テーブルと設定"], sql:["SQLコンソール","読み取り専用"], audit:["操作ログ","管理画面からの操作履歴"],
+  }[VIEW] || ["", ""];
+  $("#title").textContent = meta[0]; $("#crumb").textContent = meta[1]; $("#tools").innerHTML = "";
+  if (!silent) v.innerHTML = loading();
+  try {
+    await ({ dash:viewDash, live:viewLive, rooms:viewRooms, room:viewRoom, users:viewUsers, user:viewUser,
+      content:viewContent, mod:viewMod, ng:viewNg, revenue:viewRevenue, push:viewPush,
+      system:viewSystem, sql:viewSql, audit:viewAudit }[VIEW] || viewDash)();
+  } catch (e) {
+    v.innerHTML = `<div class="card"><div class="empty">読み込みに失敗しました<br><span class="mono">${esc(e.message)}</span></div></div>`;
+  }
+}
+
+/* ============ ① ダッシュボード ============ */
+let dashMetric = "messages";
+async function viewDash() {
+  const d = await api("overview");
+  STATE.dash = d;
+  const k = d.kpi;
+  const reports = k.msg_reports + k.post_reports + k.img_reports;
+  const badge = $("#badge-mod");
+  if (badge) { badge.style.display = reports ? "" : "none"; badge.textContent = reports; }
+
+  const kpi = (lbl, val, sub, color) => `<div class="kpi anim" style="--accent:${color}">
+    <div class="lbl">${lbl}</div><div class="val">${val}</div><div class="sub">${sub || ""}</div></div>`;
+
+  const metrics = { messages:["発言数","var(--pink)"], active:["アクティブユーザー","var(--teal)"], revenue:["スパチャ売上","var(--gold)"], joins:["ルーム参加","var(--blue)"] };
+  const sum = (key) => d.series.reduce((a, r) => a + Number(r[key] || 0), 0);
+  const maxRoomMsg = Math.max(1, ...d.topRooms.map((r) => r.messages));
+
+  $("#view").innerHTML = `
+  <div class="grid kpis" style="margin-bottom:16px">
+    ${kpi("👥 ユーザー", n(k.users), `24hアクティブ ${n(k.active_24h)}人`, "var(--purple)")}
+    ${kpi("🏠 ルーム", n(k.rooms), `統合申請 ${n(k.pending_merges)}件`, "var(--pink)")}
+    ${kpi("💬 発言", n(k.messages), `24h ${n(k.messages_24h)}件`, "var(--blue)")}
+    ${kpi("💎 スパチャ売上", yen(k.revenue), `${n(k.superchats)}件`, "var(--gold)")}
+    ${kpi("🔥 ルーム熱量", n(k.heat), "全ルーム累計", "var(--red)")}
+    ${kpi("🥢 ペンライト", n(k.penlights), "累計振り数", "var(--teal)")}
+    ${kpi("📅 予定", n(k.events), `参加表明 ${n(k.attendance)}`, "var(--blue)")}
+    ${kpi("🧵 スレッド", n(k.threads), `投稿 ${n(k.thread_posts)}`, "var(--purple)")}
+    ${kpi("🚩 通報", n(reports), reports ? "要確認" : "問題なし", reports ? "var(--red)" : "var(--teal)")}
+    ${kpi("🔇 ミュート中", n(k.active_mutes), `非表示 ${n(k.hidden_messages)}件`, "var(--red)")}
+    ${kpi("📱 通知端末", n(k.devices), "プッシュ登録済み", "var(--teal)")}
+    ${kpi("📈 週間アクティブ", n(k.active_7d), `新規参加 ${n(k.joins_7d)}`, "var(--pink)")}
+  </div>
+
+  <div class="grid" style="grid-template-columns:1.6fr 1fr;align-items:start">
+    <div class="card anim">
+      <h2>過去30日の推移
+        <span class="spacer"></span>
+        ${Object.entries(metrics).map(([id, m]) => `<span class="chip click ${dashMetric===id?"on":""}" onclick="dashMetric='${id}';render(true)">${m[0]}</span>`).join("")}
+      </h2>
+      <div style="font-size:24px;font-weight:800;margin-bottom:2px">${dashMetric==="revenue"?yen(sum("revenue")):n(sum(dashMetric))}</div>
+      <div style="font-size:11.5px;color:var(--dim);margin-bottom:14px">30日間の合計</div>
+      ${lineChart(d.series, dashMetric, metrics[dashMetric][1].replace("var(--pink)","#FF5C8A").replace("var(--teal)","#00E5C0").replace("var(--gold)","#FFC24B").replace("var(--blue)","#4DA3FF"), 170)}
+    </div>
+    <div class="card anim">
+      <h2>にぎわっているルーム</h2>
+      ${d.topRooms.map((r) => barRow(
+        `<span style="cursor:pointer" onclick="go('room:${r.id}')">${colorDot(r.color)}${esc(r.name)}</span>`,
+        r.messages, maxRoomMsg, `linear-gradient(90deg,#${esc(r.color)},var(--purple))`,
+        `${n(r.messages)}件`)).join("") || `<div class="empty">まだルームがありません</div>`}
+    </div>
+  </div>
+
+  <div class="card anim" style="margin-top:14px">
+    <h2>直近の発言 <span class="cnt">最新30件</span> <span class="spacer"></span>
+      <span class="chip click" onclick="go('live')"><span class="live-dot"></span>ライブフィードを開く</span></h2>
+    ${table([
+      { h:"時刻", f:(r)=>`<span class="mono">${dt(r.created_at,1)}</span>` },
+      { h:"ルーム", f:(r)=>`${colorDot(r.color)}${esc(r.room_name)}` },
+      { h:"ユーザー", f:(r)=>esc(r.user_name) },
+      { h:"種別", f:(r)=>kindTag(r.kind, r.amount) },
+      { h:"内容", f:(r)=>`<div class="trunc">${r.is_hidden?'<span class="tag r">非表示</span> ':""}${esc(r.content)}</div>` },
+    ], d.recent)}
+  </div>`;
+}
+
+/* ============ ② ライブフィード ============ */
+async function viewLive() {
+  const d = await api("overview");
+  $("#tools").innerHTML = `<span class="chip"><span class="live-dot"></span>10秒ごとに自動更新</span>`;
+  $("#view").innerHTML = `<div class="card">
+    <h2>いま流れている発言 <span class="cnt">最新30件</span></h2>
+    ${table([
+      { h:"時刻", f:(r)=>`<span class="mono">${dt(r.created_at,1)}</span><div style="font-size:10.5px;color:var(--dim)">${ago(r.created_at)}</div>` },
+      { h:"ルーム", f:(r)=>`${colorDot(r.color)}${esc(r.room_name)}` },
+      { h:"ユーザー", f:(r)=>esc(r.user_name) },
+      { h:"種別", f:(r)=>kindTag(r.kind, r.amount) },
+      { h:"内容", f:(r)=>`<div class="trunc" style="max-width:520px">${esc(r.content)}</div>` },
+    ], d.recent)}</div>`;
+  if (!timer) timer = setInterval(() => { if (VIEW === "live") viewLive(); }, 10000);
+}
+
+/* ============ ③ ルーム ============ */
+let roomSort = "messages", roomSearch = "";
+async function viewRooms() {
+  const rows = await api("rooms", { sort: roomSort, search: roomSearch });
+  $("#tools").innerHTML = `
+    <input id="rq" placeholder="ルーム名で検索" value="${esc(roomSearch)}" style="width:180px"
+      onkeydown="if(event.key==='Enter'){roomSearch=this.value;render()}">
+    <select onchange="roomSort=this.value;render()" style="width:auto">
+      ${[["messages","発言が多い順"],["members","人数が多い順"],["heat","熱量が高い順"],["revenue","売上が高い順"],["recent","最終発言が新しい順"],["created","作成が新しい順"]]
+        .map(([v,l])=>`<option value="${v}" ${roomSort===v?"selected":""}>${l}</option>`).join("")}
+    </select>`;
+  $("#view").innerHTML = `<div class="card"><h2>ルーム一覧 <span class="cnt">${rows.length}件</span></h2>
+    ${table([
+      { h:"ルーム", f:(r)=>`<div class="who">${colorDot(r.color)}<div><div style="font-weight:700">${esc(r.name)}</div>
+        <div style="font-size:11px;color:var(--dim)">${r.genre?esc(r.genre):"—"}${r.birthday?` · 🎂${esc(r.birthday)}`:""}</div></div></div>` },
+      { h:"参加人数", num:1, f:(r)=>n(r.member_count) },
+      { h:"発言", num:1, f:(r)=>`${n(r.messages)}<div style="font-size:10.5px;color:var(--dim)">7日 ${n(r.messages_7d)}</div>` },
+      { h:"予定", num:1, f:(r)=>n(r.events) },
+      { h:"スレ", num:1, f:(r)=>n(r.threads) },
+      { h:"熱量", num:1, f:(r)=>n(r.heat) },
+      { h:"売上", num:1, f:(r)=>r.revenue?yen(r.revenue):"—" },
+      { h:"最終発言", f:(r)=>`<span style="color:var(--muted);font-size:12px">${ago(r.last_message)}</span>` },
+      { h:"", f:(r)=>`<span class="tag ${r.member_count>=300||r.messages_7d>=25?"g":r.member_count>=20||r.messages_7d>=6?"y":"n"}">${
+        r.member_count>=300||r.messages_7d>=25?"LIVE":r.member_count>=20||r.messages_7d>=6?"集まりはじめ":"静か"}</span>` },
+    ], rows, { onClick:(r)=>`go('room:${r.id}')` })}</div>`;
+}
+
+let roomTab = "messages";
+async function viewRoom() {
+  const d = await api("room", { id: PARAM });
+  const r = d.room;
+  $("#title").textContent = r.name;
+  $("#crumb").innerHTML = `<span style="cursor:pointer" onclick="go('rooms')">← ルーム一覧</span> ／ <span class="mono">${esc(r.id)}</span>`;
+  $("#tools").innerHTML = `
+    <button class="btn ghost sm" onclick="editRoom()">✎ 情報を編集</button>
+    <button class="btn ghost sm" onclick="noticeRoom()">📢 告知を送る</button>
+    <a class="btn ghost sm" href="https://dreamnoark.com/oshi-calendar/oshi/${encodeURIComponent(r.name)}/" target="_blank" rel="noopener">🌐 公開ページ</a>`;
+  STATE.room = d;
+
+  const wiki = Object.fromEntries(d.wiki.map((w) => [w.kind, w.n]));
+  const kpi = (l, v, c) => `<div class="kpi" style="--accent:${c}"><div class="lbl">${l}</div><div class="val">${v}</div></div>`;
+  const tabs = { messages:`発言 ${d.messages.length}`, events:`予定 ${d.events.length}`, threads:`スレッド ${d.threads.length}`,
+    members:`メンバー ${d.members.length}`, penlights:`ペンラ ${d.penlights.length}`, polls:`アンケート ${d.polls.length}`, bans:`ミュート ${d.bans.length}` };
+
+  const body = {
+    messages: () => table([
+      { h:"時刻", f:(m)=>`<span class="mono">${dt(m.created_at,1)}</span>` },
+      { h:"ユーザー", f:(m)=>`<span style="cursor:pointer" onclick="event.stopPropagation();go('user:${encodeURIComponent(m.user_id||"")}')">${esc(m.user_name)}</span>
+        <span class="tag n">Lv${m.sender_level??1}</span>` },
+      { h:"種別", f:(m)=>kindTag(m.kind, m.amount) },
+      { h:"内容", f:(m)=>`<div class="trunc" style="max-width:430px">${m.is_hidden?'<span class="tag r">非表示</span> ':""}${esc(m.content)}</div>` },
+      { h:"通報", num:1, f:(m)=>m.reports?`<span class="tag r">${m.reports}</span>`:"—" },
+      { h:"", num:1, f:(m)=>`
+        <button class="btn ghost xs" onclick="event.stopPropagation();act('hideMessage',{id:'${m.id}',hidden:${!m.is_hidden}},'${m.is_hidden?"再表示しました":"非表示にしました"}')">${m.is_hidden?"再表示":"非表示"}</button>
+        <button class="btn ghost xs" onclick="event.stopPropagation();muteDialog('${r.id}','${esc(m.user_id||"")}','${esc(m.user_name)}')">ミュート</button>` },
+    ], d.messages),
+    events: () => table([
+      { h:"日時", f:(e)=>dt(e.date) },
+      { h:"カテゴリ", f:(e)=>`<span class="tag p">${(CAT[e.category]||["","?"])[0]} ${(CAT[e.category]||["","?"])[1]}</span>` },
+      { h:"タイトル", f:(e)=>`<div class="trunc">${esc(e.title)}</div>${e.memo?`<div style="font-size:11px;color:var(--dim)" class="trunc">${esc(e.memo)}</div>`:""}` },
+      { h:"乗っかり", num:1, f:(e)=>n(e.attendee_count) },
+      { h:"リンク", f:(e)=>e.official_url?`<a href="${esc(e.official_url)}" target="_blank" rel="noopener">開く</a>`:"—" },
+      { h:"", num:1, f:(e)=>`<button class="btn ghost xs" onclick="confirmAct('予定「${esc(e.title)}」を削除します。','deleteEvent',{id:'${e.id}'},'削除しました')">削除</button>` },
+    ], d.events),
+    threads: () => table([
+      { h:"作成", f:(t)=>dt(t.created_at,1) },
+      { h:"タイトル", f:(t)=>`${t.has_spoiler?'<span class="tag y">ネタバレ</span> ':""}${esc(t.title)}` },
+      { h:"作成者", f:(t)=>esc(t.author_name) },
+      { h:"投稿", num:1, f:(t)=>n(t.posts) },
+      { h:"", num:1, f:(t)=>`<button class="btn ghost xs" onclick="confirmAct('スレッド「${esc(t.title)}」を投稿ごと削除します。','deleteThread',{id:'${t.id}'},'削除しました')">削除</button>` },
+    ], d.threads),
+    members: () => table([
+      { h:"ユーザー", f:(m)=>`<div class="who">${avatar(m.avatar_url,m.avatar_emoji)}<span>${esc(m.user_name||"（未設定）")}</span></div>` },
+      { h:"ID", f:(m)=>`<span class="mono">${esc(m.user_id)}</span>` },
+      { h:"発言", num:1, f:(m)=>n(m.messages) },
+      { h:"参加日", f:(m)=>dt(m.created_at) },
+    ], d.members, { onClick:(m)=>`go('user:${encodeURIComponent(m.user_id)}')` }),
+    penlights: () => table([
+      { h:"ユーザー", f:(p)=>esc(p.user_name) },
+      { h:"振った回数", num:1, f:(p)=>n(p.count) },
+      { h:"最終", f:(p)=>ago(p.updated_at) },
+    ], d.penlights),
+    polls: () => table([
+      { h:"質問", f:(p)=>esc(p.question) },
+      { h:"選択肢", f:(p)=>(p.options||[]).map((o)=>`<span class="tag n">${esc(o)}</span>`).join(" ") },
+      { h:"投票", num:1, f:(p)=>n(p.votes) },
+      { h:"作成", f:(p)=>dt(p.created_at,1) },
+      { h:"", num:1, f:(p)=>`<button class="btn ghost xs" onclick="confirmAct('アンケートを削除します。','deletePoll',{id:'${p.id}'},'削除しました')">削除</button>` },
+    ], d.polls),
+    bans: () => table([
+      { h:"ユーザー", f:(b)=>`<span class="mono">${esc(b.user_id)}</span>` },
+      { h:"実行者", f:(b)=>b.banned_by==="community"?'<span class="tag y">通報の総意</span>':esc(b.banned_by) },
+      { h:"理由", f:(b)=>esc(b.reason||"—") },
+      { h:"開始", f:(b)=>dt(b.created_at,1) },
+      { h:"期限", f:(b)=>b.expires_at?dt(b.expires_at,1):'<span class="tag r">無期限</span>' },
+      { h:"", num:1, f:(b)=>`<button class="btn ghost xs" onclick="act('unmute',{roomId:'${r.id}',userId:'${esc(b.user_id)}'},'解除しました')">解除</button>` },
+    ], d.bans, { empty:"ミュート中のユーザーはいません" }),
+  }[roomTab]();
+
+  $("#view").innerHTML = `
+    <div class="grid kpis" style="margin-bottom:14px">
+      ${kpi("参加人数", n(r.member_count), "var(--pink)")}
+      ${kpi("累計熱量", n(r.heat), "var(--red)")}
+      ${kpi("発言", n(d.messages.length >= 100 ? "100+" : d.messages.length), "var(--blue)")}
+      ${kpi("図鑑項目", n((wiki.links||0)+(wiki.works||0)+(wiki.terms||0)+(wiki.history||0)+(wiki.faq||0)), "var(--teal)")}
+      ${kpi("推し色", `<span class="swatch" style="width:22px;height:22px;background:#${esc(r.color)}"></span>`, "var(--purple)")}
+    </div>
+    ${r.chief_notice ? `<div class="card anim" style="margin-bottom:14px;border-color:rgba(255,194,75,.4)">
+      <h2>📌 現在のチーフ告知</h2><div style="font-size:14px">${esc(r.chief_notice)}</div>
+      <button class="btn ghost sm" style="margin-top:12px" onclick="act('roomNotice',{roomId:'${r.id}',notice:null},'告知を消しました')">告知を消す</button></div>` : ""}
+    <div class="grid" style="grid-template-columns:1.4fr 1fr;margin-bottom:14px">
+      <div class="card anim"><h2>過去30日の発言数</h2>${lineChart(d.daily, "messages", "#FF5C8A", 120)}</div>
+      <div class="card anim"><h2>推しプロフィール（図鑑）</h2>
+        <table><tbody>
+          ${[["誕生日",r.birthday],["デビュー",r.debut_date],["所属",r.agency],["公式タグ",r.official_tag],["ジャンル",r.genre],["チーフ",r.chief_user_id],["作成日",dt(r.created_at)]]
+            .map(([k,v])=>`<tr><td style="color:var(--muted);width:88px">${k}</td><td>${esc(v||"—")}</td></tr>`).join("")}
+          <tr><td style="color:var(--muted)">図鑑</td><td>${["links","works","terms","history","faq","feed"].map((x)=>`<span class="tag n">${x} ${wiki[x]||0}</span>`).join(" ")}</td></tr>
+        </tbody></table>
+        ${r.profile_bio?`<div style="margin-top:10px;font-size:12.5px;color:var(--muted)">${esc(r.profile_bio)}</div>`:""}
+      </div>
+    </div>
+    <div class="card anim">
+      <div class="tabs">${Object.entries(tabs).map(([id,l])=>`<span class="chip click ${roomTab===id?"on":""}" onclick="roomTab='${id}';render(true)">${l}</span>`).join("")}</div>
+      ${body}
+    </div>`;
+}
+
+function editRoom() {
+  const r = STATE.room.room;
+  const f = (k, label, type) => `<div class="field"><label>${label}</label>
+    <input id="f-${k}" type="${type||"text"}" value="${esc(r[k] ?? "")}"></div>`;
+  modal(`<h3>ルーム情報を編集</h3>
+    ${f("name","推しの名前")}
+    <div class="row"><div style="flex:1">${f("color","推し色（HEX・#なし）")}</div>
+      <div style="flex:1">${f("genre","ジャンル")}</div></div>
+    <div class="row"><div style="flex:1">${f("birthday","誕生日","date")}</div>
+      <div style="flex:1">${f("debut_date","デビュー日","date")}</div></div>
+    <div class="row"><div style="flex:1">${f("agency","所属")}</div>
+      <div style="flex:1">${f("official_tag","公式タグ")}</div></div>
+    <div class="field"><label>紹介文</label><textarea id="f-profile_bio" rows="3">${esc(r.profile_bio ?? "")}</textarea></div>
+    <p style="font-size:11.5px;color:var(--dim)">※ 名前を変えても正規化名（重複防止キー）は変わりません。統合が必要な場合はアプリ側のマージ機能を使ってください。</p>
+    <div class="row" style="justify-content:flex-end;margin-top:16px">
+      <button class="btn ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn" onclick="saveRoom('${r.id}')">保存</button></div>`);
+}
+function saveRoom(id) {
+  const fields = {};
+  ["name","color","genre","birthday","debut_date","agency","official_tag","profile_bio"].forEach((k) => {
+    const el = $("#f-" + k); if (el) fields[k] = el.value.trim();
+  });
+  act("roomUpdate", { roomId: id, fields }, "保存しました");
+}
+function noticeRoom() {
+  const r = STATE.room.room;
+  modal(`<h3>📢 チーフ告知を送る</h3>
+    <p style="color:var(--muted);font-size:12.5px">ルーム上部に固定表示され、<b>参加者全員にプッシュ通知が飛びます</b>（通知OFFの人を除く）。</p>
+    <div class="field"><label>本文</label><textarea id="notice" rows="3" placeholder="例）今夜21時から生放送！実況チャットに集合しよう🔥">${esc(r.chief_notice ?? "")}</textarea></div>
+    <div class="row" style="justify-content:flex-end;margin-top:8px">
+      <button class="btn ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn" onclick="act('roomNotice',{roomId:'${r.id}',notice:$('#notice').value.trim()},'告知を送りました')">送信する</button></div>`);
+}
+function muteDialog(roomId, userId, userName) {
+  if (!userId) return toast("このメッセージにはユーザーIDがありません", true);
+  modal(`<h3>🔇 ルームミュート</h3>
+    <p style="color:var(--muted);font-size:13px;line-height:1.8">
+      <b>${esc(userName)}</b> をこのルームで<b>書き込み禁止</b>にします。<br>
+      閲覧（カレンダー・図鑑）は引き続きできます（公共財ポリシー）。</p>
+    <div class="field"><label>期間</label>
+      <select id="mdays">
+        <option value="1">1日</option><option value="3">3日</option>
+        <option value="7" selected>7日</option><option value="30">30日</option>
+        <option value="0">無期限</option>
+      </select></div>
+    <div class="field"><label>理由（本人には表示されません）</label><input id="mreason" value="管理者による措置"></div>
+    <div class="row" style="justify-content:flex-end;margin-top:14px">
+      <button class="btn ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn danger" onclick="act('mute',{roomId:'${roomId}',userId:'${esc(userId)}',days:Number($('#mdays').value),reason:$('#mreason').value},'ミュートしました')">ミュートする</button></div>`);
+}
+
+/* ============ ④ ユーザー ============ */
+let userSort = "messages", userSearch = "";
+async function viewUsers() {
+  const rows = await api("users", { sort: userSort, search: userSearch });
+  $("#tools").innerHTML = `
+    <input id="uq" placeholder="名前 / IDで検索" value="${esc(userSearch)}" style="width:180px"
+      onkeydown="if(event.key==='Enter'){userSearch=this.value;render()}">
+    <select onchange="userSort=this.value;render()" style="width:auto">
+      ${[["messages","発言が多い順"],["spent","課金額が多い順"],["reported","通報された順"],["recent","最終更新が新しい順"]]
+        .map(([v,l])=>`<option value="${v}" ${userSort===v?"selected":""}>${l}</option>`).join("")}
+    </select>`;
+  $("#view").innerHTML = `<div class="card"><h2>ユーザー一覧 <span class="cnt">${rows.length}件</span></h2>
+    ${table([
+      { h:"ユーザー", f:(u)=>`<div class="who">${avatar(u.avatar_url,u.avatar_emoji,30)}
+        <div><div style="font-weight:700">${esc(u.user_name)}${u.is_supporter?' <span class="tag y">👑サポーター</span>':""}</div>
+        <div class="mono" style="font-size:10.5px">${esc(u.user_id)}</div></div></div>` },
+      { h:"発言", num:1, f:(u)=>n(u.messages) },
+      { h:"課金額", num:1, f:(u)=>u.spent?`<span style="color:var(--gold);font-weight:700">${yen(u.spent)}</span>`:"—" },
+      { h:"ルーム", num:1, f:(u)=>n(u.rooms) },
+      { h:"グッズ", num:1, f:(u)=>n(u.goods) },
+      { h:"端末", num:1, f:(u)=>n(u.devices) },
+      { h:"通報", num:1, f:(u)=>u.reported?`<span class="tag r">${u.reported}</span>`:"—" },
+      { h:"制限", num:1, f:(u)=>u.mutes?`<span class="tag r">🔇${u.mutes}</span>`:"—" },
+      { h:"最終更新", f:(u)=>`<span style="color:var(--muted);font-size:12px">${ago(u.updated_at)}</span>` },
+    ], rows, { onClick:(u)=>`go('user:${encodeURIComponent(u.user_id)}')` })}</div>`;
+}
+
+async function viewUser() {
+  const d = await api("user", { id: PARAM });
+  const p = d.profile || { user_id: PARAM, user_name: "（プロフィール未作成）" };
+  $("#title").textContent = p.user_name;
+  $("#crumb").innerHTML = `<span style="cursor:pointer" onclick="go('users')">← ユーザー一覧</span> ／ <span class="mono">${esc(p.user_id)}</span>`;
+  const goods = Array.isArray(p.goods_photos) ? p.goods_photos : [];
+  const kpi = (l, v, c) => `<div class="kpi" style="--accent:${c}"><div class="lbl">${l}</div><div class="val">${v}</div></div>`;
+  $("#view").innerHTML = `
+    <div class="grid" style="grid-template-columns:300px 1fr;align-items:start;margin-bottom:14px">
+      <div class="card anim" style="text-align:center">
+        ${avatar(p.avatar_url, p.avatar_emoji, 88)}
+        <div style="font-size:18px;font-weight:800;margin-top:10px">${esc(p.user_name)}</div>
+        ${p.is_supporter?'<span class="tag y">👑 サポーター</span>':""}
+        <div style="color:var(--muted);font-size:12.5px;margin-top:8px">${esc(p.bio||"自己紹介はありません")}</div>
+        <div class="mono" style="margin-top:10px;font-size:10.5px">${esc(p.user_id)}</div>
+        ${goods.length?`<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:12px">
+          ${goods.slice(0,6).map((g)=>`<img src="${esc(typeof g==="string"?g:g.url)}" style="width:56px;height:56px;object-fit:cover;border-radius:9px" loading="lazy">`).join("")}
+        </div><div style="font-size:11px;color:var(--dim);margin-top:6px">グッズ写真 ${goods.length}枚</div>`:""}
+      </div>
+      <div>
+        <div class="grid kpis" style="margin-bottom:14px">
+          ${kpi("発言", n(d.messages.length>=100?"100+":d.messages.length), "var(--blue)")}
+          ${kpi("課金額", yen(d.stats.spent), "var(--gold)")}
+          ${kpi("ペンラ", n(d.stats.penlights), "var(--teal)")}
+          ${kpi("図鑑編集", n(d.stats.wiki_edits), "var(--purple)")}
+          ${kpi("予定登録", n(d.stats.events_created), "var(--pink)")}
+        </div>
+        <div class="card anim"><h2>参加ルーム <span class="cnt">${d.rooms.length}</span></h2>
+          ${d.rooms.map((r)=>`<span class="chip click" onclick="go('room:${r.room_id}')">${colorDot(r.color)}${esc(r.name)}</span>`).join(" ") || '<div class="empty">なし</div>'}
+        </div>
+        ${d.bans.length?`<div class="card anim" style="margin-top:14px;border-color:rgba(255,84,104,.4)">
+          <h2>🔇 ミュート中</h2>${table([
+            { h:"ルーム", f:(b)=>esc(b.room_name) },
+            { h:"実行者", f:(b)=>b.banned_by==="community"?'<span class="tag y">通報の総意</span>':esc(b.banned_by) },
+            { h:"期限", f:(b)=>b.expires_at?dt(b.expires_at,1):'<span class="tag r">無期限</span>' },
+            { h:"", num:1, f:(b)=>`<button class="btn ghost xs" onclick="act('unmute',{roomId:'${b.room_id}',userId:'${esc(p.user_id)}'},'解除しました')">解除</button>` },
+          ], d.bans)}</div>`:""}
+      </div>
+    </div>
+    <div class="card anim"><h2>発言履歴 <span class="cnt">最新100件</span></h2>
+      ${table([
+        { h:"時刻", f:(m)=>`<span class="mono">${dt(m.created_at,1)}</span>` },
+        { h:"ルーム", f:(m)=>`<span style="cursor:pointer" onclick="go('room:${m.room_id}')">${esc(m.room_name)}</span>` },
+        { h:"種別", f:(m)=>kindTag(m.kind,m.amount) },
+        { h:"内容", f:(m)=>`<div class="trunc" style="max-width:480px">${m.is_hidden?'<span class="tag r">非表示</span> ':""}${esc(m.content)}</div>` },
+        { h:"通報", num:1, f:(m)=>m.reports?`<span class="tag r">${m.reports}</span>`:"—" },
+        { h:"", num:1, f:(m)=>`<button class="btn ghost xs" onclick="act('hideMessage',{id:'${m.id}',hidden:${!m.is_hidden}},'更新しました')">${m.is_hidden?"再表示":"非表示"}</button>` },
+      ], d.messages)}</div>
+    <div class="card anim" style="margin-top:14px"><h2>通知端末 <span class="cnt">${d.devices.length}</span></h2>
+      ${table([
+        { h:"platform", f:(x)=>`<span class="tag p">${esc(x.platform)}</span>` },
+        { h:"トークン", f:(x)=>`<span class="mono">${esc(String(x.token).slice(0,28))}…</span>` },
+        { h:"通知設定", f:(x)=>[["soon","🔴まもなく",x.notify_event_soon],["start","▶️開始",x.notify_event_start],["new","📅新予定",x.notify_new_event],["notice","📌告知",x.notify_notice],["digest","🌅朝",x.notify_digest]]
+            .map(([,l,on])=>`<span class="tag ${on?"g":"n"}">${l}</span>`).join(" ") },
+        { h:"更新", f:(x)=>ago(x.updated_at) },
+      ], d.devices, { empty:"プッシュ通知の登録がありません" })}</div>`;
+}
+
+/* ============ ⑤ コンテンツ ============ */
+let contentTab = "events", eventScope = "upcoming";
+async function viewContent() {
+  $("#view").innerHTML = `<div class="card">
+    <div class="tabs">${Object.entries({events:"📅 予定",threads:"🧵 スレッド",polls:"🗳 アンケート",wiki:"📚 図鑑の編集履歴"})
+      .map(([id,l])=>`<span class="chip click ${contentTab===id?"on":""}" onclick="contentTab='${id}';render()">${l}</span>`).join("")}</div>
+    <div id="content-body">${loading()}</div></div>`;
+  const b = $("#content-body");
+  if (contentTab === "events") {
+    const rows = await api("events", { scope: eventScope });
+    b.innerHTML = `<div class="tabs">${Object.entries({upcoming:"これから",past:"過去",all:"すべて"})
+        .map(([id,l])=>`<span class="chip click ${eventScope===id?"on":""}" onclick="eventScope='${id}';render()">${l}</span>`).join("")}</div>
+      ${table([
+        { h:"日時", f:(e)=>`${dt(e.date)}<div style="font-size:10.5px;color:var(--dim)">${ago(e.date)}</div>` },
+        { h:"ルーム", f:(e)=>`<span style="cursor:pointer" onclick="go('room:${e.room_id}')">${colorDot(e.color)}${esc(e.room_name)}</span>` },
+        { h:"カテゴリ", f:(e)=>`<span class="tag p">${(CAT[e.category]||["","?"])[0]} ${(CAT[e.category]||["","?"])[1]}</span>` },
+        { h:"タイトル", f:(e)=>`<div class="trunc">${esc(e.title)}</div>` },
+        { h:"乗っかり", num:1, f:(e)=>n(e.attendee_count) },
+        { h:"URL", f:(e)=>e.official_url?`<a href="${esc(e.official_url)}" target="_blank" rel="noopener">🔗</a>`:"—" },
+        { h:"", num:1, f:(e)=>`<button class="btn ghost xs" onclick="confirmAct('予定「${esc(e.title)}」を削除します。','deleteEvent',{id:'${e.id}'},'削除しました')">削除</button>` },
+      ], rows)}`;
+  } else if (contentTab === "threads") {
+    const rows = await api("threads");
+    b.innerHTML = table([
+      { h:"作成", f:(t)=>dt(t.created_at,1) },
+      { h:"ルーム", f:(t)=>`<span style="cursor:pointer" onclick="go('room:${t.room_id}')">${colorDot(t.color)}${esc(t.room_name)}</span>` },
+      { h:"タイトル", f:(t)=>`${t.has_spoiler?'<span class="tag y">ネタバレ</span> ':""}${esc(t.title)}` },
+      { h:"作成者", f:(t)=>esc(t.author_name) },
+      { h:"投稿", num:1, f:(t)=>n(t.posts) },
+      { h:"最終投稿", f:(t)=>ago(t.last_post) },
+      { h:"", num:1, f:(t)=>`<button class="btn ghost xs" onclick="confirmAct('スレッド「${esc(t.title)}」を投稿ごと削除します。','deleteThread',{id:'${t.id}'},'削除しました')">削除</button>` },
+    ], rows);
+  } else if (contentTab === "polls") {
+    const rows = await api("polls");
+    b.innerHTML = table([
+      { h:"作成", f:(p)=>dt(p.created_at,1) },
+      { h:"ルーム", f:(p)=>`<span style="cursor:pointer" onclick="go('room:${p.room_id}')">${esc(p.room_name)}</span>` },
+      { h:"質問", f:(p)=>esc(p.question) },
+      { h:"選択肢", f:(p)=>(p.options||[]).map((o)=>`<span class="tag n">${esc(o)}</span>`).join(" ") },
+      { h:"投票", num:1, f:(p)=>n(p.votes) },
+      { h:"", num:1, f:(p)=>`<button class="btn ghost xs" onclick="confirmAct('アンケートを削除します。','deletePoll',{id:'${p.id}'},'削除しました')">削除</button>` },
+    ], rows);
+  } else {
+    const rows = await api("wikiEdits");
+    b.innerHTML = table([
+      { h:"日時", f:(w)=>dt(w.created_at,1) },
+      { h:"ルーム", f:(w)=>`<span style="cursor:pointer" onclick="go('room:${w.room_id}')">${esc(w.room_name)}</span>` },
+      { h:"編集者", f:(w)=>esc(w.editor_name) },
+      { h:"操作", f:(w)=>`<span class="tag ${({add:"g",edit:"y",delete:"r",revert:"p"})[w.action]||"n"}">${({add:"追加",edit:"編集",delete:"削除",revert:"取消"})[w.action]||w.action}</span>` },
+      { h:"対象", f:(w)=>esc(w.target) },
+      { h:"内容", f:(w)=>`<div class="trunc">${esc(w.summary)}</div>` },
+      { h:"", f:(w)=>w.reverted?'<span class="tag n">取り消し済み</span>':"" },
+    ], rows, { empty:"図鑑の編集履歴はまだありません" });
+  }
+}
+
+/* ============ ⑥ モデレーション ============ */
+let modTab = "reported";
+async function viewMod() {
+  const d = await api("moderation");
+  const tabs = { reported:`🚩 通報された発言 ${d.reported.length}`, reportedPosts:`🧵 通報されたスレ投稿 ${d.reportedPosts.length}`,
+    images:`🖼 通報された画像 ${d.images.length}`, hidden:`🙈 非表示中 ${d.hidden.length}`,
+    mutes:`🔇 ミュート ${d.mutes.length}`, imgLog:`🤖 画像判定ログ ${d.imgLog.length}`, blocks:`🚷 ブロック ${d.blocks.length}` };
+
+  const body = {
+    reported: () => table([
+      { h:"通報数", num:1, f:(m)=>`<span class="tag ${m.reports>=3?"r":"y"}">${m.reports}</span>` },
+      { h:"状態", f:(m)=>m.is_hidden?'<span class="tag r">非表示</span>':'<span class="tag g">公開中</span>' },
+      { h:"ルーム", f:(m)=>`<span style="cursor:pointer" onclick="go('room:${m.room_id}')">${esc(m.room_name)}</span>` },
+      { h:"ユーザー", f:(m)=>`<span style="cursor:pointer" onclick="go('user:${encodeURIComponent(m.user_id||"")}')">${esc(m.user_name)}</span>` },
+      { h:"内容", f:(m)=>`<div class="trunc" style="max-width:380px">${esc(m.content)}</div>` },
+      { h:"最終通報", f:(m)=>ago(m.last_report) },
+      { h:"", num:1, f:(m)=>`
+        <button class="btn ghost xs" onclick="act('hideMessage',{id:'${m.id}',hidden:${!m.is_hidden}},'更新しました')">${m.is_hidden?"再表示":"非表示"}</button>
+        <button class="btn ghost xs" onclick="muteDialog('${m.room_id}','${esc(m.user_id||"")}','${esc(m.user_name)}')">ミュート</button>
+        <button class="btn ghost xs" onclick="act('clearReports',{id:'${m.id}'},'通報を取り下げました')">通報取消</button>` },
+    ], d.reported, { empty:"通報された発言はありません 🎉" }),
+    reportedPosts: () => table([
+      { h:"通報数", num:1, f:(p)=>`<span class="tag ${p.reports>=3?"r":"y"}">${p.reports}</span>` },
+      { h:"状態", f:(p)=>p.is_hidden?'<span class="tag r">非表示</span>':'<span class="tag g">公開中</span>' },
+      { h:"スレッド", f:(p)=>esc(p.thread_title) },
+      { h:"投稿者", f:(p)=>esc(p.author_name) },
+      { h:"内容", f:(p)=>`<div class="trunc" style="max-width:360px">${esc(p.content)}</div>` },
+      { h:"", num:1, f:(p)=>`<button class="btn ghost xs" onclick="act('hideThreadPost',{id:'${p.id}',hidden:${!p.is_hidden}},'更新しました')">${p.is_hidden?"再表示":"非表示"}</button>` },
+    ], d.reportedPosts, { empty:"通報されたスレッド投稿はありません 🎉" }),
+    images: () => table([
+      { h:"画像", f:(x)=>`<img src="${esc(x.image_url)}" style="width:60px;height:60px;object-fit:cover;border-radius:9px" loading="lazy">` },
+      { h:"通報数", num:1, f:(x)=>`<span class="tag ${x.reports>=3?"r":"y"}">${x.reports}</span>` },
+      { h:"場所", f:(x)=>`<span class="mono">${esc(x.bucket)}/${esc(x.object_path)}</span>` },
+      { h:"最終通報", f:(x)=>ago(x.last_report) },
+      { h:"", f:(x)=>`<a class="btn ghost xs" href="${esc(x.image_url)}" target="_blank" rel="noopener">開く</a>` },
+    ], d.images, { empty:"通報された画像はありません 🎉" }),
+    hidden: () => table([
+      { h:"時刻", f:(m)=>dt(m.created_at,1) },
+      { h:"ルーム", f:(m)=>esc(m.room_name) },
+      { h:"ユーザー", f:(m)=>esc(m.user_name) },
+      { h:"内容", f:(m)=>`<div class="trunc" style="max-width:420px">${esc(m.content)}</div>` },
+      { h:"", num:1, f:(m)=>`<button class="btn ghost xs" onclick="act('hideMessage',{id:'${m.id}',hidden:false},'再表示しました')">再表示</button>
+        <button class="btn ghost xs" onclick="confirmAct('この発言を完全に削除します（元に戻せません）。','deleteMessage',{id:'${m.id}'},'削除しました')">完全削除</button>` },
+    ], d.hidden, { empty:"非表示中の発言はありません" }),
+    mutes: () => table([
+      { h:"ルーム", f:(b)=>esc(b.room_name) },
+      { h:"ユーザー", f:(b)=>`${esc(b.user_name||"—")}<div class="mono" style="font-size:10.5px">${esc(b.user_id)}</div>` },
+      { h:"実行者", f:(b)=>b.banned_by==="community"?'<span class="tag y">通報の総意</span>':`<span class="tag p">${esc(b.banned_by)}</span>` },
+      { h:"理由", f:(b)=>esc(b.reason||"—") },
+      { h:"期限", f:(b)=>b.expires_at?`${dt(b.expires_at,1)}${new Date(b.expires_at)<new Date()?' <span class="tag n">期限切れ</span>':""}`:'<span class="tag r">無期限</span>' },
+      { h:"", num:1, f:(b)=>`<button class="btn ghost xs" onclick="act('unmute',{roomId:'${b.room_id}',userId:'${esc(b.user_id)}'},'解除しました')">解除</button>` },
+    ], d.mutes, { empty:"ミュート中のユーザーはいません" }),
+    imgLog: () => table([
+      { h:"日時", f:(x)=>dt(x.created_at,1) },
+      { h:"判定", f:(x)=>`<span class="tag ${x.verdict==="ng"?"r":x.verdict==="ok"?"g":"n"}">${esc(x.verdict)}</span>` },
+      { h:"provider", f:(x)=>esc(x.provider) },
+      { h:"score", num:1, f:(x)=>x.score??"—" },
+      { h:"所有者", f:(x)=>`<span class="mono">${esc(x.owner_id||"—")}</span>` },
+      { h:"画像", f:(x)=>`<a href="${esc(x.image_url)}" target="_blank" rel="noopener" class="mono">開く</a>` },
+    ], d.imgLog, { empty:"画像判定のログはありません" }),
+    blocks: () => table([
+      { h:"ブロックした人", f:(b)=>`<span class="mono">${esc(b.blocker_id)}</span>` },
+      { h:"→", f:()=>"→" },
+      { h:"された人", f:(b)=>`<span class="mono">${esc(b.blocked_id)}</span>` },
+      { h:"日時", f:(b)=>dt(b.created_at,1) },
+    ], d.blocks, { empty:"ブロックはありません" }),
+  }[modTab]();
+
+  const total = d.reported.length + d.reportedPosts.length + d.images.length;
+  $("#view").innerHTML = `
+    ${total ? `<div class="card anim" style="margin-bottom:14px;border-color:rgba(255,84,104,.45);background:rgba(255,84,104,.06)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="font-size:30px">🚨</div>
+        <div><div style="font-weight:800;font-size:15px">${total}件の通報が未確認です</div>
+        <div style="color:var(--muted);font-size:12.5px">3人が通報した投稿はアプリ側で自動的に非表示になります（24時間以内対応の担保）。ここでは手動での対応もできます。</div></div>
+      </div></div>` : `<div class="card anim" style="margin-bottom:14px;border-color:rgba(0,229,192,.35)">
+      <div style="display:flex;align-items:center;gap:12px"><div style="font-size:30px">✅</div>
+      <div><div style="font-weight:800;font-size:15px">未対応の通報はありません</div>
+      <div style="color:var(--muted);font-size:12.5px">コミュニティは健全な状態です。</div></div></div></div>`}
+    <div class="card anim">
+      <div class="tabs">${Object.entries(tabs).map(([id,l])=>`<span class="chip click ${modTab===id?"on":""}" onclick="modTab='${id}';render(true)">${l}</span>`).join("")}</div>
+      ${body}</div>`;
+}
+
+/* ============ ⑦ NGワード ============ */
+async function viewNg() {
+  const rows = await api("ngwords");
+  $("#tools").innerHTML = `<button class="btn sm" onclick="ngDialog()">＋ 追加</button>`;
+  $("#view").innerHTML = `
+    <div class="card anim" style="margin-bottom:14px">
+      <h2>💡 使い方</h2>
+      <div style="color:var(--muted);font-size:12.5px;line-height:1.9">
+        ここで追加した語は<b>アプリの審査なしで即反映</b>されます（ユーザーが次にアプリを起動したとき）。<br>
+        入力は正規化してから部分一致するため、<b>ひらがな／カタカナ／全角半角／間の空白は自動で吸収</b>されます。片方だけ登録すればOKです。<br>
+        「許可」に設定すると、アプリに組み込み済みの基本NGワードを<b>無効化</b>できます（誤検知の緩和用）。<br>
+        対象は公開・共有される全テキスト（チャット／スレッド／自己紹介／ルーム名／予定など）。端末内だけの推し活費・参戦レポは対象外です。
+      </div>
+    </div>
+    <div class="card anim"><h2>サーバー管理のNGワード <span class="cnt">${rows.length}件</span></h2>
+      ${table([
+        { h:"語", f:(w)=>`<b style="font-size:14px">${esc(w.word)}</b>` },
+        { h:"動作", f:(w)=>w.blocked?'<span class="tag r">ブロック</span>':'<span class="tag g">許可（基本語を無効化）</span>' },
+        { h:"メモ", f:(w)=>esc(w.note||"—") },
+        { h:"更新", f:(w)=>dt(w.updated_at,1) },
+        { h:"", num:1, f:(w)=>`
+          <button class="btn ghost xs" onclick="act('ngwordSave',{word:'${esc(w.word)}',blocked:${!w.blocked},note:${JSON.stringify(w.note||"")}},'切り替えました')">${w.blocked?"許可にする":"ブロックにする"}</button>
+          <button class="btn ghost xs" onclick="confirmAct('「${esc(w.word)}」を削除します。','ngwordDelete',{word:'${esc(w.word)}'},'削除しました')">削除</button>` },
+      ], rows, { empty:"サーバー追加のNGワードはまだありません（アプリ組み込みの基本語だけが効いています）" })}</div>`;
+}
+function ngDialog() {
+  modal(`<h3>NGワードを追加</h3>
+    <div class="field"><label>語</label><input id="ngw" placeholder="例）ばか"></div>
+    <div class="field"><label>動作</label>
+      <select id="ngb"><option value="1">ブロックする</option><option value="0">許可する（組み込み基本語を無効化）</option></select></div>
+    <div class="field"><label>メモ（任意）</label><input id="ngn" placeholder="なぜ追加したか"></div>
+    <div class="row" style="justify-content:flex-end;margin-top:14px">
+      <button class="btn ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn" onclick="act('ngwordSave',{word:$('#ngw').value.trim(),blocked:$('#ngb').value==='1',note:$('#ngn').value.trim()||null},'追加しました')">追加する</button></div>`);
+}
+
+/* ============ ⑧ 収益 ============ */
+async function viewRevenue() {
+  const d = await api("revenue");
+  const total = d.tiers.reduce((a, t) => a + Number(t.total), 0);
+  const count = d.tiers.reduce((a, t) => a + Number(t.n), 0);
+  const maxTier = Math.max(1, ...d.tiers.map((t) => Number(t.total)));
+  const maxRoom = Math.max(1, ...d.byRoom.map((r) => Number(r.total)));
+  const TIER = { 300:"#4DA3FF", 500:"#00E5C0", 1000:"#FFC24B", 3000:"#FF5C8A", 5000:"#FF4D6D", 10000:"#7CE7FF", 30000:"#B79BFF" };
+  const kpi = (l, v, s, c) => `<div class="kpi anim" style="--accent:${c}"><div class="lbl">${l}</div><div class="val">${v}</div><div class="sub">${s}</div></div>`;
+  $("#view").innerHTML = `
+    <div class="grid kpis" style="margin-bottom:16px">
+      ${kpi("💎 累計スパチャ", yen(total), `${n(count)}件`, "var(--gold)")}
+      ${kpi("平均単価", yen(count?Math.round(total/count):0), "1件あたり", "var(--pink)")}
+      ${kpi("課金ユーザー", n(d.spenders.length), "延べ人数", "var(--purple)")}
+      ${kpi("今月", yen(d.monthly[0]?.total||0), d.monthly[0]?`${n(d.monthly[0].n)}件`:"—", "var(--teal)")}
+    </div>
+    <div class="card anim" style="margin-bottom:14px">
+      <h2>⚠️ 表示上の注意</h2>
+      <div style="color:var(--muted);font-size:12.5px;line-height:1.9">
+        ここの金額は<b>アプリ内に記録されたスパチャの額面合計</b>です。App Store / Google Play の実際の入金額は
+        <b>プラットフォーム手数料（15〜30%）を差し引いた額</b>で、返金・為替の影響も受けます。正確な売上は
+        <a href="https://appstoreconnect.apple.com/analytics" target="_blank" rel="noopener">App Store Connect</a> と
+        <a href="https://play.google.com/console" target="_blank" rel="noopener">Play Console</a> の財務レポートで確認してください。
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;margin-bottom:14px">
+      <div class="card anim"><h2>ティア別の内訳</h2>
+        ${d.tiers.map((t)=>barRow(`${yen(t.amount)} <span style="color:var(--dim);font-size:11px">×${t.n}</span>`, t.total, maxTier, TIER[t.amount]||"var(--purple)", yen(t.total))).join("") || '<div class="empty">スパチャはまだありません</div>'}
+      </div>
+      <div class="card anim"><h2>ルーム別の売上</h2>
+        ${d.byRoom.map((r)=>barRow(`<span style="cursor:pointer" onclick="go('room:${r.id}')">${colorDot(r.color)}${esc(r.name)}</span>`, r.total, maxRoom, `linear-gradient(90deg,#${esc(r.color)},var(--gold))`, yen(r.total))).join("") || '<div class="empty">まだありません</div>'}
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr">
+      <div class="card anim"><h2>💛 トップ課金ユーザー</h2>
+        ${table([
+          { h:"#", num:1, f:(s)=>`<span style="font-weight:800;color:var(--gold)">${d.spenders.indexOf(s)+1}</span>` },
+          { h:"ユーザー", f:(s)=>`<span style="cursor:pointer" onclick="go('user:${encodeURIComponent(s.user_id||"")}')">${esc(s.user_name)}</span>` },
+          { h:"件数", num:1, f:(s)=>n(s.n) },
+          { h:"合計", num:1, f:(s)=>`<b style="color:var(--gold)">${yen(s.total)}</b>` },
+        ], d.spenders, { empty:"まだいません" })}
+      </div>
+      <div class="card anim"><h2>月別の推移</h2>
+        ${table([
+          { h:"月", f:(m)=>m.ym },
+          { h:"件数", num:1, f:(m)=>n(m.n) },
+          { h:"金額", num:1, f:(m)=>yen(m.total) },
+        ], d.monthly, { empty:"まだありません" })}
+        <h2 style="margin-top:18px">👑 月間スパチャ王・殿堂</h2>
+        ${table([
+          { h:"月", f:(h)=>h.ym },
+          { h:"ルーム", f:(h)=>`${colorDot(h.color)}${esc(h.room_name)}` },
+          { h:"王", f:(h)=>esc(h.user_name) },
+          { h:"金額", num:1, f:(h)=>yen(h.total) },
+        ], d.hof, { empty:"毎月1日 0:05 に自動で記録されます" })}
+      </div>
+    </div>`;
+}
+
+/* ============ ⑨ プッシュ通知 ============ */
+async function viewPush() {
+  const d = await api("push");
+  const total = d.byPlatform.reduce((a, p) => a + p.n, 0);
+  const maxReach = Math.max(1, ...d.reach.map((r) => r.reachable));
+  $("#tools").innerHTML = `<button class="btn sm" onclick="pushDialog()">📢 手動でプッシュを送る</button>`;
+  $("#view").innerHTML = `
+    <div class="grid kpis" style="margin-bottom:16px">
+      <div class="kpi anim" style="--accent:var(--teal)"><div class="lbl">📱 登録端末</div><div class="val">${n(total)}</div></div>
+      ${d.byPlatform.map((p)=>`<div class="kpi anim" style="--accent:var(--purple)"><div class="lbl">${p.platform}</div><div class="val">${n(p.n)}</div>
+        <div class="sub">まもなく${p.soon} / 開始${p.start} / 新予定${p.new_event}</div></div>`).join("")}
+    </div>
+    <div class="card anim" style="margin-bottom:14px">
+      <h2>自動配信の仕組み</h2>
+      <div style="color:var(--muted);font-size:12.5px;line-height:1.9">
+        🔴 <b>まもなく（10分前）</b>・▶️ <b>開始した瞬間</b> … 毎分のcronがルーム参加者全員に配信<br>
+        📅 <b>新しい予定</b> … 予定が登録された瞬間にトリガーで配信（登録者本人は除外）<br>
+        📌 <b>チーフ告知</b> … ルームの告知を更新すると配信（この画面のルーム詳細から送れます）<br>
+        🌅 <b>朝のお知らせ</b> … 毎朝9時（JST）に当落発表日・生誕祭をまとめて配信<br>
+        通知は<b>参加しているルームの分だけ</b>届き、種類ごとに個人でON/OFFできます。
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr">
+      <div class="card anim"><h2>ルーム別の到達可能端末</h2>
+        ${d.reach.map((r)=>barRow(`<span style="cursor:pointer" onclick="go('room:${r.id}')">${colorDot(r.color)}${esc(r.name)}</span>`, r.reachable, maxReach, `linear-gradient(90deg,#${esc(r.color)},var(--teal))`, `${n(r.reachable)}台`)).join("") || '<div class="empty">まだありません</div>'}
+      </div>
+      <div class="card anim"><h2>最近登録された端末</h2>
+        ${table([
+          { h:"platform", f:(x)=>`<span class="tag p">${esc(x.platform)}</span>` },
+          { h:"ユーザー", f:(x)=>`<span class="mono" style="cursor:pointer" onclick="go('user:${encodeURIComponent(x.user_id||"")}')">${esc(String(x.user_id).slice(0,22))}</span>` },
+          { h:"ミュート", num:1, f:(x)=>x.muted?`<span class="tag y">${x.muted}</span>`:"—" },
+          { h:"更新", f:(x)=>ago(x.updated_at) },
+        ], d.recent.slice(0,30))}
+      </div>
+    </div>`;
+}
+function pushDialog() {
+  const rooms = STATE.dash?.topRooms || [];
+  modal(`<h3>📢 手動プッシュ送信</h3>
+    <p style="color:var(--muted);font-size:12.5px;line-height:1.8">
+      ルームを選ぶとその参加者に、選ばなければ<b>全端末</b>に届きます。<br>
+      <b>実際にユーザーの端末が鳴ります。</b>文面をよく確認してから送ってください。</p>
+    <div class="field"><label>タイトル</label><input id="ptitle" placeholder="例）推しコールからのお知らせ"></div>
+    <div class="field"><label>本文</label><textarea id="pbody" rows="3" placeholder="例）新機能を追加しました！"></textarea></div>
+    <div class="row"><div class="field" style="flex:1"><label>宛先ルーム（任意）</label>
+      <select id="proom"><option value="">全端末</option>${rooms.map((r)=>`<option value="${r.id}">${esc(r.name)}</option>`).join("")}</select></div>
+      <div class="field" style="flex:1"><label>タップ先のタブ</label>
+        <select id="ptab"><option value="calendar">カレンダー</option><option value="chat">実況チャット</option><option value="wiki">図鑑</option><option value="threads">スレッド</option></select></div></div>
+    <div class="row" style="justify-content:flex-end;margin-top:10px">
+      <button class="btn ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn danger" onclick="sendPush()">送信する</button></div>
+    <p style="font-size:11px;color:var(--dim);margin-top:12px">※ send-push 側が custom タイプに未対応の場合はエラーが返ります。その場合はチーフ告知（ルーム詳細）をお使いください。</p>`);
+}
+async function sendPush() {
+  const title = $("#ptitle").value.trim(), body = $("#pbody").value.trim();
+  if (!title || !body) return toast("タイトルと本文を入れてください", true);
+  try {
+    const r = await api("pushSend", { title, body, roomId: $("#proom").value || null, tab: $("#ptab").value });
+    closeModal();
+    toast(r.ok ? "送信しました" : `送信できませんでした（${r.status}）`, !r.ok);
+    if (!r.ok) console.warn(r.response);
+  } catch (e) { toast("失敗: " + e.message, true); }
+}
+
+/* ============ ⑩ システム ============ */
+async function viewSystem() {
+  const [tables, merges] = await Promise.all([api("tables"), api("merges")]);
+  const max = Math.max(1, ...tables.map((t) => t.rows));
+  $("#view").innerHTML = `
+    <div class="grid" style="grid-template-columns:1fr 1fr;margin-bottom:14px">
+      <div class="card anim"><h2>テーブルの行数 <span class="cnt">${tables.length}テーブル</span></h2>
+        <div style="max-height:420px;overflow:auto">
+        ${tables.map((t)=>barRow(`<span class="mono">${esc(t.table)}</span>`, t.rows, max, null, n(t.rows))).join("")}</div>
+      </div>
+      <div>
+        <div class="card anim"><h2>🔗 ルーム統合（マージ）申請</h2>
+          ${table([
+            { h:"統合元", f:(m)=>`<span style="cursor:pointer" onclick="go('room:${m.source_id}')">${esc(m.source_name)}</span>` },
+            { h:"→", f:()=>"→" },
+            { h:"統合先", f:(m)=>`<span style="cursor:pointer" onclick="go('room:${m.target_id}')">${esc(m.target_name)}</span>` },
+            { h:"賛成", num:1, f:(m)=>`<span class="tag ${m.approvals>=5?"g":"y"}">${m.approvals}/5</span>` },
+            { h:"状態", f:(m)=>m.status==="merged"?'<span class="tag g">統合済み</span>':'<span class="tag y">受付中</span>' },
+          ], merges, { empty:"申請はありません（5人の賛成で自動的に統合されます）" })}
+        </div>
+        <div class="card anim" style="margin-top:14px"><h2>🔐 管理トークンの変更</h2>
+          <p style="color:var(--muted);font-size:12.5px">変更すると、この画面を開いている他のブラウザは<b>すぐにログアウト</b>されます。</p>
+          <div class="field"><label>新しいトークン（16文字以上）</label><input id="newtok" type="password" placeholder="十分に長いランダム文字列"></div>
+          <button class="btn ghost sm" onclick="genToken()">🎲 安全なトークンを生成</button>
+          <button class="btn sm" onclick="changeToken()">変更する</button>
+        </div>
+        <div class="card anim" style="margin-top:14px"><h2>🔎 外部ダッシュボード</h2>
+          <div class="row">
+            <a class="btn ghost sm" href="https://supabase.com/dashboard/project/imcmtdyjbjbxuvecwslf" target="_blank" rel="noopener">Supabase</a>
+            <a class="btn ghost sm" href="https://appstoreconnect.apple.com/apps/6794688074" target="_blank" rel="noopener">App Store Connect</a>
+            <a class="btn ghost sm" href="https://play.google.com/console" target="_blank" rel="noopener">Play Console</a>
+            <a class="btn ghost sm" href="https://search.google.com/search-console" target="_blank" rel="noopener">Search Console</a>
+            <a class="btn ghost sm" href="https://dreamnoark.com/oshi-calendar/" target="_blank" rel="noopener">公開サイト</a>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+function genToken() {
+  const a = new Uint8Array(24); crypto.getRandomValues(a);
+  const t = [...a].map((b) => b.toString(16).padStart(2, "0")).join("");
+  $("#newtok").type = "text"; $("#newtok").value = t;
+  toast("生成しました。忘れずに控えてください");
+}
+async function changeToken() {
+  const t = $("#newtok").value.trim();
+  if (t.length < 16) return toast("16文字以上にしてください", true);
+  if (!confirm("管理トークンを変更します。控えましたか？")) return;
+  try {
+    await api("setToken", { token: t });
+    TOKEN = t;
+    if (localStorage.getItem("oc_admin_token")) localStorage.setItem("oc_admin_token", t);
+    toast("変更しました");
+  } catch (e) { toast("失敗: " + e.message, true); }
+}
+
+/* ============ ⑪ SQLコンソール ============ */
+const SAMPLES = [
+  ["曜日ごとの発言数", "select to_char(created_at, 'Dy') as day, count(*)::int as n from messages group by 1 order by n desc"],
+  ["時間帯ごとの発言数", "select extract(hour from created_at)::int as hour, count(*)::int as n from messages group by 1 order by 1"],
+  ["ルームごとの平均発言長", "select r.name, round(avg(length(m.content)))::int as avg_len, count(*)::int as n from messages m join rooms r on r.id=m.room_id where m.kind='text' group by r.name order by n desc"],
+  ["予定カテゴリの人気", "select category, count(*)::int as n, sum(attendee_count)::int as attendees from events group by 1 order by n desc"],
+  ["1度も発言していないメンバー", "select p.user_name, p.user_id from profiles p where not exists (select 1 from messages m where m.user_id = p.user_id)"],
+  ["最近7日に動きがないルーム", "select r.name, max(m.created_at) as last from rooms r left join messages m on m.room_id=r.id group by r.name having coalesce(max(m.created_at), '2000-01-01') < now() - interval '7 days'"],
+];
+async function viewSql() {
+  $("#view").innerHTML = `
+    <div class="card anim" style="margin-bottom:14px">
+      <h2>🧪 SQLコンソール <span class="cnt">読み取り専用</span></h2>
+      <p style="color:var(--muted);font-size:12.5px">SELECT / WITH で始まるクエリだけ実行できます。書き込み（INSERT・UPDATE・DELETE等）はサーバー側で拒否されます。</p>
+      <textarea id="sqlq" rows="5" class="mono" style="font-size:13px" placeholder="select count(*) from messages">${esc(STATE.sql || "select r.name, count(*)::int as messages\nfrom messages m join rooms r on r.id = m.room_id\ngroup by r.name order by messages desc")}</textarea>
+      <div class="row" style="margin-top:10px">
+        <button class="btn sm" onclick="runSql()">▶ 実行（⌘/Ctrl + Enter）</button>
+        <span class="spacer"></span>
+        ${SAMPLES.map(([l,q],i)=>`<span class="chip click" onclick="$('#sqlq').value=${JSON.stringify(q)};runSql()">${l}</span>`).join("")}
+      </div>
+    </div>
+    <div class="card anim" id="sqlout"><div class="empty">クエリを実行すると結果がここに出ます</div></div>`;
+  $("#sqlq").addEventListener("keydown", (e) => { if ((e.metaKey || e.ctrlKey) && e.key === "Enter") runSql(); });
+}
+async function runSql() {
+  const q = $("#sqlq").value.trim();
+  STATE.sql = q;
+  const out = $("#sqlout");
+  out.innerHTML = loading();
+  try {
+    const t0 = performance.now();
+    const rows = await api("query", { q });
+    const ms = Math.round(performance.now() - t0);
+    if (!rows.length) { out.innerHTML = `<div class="empty">0件（${ms}ms）</div>`; return; }
+    const cols = Object.keys(rows[0]);
+    out.innerHTML = `<h2>結果 <span class="cnt">${rows.length}件 · ${ms}ms</span>
+      <span class="spacer"></span><button class="btn ghost xs" onclick="copyCsv()">CSVでコピー</button></h2>
+      ${table(cols.map((c)=>({ h:c, f:(r)=>{
+        const v = r[c];
+        return typeof v === "object" && v !== null ? `<span class="mono">${esc(JSON.stringify(v))}</span>` : esc(v ?? "—");
+      }})), rows)}`;
+    STATE.sqlRows = rows;
+  } catch (e) {
+    out.innerHTML = `<div class="empty" style="color:var(--red)">${esc(e.message)}</div>`;
+  }
+}
+function copyCsv() {
+  const rows = STATE.sqlRows || [];
+  if (!rows.length) return;
+  const cols = Object.keys(rows[0]);
+  const csv = [cols.join(","), ...rows.map((r) => cols.map((c) => {
+    const v = r[c];
+    const s = typeof v === "object" && v !== null ? JSON.stringify(v) : String(v ?? "");
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }).join(","))].join("\n");
+  navigator.clipboard.writeText(csv).then(() => toast("CSVをコピーしました"));
+}
+
+/* ============ ⑫ 操作ログ ============ */
+async function viewAudit() {
+  const rows = await api("auditLog");
+  $("#view").innerHTML = `<div class="card anim">
+    <h2>この管理画面から行った操作 <span class="cnt">最新200件</span></h2>
+    <p style="color:var(--muted);font-size:12.5px;margin:-6px 0 14px">読み取りは記録されません。書き込み・削除・設定変更だけが残ります。</p>
+    ${table([
+      { h:"日時", f:(a)=>dt(a.created_at) },
+      { h:"操作", f:(a)=>`<span class="tag ${String(a.action).match(/delete|mute|hide/i)?"r":"p"}">${esc(a.action)}</span>` },
+      { h:"内容", f:(a)=>`<div class="trunc mono" style="max-width:620px">${esc(JSON.stringify(a.params))}</div>` },
+    ], rows, { empty:"まだ操作はありません" })}</div>`;
+}
+
+/* ============ 起動 ============ */
+(function boot() {
+  const saved = localStorage.getItem("oc_admin_token");
+  if (saved) { $("#tok").value = saved; $("#remember").checked = true; $("#gate").querySelector("form").requestSubmit(); }
+})();
+</script>
+</body>
+</html>

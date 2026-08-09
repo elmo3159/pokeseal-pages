@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /oshi-calendar/admin/
 Sitemap: https://dreamnoark.com/oshi-calendar/oshi/sitemap.xml
 Sitemap: https://dreamnoark.com/snapdrop/sitemap.xml
