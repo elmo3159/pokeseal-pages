@@ -934,7 +934,7 @@ ${urls.map((u) => `<url><loc>${u}</loc><changefreq>daily</changefreq></url>`).jo
   outFiles.push(['oshi-calendar/oshi/sitemap.xml', sitemap]);
   outFiles.push([
     'robots.txt',
-    `User-agent: *\nAllow: /\nSitemap: ${SITE}${BASE}/sitemap.xml\nSitemap: ${SITE}/snapdrop/sitemap.xml\n`,
+    `User-agent: *\nAllow: /\nDisallow: /oshi-calendar/admin/\nSitemap: ${SITE}${BASE}/sitemap.xml\nSitemap: ${SITE}/snapdrop/sitemap.xml\n`,
   ]);
 
   for (const [rel, content] of outFiles) {
