@@ -480,6 +480,13 @@ async function render(silent) {
   }
 }
 
+function setModBadge(count) {
+  const badge = $("#badge-mod");
+  if (!badge) return;
+  badge.style.display = count ? "" : "none";
+  badge.textContent = count;
+}
+
 /* ============ ① ダッシュボード ============ */
 let dashMetric = "messages";
 async function viewDash() {
@@ -487,8 +494,7 @@ async function viewDash() {
   STATE.dash = d;
   const k = d.kpi;
   const reports = k.msg_reports + k.post_reports + k.img_reports;
-  const badge = $("#badge-mod");
-  if (badge) { badge.style.display = reports ? "" : "none"; badge.textContent = reports; }
+  setModBadge(reports);
 
   const kpi = (lbl, val, sub, color) => `<div class="kpi anim" style="--accent:${color}">
     <div class="lbl">${lbl}</div><div class="val">${val}</div><div class="sub">${sub || ""}</div></div>`;
@@ -671,7 +677,7 @@ async function viewRoom() {
     ${r.chief_notice ? `<div class="card anim" style="margin-bottom:14px;border-color:rgba(255,194,75,.4)">
       <h2>📌 現在のチーフ告知</h2><div style="font-size:14px">${esc(r.chief_notice)}</div>
       <button class="btn ghost sm" style="margin-top:12px" onclick="act('roomNotice',{roomId:'${r.id}',notice:null},'告知を消しました')">告知を消す</button></div>` : ""}
-    <div class="grid" style="grid-template-columns:1.4fr 1fr;margin-bottom:14px">
+    <div class="grid" style="grid-template-columns:1.4fr 1fr;align-items:start;margin-bottom:14px">
       <div class="card anim"><h2>過去30日の発言数</h2>${lineChart(d.daily, "messages", "#FF5C8A", 120)}</div>
       <div class="card anim"><h2>推しプロフィール（図鑑）</h2>
         <table><tbody>
@@ -950,6 +956,7 @@ async function viewMod() {
   }[modTab]();
 
   const total = d.reported.length + d.reportedPosts.length + d.images.length;
+  setModBadge(total);
   $("#view").innerHTML = `
     ${total ? `<div class="card anim" style="margin-bottom:14px;border-color:rgba(255,84,104,.45);background:rgba(255,84,104,.06)">
       <div style="display:flex;align-items:center;gap:12px">
@@ -1026,7 +1033,7 @@ async function viewRevenue() {
         <a href="https://play.google.com/console" target="_blank" rel="noopener">Play Console</a> の財務レポートで確認してください。
       </div>
     </div>
-    <div class="grid" style="grid-template-columns:1fr 1fr;margin-bottom:14px">
+    <div class="grid" style="grid-template-columns:1fr 1fr;align-items:start;margin-bottom:14px">
       <div class="card anim"><h2>ティア別の内訳</h2>
         ${d.tiers.map((t)=>barRow(`${yen(t.amount)} <span style="color:var(--dim);font-size:11px">×${t.n}</span>`, t.total, maxTier, TIER[t.amount]||"var(--purple)", yen(t.total))).join("") || '<div class="empty">スパチャはまだありません</div>'}
       </div>
@@ -1034,7 +1041,7 @@ async function viewRevenue() {
         ${d.byRoom.map((r)=>barRow(`<span style="cursor:pointer" onclick="go('room:${r.id}')">${colorDot(r.color)}${esc(r.name)}</span>`, r.total, maxRoom, `linear-gradient(90deg,#${esc(r.color)},var(--gold))`, yen(r.total))).join("") || '<div class="empty">まだありません</div>'}
       </div>
     </div>
-    <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="grid" style="grid-template-columns:1fr 1fr;align-items:start">
       <div class="card anim"><h2>💛 トップ課金ユーザー</h2>
         ${table([
           { h:"#", num:1, f:(s)=>`<span style="font-weight:800;color:var(--gold)">${d.spenders.indexOf(s)+1}</span>` },
@@ -1082,7 +1089,7 @@ async function viewPush() {
         通知は<b>参加しているルームの分だけ</b>届き、種類ごとに個人でON/OFFできます。
       </div>
     </div>
-    <div class="grid" style="grid-template-columns:1fr 1fr">
+    <div class="grid" style="grid-template-columns:1fr 1fr;align-items:start">
       <div class="card anim"><h2>ルーム別の到達可能端末</h2>
         ${d.reach.map((r)=>barRow(`<span style="cursor:pointer" onclick="go('room:${r.id}')">${colorDot(r.color)}${esc(r.name)}</span>`, r.reachable, maxReach, `linear-gradient(90deg,#${esc(r.color)},var(--teal))`, `${n(r.reachable)}台`)).join("") || '<div class="empty">まだありません</div>'}
       </div>
@@ -1129,7 +1136,7 @@ async function viewSystem() {
   const [tables, merges] = await Promise.all([api("tables"), api("merges")]);
   const max = Math.max(1, ...tables.map((t) => t.rows));
   $("#view").innerHTML = `
-    <div class="grid" style="grid-template-columns:1fr 1fr;margin-bottom:14px">
+    <div class="grid" style="grid-template-columns:1fr 1fr;align-items:start;margin-bottom:14px">
       <div class="card anim"><h2>テーブルの行数 <span class="cnt">${tables.length}テーブル</span></h2>
         <div style="max-height:420px;overflow:auto">
         ${tables.map((t)=>barRow(`<span class="mono">${esc(t.table)}</span>`, t.rows, max, null, n(t.rows))).join("")}</div>
