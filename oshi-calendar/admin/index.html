@@ -343,6 +343,7 @@ const NAV = [
     { id: "push", ic: "🔔", label: "プッシュ通知" },
   ]},
   { g: "システム", items: [
+    { id: "health", ic: "🩺", label: "データ健全性" },
     { id: "system", ic: "⚙️", label: "システム" },
     { id: "sql", ic: "🧪", label: "SQLコンソール" },
     { id: "audit", ic: "📜", label: "操作ログ" },
@@ -467,14 +468,14 @@ async function render(silent) {
     user:["ユーザー詳細",""], content:["コンテンツ","予定・スレッド・アンケート・図鑑"],
     mod:["モデレーション","通報・非表示・ミュート"], ng:["NGワード","審査不要で即反映"],
     revenue:["収益","スパチャの内訳と推移"], push:["プッシュ通知","端末と到達数"],
-    system:["システム","テーブルと設定"], sql:["SQLコンソール","読み取り専用"], audit:["操作ログ","管理画面からの操作履歴"],
+    health:["データ健全性","数字がズレる原因の洗い出し"], system:["システム","テーブルと設定"], sql:["SQLコンソール","読み取り専用"], audit:["操作ログ","管理画面からの操作履歴"],
   }[VIEW] || ["", ""];
   $("#title").textContent = meta[0]; $("#crumb").textContent = meta[1]; $("#tools").innerHTML = "";
   if (!silent) v.innerHTML = loading();
   try {
     await ({ dash:viewDash, live:viewLive, rooms:viewRooms, room:viewRoom, users:viewUsers, user:viewUser,
       content:viewContent, mod:viewMod, ng:viewNg, revenue:viewRevenue, push:viewPush,
-      system:viewSystem, sql:viewSql, audit:viewAudit }[VIEW] || viewDash)();
+      health:viewHealth, system:viewSystem, sql:viewSql, audit:viewAudit }[VIEW] || viewDash)();
   } catch (e) {
     v.innerHTML = `<div class="card"><div class="empty">読み込みに失敗しました<br><span class="mono">${esc(e.message)}</span></div></div>`;
   }
@@ -1131,7 +1132,50 @@ async function sendPush() {
   } catch (e) { toast("失敗: " + e.message, true); }
 }
 
-/* ============ ⑩ システム ============ */
+/* ============ ⑩ データ健全性 ============ */
+async function viewHealth() {
+  const d = await api("healthcheck");
+  const bad = d.rows.filter((r) => r.n > 0);
+  $("#view").innerHTML = `
+    <div class="card anim" style="margin-bottom:14px;border-color:${bad.length?"rgba(255,194,75,.4)":"rgba(0,229,192,.35)"}">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="font-size:30px">${bad.length?"🩺":"✅"}</div>
+        <div><div style="font-weight:800;font-size:15px">${bad.length?`${bad.length}項目に気になる点があります`:"データはきれいな状態です"}</div>
+        <div style="color:var(--muted);font-size:12.5px">画面に出る数字がズレる原因を、あらかじめ洗い出します。<b>0件でなくても異常とは限りません</b>（仕様上そうなるものには理由を書いています）。</div></div>
+      </div>
+    </div>
+    <div class="card anim" style="margin-bottom:14px"><h2>チェック項目</h2>
+      ${table([
+        { h:"", f:(r)=>r.n>0?"⚠️":"✅" },
+        { h:"項目", f:(r)=>`<b>${esc(r.issue)}</b>` },
+        { h:"件数", num:1, f:(r)=>r.n>0?`<span class="tag y">${n(r.n)}</span>`:'<span class="tag g">0</span>' },
+        { h:"意味", f:(r)=>`<span style="color:var(--muted)">${esc(r.detail)}</span>` },
+      ], d.rows)}
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;align-items:start">
+      <div class="card anim"><h2>金額0のスパチャ <span class="cnt">${d.zeroChats.length}件</span></h2>
+        <p style="color:var(--muted);font-size:12px;margin:-6px 0 12px">課金が成立していないのに演出だけ流れた記録です。テスト由来なら削除して構いません。</p>
+        ${table([
+          { h:"日時", f:(m)=>dt(m.created_at,1) },
+          { h:"ルーム", f:(m)=>`<span style="cursor:pointer" onclick="go('room:${m.room_id}')">${esc(m.room_name)}</span>` },
+          { h:"ユーザー", f:(m)=>esc(m.user_name) },
+          { h:"内容", f:(m)=>`<div class="trunc" style="max-width:200px">${esc(m.content)}</div>` },
+          { h:"", num:1, f:(m)=>`<button class="btn ghost xs" onclick="confirmAct('この0円スパチャの記録を完全に削除します。','deleteMessage',{id:'${m.id}'},'削除しました')">削除</button>` },
+        ], d.zeroChats, { empty:"ありません 🎉" })}
+      </div>
+      <div class="card anim"><h2>動きが止まっているルーム</h2>
+        <p style="color:var(--muted);font-size:12px;margin:-6px 0 12px">最終発言が古い順。予定が1件も入っていない部屋は特に離脱しやすいので、予定を足すと復活しやすいです。</p>
+        ${table([
+          { h:"ルーム", f:(r)=>`<span style="cursor:pointer" onclick="go('room:${r.id}')">${colorDot(r.color)}${esc(r.name)}</span>` },
+          { h:"人数", num:1, f:(r)=>n(r.member_count) },
+          { h:"最終発言", f:(r)=>ago(r.last_message) },
+          { h:"今後の予定", num:1, f:(r)=>r.upcoming?n(r.upcoming):'<span class="tag y">0</span>' },
+        ], d.staleRooms)}
+      </div>
+    </div>`;
+}
+
+/* ============ ⑪ システム ============ */
 async function viewSystem() {
   const [tables, merges] = await Promise.all([api("tables"), api("merges")]);
   const max = Math.max(1, ...tables.map((t) => t.rows));
